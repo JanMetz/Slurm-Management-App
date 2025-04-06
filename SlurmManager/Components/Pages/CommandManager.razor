@@ -1,0 +1,100 @@
+﻿@page "/CommandManager"
+@using System.Text
+@rendermode InteractiveServer
+
+<PageTitle>Command Manager</PageTitle>
+
+Run command 
+<Dropdown TItem="int" OnSelected="@OnSelected" >
+    <InitialTip>Chose the command you wish to run</InitialTip>
+    <ChildContent>
+        @for (var i = 0; i < _commandNames.Count; ++i)
+        {
+            var i1 = i;
+            <DropdownListItem Item=@i>@_commandNames[i1]</DropdownListItem>
+        }
+    </ChildContent>
+</Dropdown>
+
+<p role="status">@CommandDesc</p>
+
+<input type="text" @oninput="UpdateCommandBody"/>
+<button class="btn btn-primary" @onclick="RunCommand" disabled="@RunBtnDisabled">Run @CommandName</button>
+<h3>Standard output</h3>
+<div class="readonly-box">
+    @StdOut
+</div>
+<h3>Error output</h3>
+<div class="readonly-box">
+    @ErrOut
+</div>
+
+@code {
+    private bool RunBtnDisabled { get; set; } = true;
+    private string StdOut { get; set; } = "";
+    private string ErrOut { get; set; } = "";
+    private string CommandName { get; set; } = "";
+    private string CommandDesc { get; set; } = "";
+    private string CommandBody { get; set; } = "";
+
+    private readonly List<string> _commandNames = ["echo", "sacct", "salloc","sattach"];
+    private readonly List<string> _commandDescs = ["used to display text",
+        "used to report job or job step accounting information about active or completed jobs.",
+        "used to allocate resources for a job in real time. Typically this is used to allocate resources and spawn a shell. The shell is then used to execute srun commands to launch parallel tasks.",
+        "used to attach standard input, output, and error plus signal capabilities to a currently running job or job step. One can attach to and detach from jobs multiple times."];
+    
+    private void OnSelected(int selection)
+    {
+        if (selection < 0 || selection > _commandNames.Count)
+        {
+            CommandName = "error";
+            CommandDesc = "error";
+        }
+        else
+        {
+            RunBtnDisabled = false;
+            CommandName = _commandNames[selection];
+            CommandDesc = _commandDescs[selection];
+        }
+    }
+    
+    private void UpdateCommandBody(ChangeEventArgs e)
+    {
+        if (e.Value != null) 
+            CommandBody = e.Value.ToString() ?? string.Empty;
+
+        if (CommandBody.StartsWith(CommandName))
+            CommandBody = CommandBody.Remove(0, CommandName.Length);
+    }
+    
+    private void RunCommand()
+    {
+        var process = new System.Diagnostics.Process();
+        var startInfo = new System.Diagnostics.ProcessStartInfo
+        {
+            WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+            FileName = "cmd.exe",
+            Arguments = "/C " + CommandName + " " + CommandBody,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        };
+        process.StartInfo = startInfo;
+        process.Start();
+        
+        var standardOutput = new StringBuilder();
+        var errorOutput = new StringBuilder();
+        
+        while (!process.HasExited)
+        {
+            standardOutput.Append(process.StandardOutput.ReadToEnd());
+            errorOutput.Append(process.StandardError.ReadToEnd());
+        }
+        
+        standardOutput.Append(process.StandardOutput.ReadToEnd());
+        errorOutput.Append(process.StandardError.ReadToEnd());
+        
+        StdOut = standardOutput.ToString();
+        ErrOut = errorOutput.ToString();
+    }
+
+}
