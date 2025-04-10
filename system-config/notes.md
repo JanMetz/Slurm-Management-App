@@ -1,6 +1,8 @@
 ## Do analizy:
 read_slurm_conf: backup_controller not specified??
+
 debug:  No backup controllers, not launching heartbeat.?
+
 Logging from the ResumeProgram/SuspendProgram scripts must be programmed in the scripts. This example may be used:
 ```
 action="start"
