@@ -31,3 +31,7 @@
 ## Na każdym komputerze - Należy mieć ten sam klucz munge:
     $ dd if=/dev/random bs=1 count=1024 > /etc/munge/munge.key
     $ scp /etc/munge/munge.key other_host@/etc/munge/munge.key
+
+## Na każdym komputerze - Należy aktywować serwisy slurmd i munge:
+    $ systemctl enable munge
+    $ systemctl enable slurmd
