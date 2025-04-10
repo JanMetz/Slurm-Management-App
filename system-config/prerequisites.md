@@ -35,3 +35,5 @@
 ## Na każdym komputerze - Należy aktywować serwisy slurmd i munge:
     $ systemctl enable munge
     $ systemctl enable slurmd
+### Dodatkowo na komputerze zarządcy należy aktywować serwis slurmctld:
+    $ systemctl enable slurmctld
