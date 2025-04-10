@@ -25,10 +25,12 @@ SlurmdLogFile=/var/log/slurmd.log
 im wyższa liczba tym więcej wiadomości debugu się loguje
 
 The level of detail to provide slurmd daemon's logs.
-Values from 0 to 9 are legal, with `0' being
-"quiet" operation and `9' being insanely verbose. The
+Values from 0 to 9 are legal, with 0 being
+"quiet" operation and 9 being insanely verbose. The
 default value is 3. Each increment of the number generates about 5 times as many messages.
 
 The DebugFlags configuration parameter can be used to enable
 additional logging for specific SLURM sub-systems (e.g. Backfill,
 CPU_Bind, Gres, Triggers, etc.)
+
+https://slurm-dev.schedmd.narkive.com/wHoDrxll/debug-mode
