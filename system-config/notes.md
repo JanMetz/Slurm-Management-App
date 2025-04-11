@@ -9,6 +9,8 @@ action="start"
 echo "`date` User $USER invoked $action $0 $*" >>/var/log/slurm/power_save.log
 ```
 
+W plikach /etc/pam.d/common-* znajdują się warningi, ostrzegające przed ich ręczną modyfikacją, gdyż zostanie ona nadpisana przez pam-config. Dopytać o to CS
+
 ## Żeby nie krzyczał, że nie może otworzyć skryptów:
 chmod a+rx /etc/slurm/slurm-resume.sh
 chmod a+rx /etc/slurm/slurm-suspend.sh
