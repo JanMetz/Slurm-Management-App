@@ -55,6 +55,11 @@ useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication 
 groupadd -r -g 148 slurm
 useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload manager" slurm
 
+echo +++ Zmiana wlasiciela plikow slurm-*.sh
+chown 148:148 /etc/slurm/slurm-suspend.sh
+chown 148:148 /etc/slurm/slurm-epilog.sh
+chown 148:148 /etc/slurm/slurm-resume.sh
+
 echo Aktywacja serwisow Slurm i Munge...
 systemctl enable munge
 systemctl enable slurmd
