@@ -22,3 +22,6 @@
      $ systemctl stop slurmd
      $ ps aux | grep slurm
      $ kill -9 pid
+Wg dokumentacj: 
+    "SIGINT SIGTERM SIGQUIT
+    slurmstepd will shutdown cleanly." 
