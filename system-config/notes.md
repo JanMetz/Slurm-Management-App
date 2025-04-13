@@ -40,3 +40,10 @@ additional logging for specific SLURM sub-systems (e.g. Backfill,
 CPU_Bind, Gres, Triggers, etc.)
 
 https://slurm-dev.schedmd.narkive.com/wHoDrxll/debug-mode
+
+## Munge key
+Kopiowanie przez scp może się nie udać, jeżeli z maszyny-celu nie robiło się wcześniej ssh (nie zakceptowało się fingerprinta) do maszyny-źródła.
+Po skopiowaniu trzeba zmienić ownera, bo inaczej munge nie chce wystartować. 
+```
+  $ chown 149:149 /etc/munge/munge.key
+```
