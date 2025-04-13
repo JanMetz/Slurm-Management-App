@@ -47,3 +47,10 @@ Po skopiowaniu trzeba zmienić ownera, bo inaczej munge nie chce wystartować.
 ```
   $ chown 149:149 /etc/munge/munge.key
 ```
+
+## Problemy z nodem po restarcie
+```
+  $ sinfo
+  $ sinfo -R
+  $ scontrol update nodename=lab-net-57 state=resume
+```
