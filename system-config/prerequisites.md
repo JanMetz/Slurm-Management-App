@@ -45,8 +45,9 @@
 ## Na komputerach zarządzanych - Należy uruchomić polecenie:
      $ slurmd -D -c -vv
 
-## Na komputerze zarządcy - Należy uruchomić polecenie:
+## Na komputerze zarządcy - W celu sprawdzenia czy system działa:
      $ slurmctld -D -c -vv
+     $ srun -n1 -l /bin/hostname
 
 ## Na każdym komputerze - Aby dokonać restartu i wymazać cache Slurma:
      $ rm -rf /var/lib/slurm/spool/*
