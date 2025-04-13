@@ -47,3 +47,6 @@
 
 ## Na komputerze zarządcy - Należy uruchomić polecenie:
      $ slurmctld -D -c -vv
+
+## Na każdym komputerze - Aby dokonać restartu i wymazać cache Slurma:
+     $ rm -rf /var/lib/slurm/spool/*
