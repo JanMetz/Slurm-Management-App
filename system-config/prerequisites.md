@@ -37,3 +37,13 @@
     $ systemctl enable slurmd
 ### Dodatkowo na komputerze zarządcy należy aktywować serwis slurmctld:
     $ systemctl enable slurmctld
+
+## Na każdym komputerze - Należy włączyć serwisy munge i slurmd:
+     $ systemctl start munge
+     $ systemctl start slurmd
+
+## Na komputerach zarządzanych - Należy uruchomić polecenie:
+     $ slurmd -D -c -vv
+
+## Na komputerze zarządcy - Należy uruchomić polecenie:
+     $ slurmctld -D -c -vv
