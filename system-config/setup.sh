@@ -43,6 +43,7 @@ touch /var/lib/slurm/state/resv_state.old
 echo Przenoszenie klucza Munge...
 if test -f munge.key; then
   	mv munge.key /etc/munge/munge.key
+   	chown 149:149 /etc/munge/munge.key
 else
 	echo OSTRZEZENIE: NIE ODNALEZIONO PLIKU MUNGE.KEY!
 fi
