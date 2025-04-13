@@ -3,3 +3,6 @@ Folder SlurmManager zawiera aplikację webową napisaną w C# pozwalającą doce
 
 # System-config
 Folder system-config zawiera pliki konfiguracyjne oraz skrypt (setup.sh) pozwalający na szybkie skonfigurowanie nowego węzła klastra
+
+# Tmp
+Folder tmp zawiera pliki z instrukcjami od CS
