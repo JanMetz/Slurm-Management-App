@@ -16,4 +16,9 @@
      $ sinfo -R
 
 ## Aby zmienić stan nodea:
-    $ scontrol update nodename=lab-net-57 state=resume
+     $ scontrol update nodename=lab-net-57 state=resume
+
+## Aby wyłączyć Slurm:
+     $ systemctl stop slurmd
+     $ ps aux | grep slurm
+     $ kill -9 pid
