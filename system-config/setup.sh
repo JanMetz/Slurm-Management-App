@@ -59,6 +59,9 @@ echo +++ Zmiana wlasiciela plikow slurm-*.sh
 chown 148:148 /etc/slurm/slurm-suspend.sh
 chown 148:148 /etc/slurm/slurm-epilog.sh
 chown 148:148 /etc/slurm/slurm-resume.sh
+chmod g+rx /etc/slurm/slurm-suspend.sh
+chmod g+rx /etc/slurm/slurm-epilog.sh
+chmod g+rx /etc/slurm/slurm-resume.sh
 
 echo Aktywacja serwisow Slurm i Munge...
 systemctl enable munge
