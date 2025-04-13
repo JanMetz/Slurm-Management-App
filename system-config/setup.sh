@@ -52,7 +52,7 @@ if test -f munge.key; then
   	mv munge.key /etc/munge/munge.key
    	chown munge:munge /etc/munge/munge.key
 else
-	echo OSTRZEZENIE: NIE ODNALEZIONO PLIKU MUNGE.KEY!
+	echo +++ OSTRZEZENIE: NIE ODNALEZIONO PLIKU MUNGE.KEY!
 fi
 
 echo +++ Zmiana wlasiciela plikow /etc/slurm/slurm-*.sh
