@@ -40,14 +40,6 @@ touch /var/lib/slurm/state/job_state
 touch /var/lib/slurm/state/resv_state
 touch /var/lib/slurm/state/resv_state.old
 
-echo +++ Przenoszenie klucza Munge...
-if test -f munge.key; then
-  	mv munge.key /etc/munge/munge.key
-   	chown 149:149 /etc/munge/munge.key
-else
-	echo OSTRZEZENIE: NIE ODNALEZIONO PLIKU MUNGE.KEY!
-fi
-
 echo +++ Tworzenie grupy i uzytkownika dla Slurma i Munge...
 groupadd -r -g 149 munge
 useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication service" munge
@@ -55,12 +47,18 @@ useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication 
 groupadd -r -g 148 slurm
 useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload manager" slurm
 
-echo +++ UWAGA - jezeli grupa slurm juz istnieje i ma identyfikator rozny od 148 to nalezy recznie wykonac komendy zmieniajace wlasciciela plikow /etc/slurm/slurm-*.sh
+echo +++ Przenoszenie klucza Munge...
+if test -f munge.key; then
+  	mv munge.key /etc/munge/munge.key
+   	chown munge:munge /etc/munge/munge.key
+else
+	echo OSTRZEZENIE: NIE ODNALEZIONO PLIKU MUNGE.KEY!
+fi
 
 echo +++ Zmiana wlasiciela plikow /etc/slurm/slurm-*.sh
-chown 148:148 /etc/slurm/slurm-suspend.sh
-chown 148:148 /etc/slurm/slurm-epilog.sh
-chown 148:148 /etc/slurm/slurm-resume.sh
+chown slurm:slurm /etc/slurm/slurm-suspend.sh
+chown slurm:slurm /etc/slurm/slurm-epilog.sh
+chown slurm:slurm /etc/slurm/slurm-resume.sh
 chmod g+rx /etc/slurm/slurm-suspend.sh
 chmod g+rx /etc/slurm/slurm-epilog.sh
 chmod g+rx /etc/slurm/slurm-resume.sh
