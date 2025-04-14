@@ -66,7 +66,7 @@ osobna! maszyna do logowania się i zlecania zadań - ma się odpalać nie vlab 
 przenieść repo 
 
 ## Skrypt
-do uruchomienia komputera
+do uruchomienia komputera - można wykorzystać wol adres:mac
 
 odapalanie maszyn (ping czy wgl maszyna jest widoczna)
 sprawdzanie konfigu (czy działa sieć 10Gb enp1s0, jaki jest uruchomiony system)
