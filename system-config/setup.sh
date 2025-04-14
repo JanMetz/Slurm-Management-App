@@ -4,7 +4,7 @@ echo +++ Zmiana nazwy starych plikow konfiguracyjnych...
 mv /etc/nsswitch.conf /etc/nsswitch.conf.old
 mv /etc/ldap.conf /etc/ldap.conf.old
 mv /etc/openldap/ldap.conf /etc/openldap/ldap.conf.old
-mv /etc/pam.d/common-account /etc/pam.d/commont-account.old
+mv /etc/pam.d/common-account /etc/pam.d/common-account.old
 mv /etc/pam.d/common-account-pc /etc/pam.d/common-account-pc.old
 mv /etc/pam.d/common-auth /etc/pam.d/common-auth.old
 mv /etc/security/access.conf /etc/security/access.conf.old
@@ -19,7 +19,7 @@ echo +++ Przenoszenie nowych plikow konfiguracyjnych...
 mv nsswitch.conf /etc/nsswitch.conf
 mv ldap.conf /etc/ldap.conf
 mv openldap.conf /etc/openldap/ldap.conf
-mv common-account /etc/pam.d/commont-account
+mv common-account /etc/pam.d/common-account
 mv common-account-pc /etc/pam.d/common-account-pc
 mv common-auth /etc/pam.d/common-auth
 mv access.conf /etc/security/access.conf
