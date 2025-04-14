@@ -54,3 +54,7 @@ Po skopiowaniu trzeba zmienić ownera, bo inaczej munge nie chce wystartować.
   $ sinfo -R
   $ scontrol update nodename=lab-net-57 state=resume
 ```
+
+## MeshCentral
+mesh.cs.put.poznan.pl
+Można się zalogować, wybrać z gruba rescue i naprawić np. pama jak coś pójdzie nie tak.
