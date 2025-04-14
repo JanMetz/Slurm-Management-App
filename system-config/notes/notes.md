@@ -76,8 +76,11 @@ odapalanie zadań (cron)
 lab-net-56 jest dopięte do switcha na porcie 39
 
 sprawdzenie czy port na switchu działa snmpget -v2c -cpublic 192.168.0.239 ifOperStatus.39
+ping6 ff02::1%enp1s0 -c2
 
 przygootwanie systemu tylko do obliczeń, uruchomienie systemu tylko do obliczeń, zebranie danych diag z slurma
 
 jak będzie wszystko działać to zintegrować to z meshem (komunikat na meshu że maszyna jest używana, albo ping do maszyny żeby slurm się zatrzymał, bo ktoś chce skorzystać z MC)
 Przygotować harmonaogram - do czerwca z tekstem pracy
+
+instrukcja obsługi (komendy, batche, etc)
