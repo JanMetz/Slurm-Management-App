@@ -60,7 +60,7 @@ mesh.cs.put.poznan.pl
 Można się zalogować, wybrać z gruba rescue i naprawić np. pama jak coś pójdzie nie tak.
 
 ## Front
-osobna! maszyna do logowania się i zlecania zadań
+osobna! maszyna do logowania się i zlecania zadań - ma się odpalać nie vlab tylko jeden system, który będzie pozwalał się użytkownikowi zalogować i zlecać zadania
 
 ## Git 
 przenieść repo 
@@ -69,5 +69,16 @@ przenieść repo
 do uruchomienia komputera
 
 odapalanie maszyn (ping czy wgl maszyna jest widoczna)
-sprawdzanie konfigu (czy działa sieć 10Gb enp1s0, jaki jest uruchomiony system?)
+sprawdzanie konfigu (czy działa sieć 10Gb enp1s0, jaki jest uruchomiony system)
+jeżeli nie działa 10gb to można spróbować zrobić reset portu na switchu
+odpalanie usług (usługi startowe)
 odapalanie zadań (cron) 
+
+lab-net-56 jest dopięte do switcha na porcie 39
+
+sprawdzenie czy port na switchu działa snmpget -v2c -cpublic 192.168.0.239 ifOperStatus.39
+
+przygootwanie systemu tylko do obliczeń, uruchomienie systemu tylko do obliczeń, zebranie danych diag z slurma
+
+jak będzie wszystko działać to zintegrować to z meshem (komunikat na meshu że maszyna jest używana, albo ping do maszyny żeby slurm się zatrzymał, bo ktoś chce skorzystać z MC)
+Przygotować harmonaogram - do czerwca z tekstem pracy
