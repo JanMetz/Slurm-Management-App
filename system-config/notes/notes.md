@@ -62,11 +62,10 @@ Można się zalogować, wybrać z gruba rescue i naprawić np. pama jak coś pó
 ## Front
 osobna! maszyna do logowania się i zlecania zadań - ma się odpalać nie vlab tylko jeden system, który będzie pozwalał się użytkownikowi zalogować i zlecać zadania
 
-## Git 
-przenieść repo 
-
-## Skrypt
-do uruchomienia komputera - można wykorzystać wol adres:mac
+## TODO
+przenieść repo git
+naprawić setup.sh
+skrypt do uruchomienia komputera - można wykorzystać wol adres:mac
 
 odapalanie maszyn (ping czy wgl maszyna jest widoczna)
 sprawdzanie konfigu (czy działa sieć 10Gb enp1s0, jaki jest uruchomiony system)
