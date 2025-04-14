@@ -58,3 +58,16 @@ Po skopiowaniu trzeba zmienić ownera, bo inaczej munge nie chce wystartować.
 ## MeshCentral
 mesh.cs.put.poznan.pl
 Można się zalogować, wybrać z gruba rescue i naprawić np. pama jak coś pójdzie nie tak.
+
+## Front
+osobna! maszyna do logowania się i zlecania zadań
+
+## Git 
+przenieść repo 
+
+## Skrypt
+do uruchomienia komputera
+
+odapalanie maszyn (ping czy wgl maszyna jest widoczna)
+sprawdzanie konfigu (czy działa sieć 10Gb enp1s0, jaki jest uruchomiony system?)
+odapalanie zadań (cron) 
