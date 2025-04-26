@@ -66,6 +66,7 @@ osobna! maszyna do logowania się i zlecania zadań - ma się odpalać nie vlab 
 przenieść repo git
 naprawić setup.sh
 skrypt do uruchomienia komputera - można wykorzystać wol adres:mac
+po uruchomieniu kompa openssl do zarządcy z komunikatem że coś nie działa?
 
 odapalanie maszyn (ping czy wgl maszyna jest widoczna)
 sprawdzanie konfigu (czy działa sieć 10Gb enp1s0, jaki jest uruchomiony system)
