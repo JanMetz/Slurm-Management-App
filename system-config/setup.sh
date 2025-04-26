@@ -1,34 +1,32 @@
 #!/bin/bash
 
-echo +++ Zmiana nazwy starych plikow konfiguracyjnych... 
-mv /etc/nsswitch.conf /etc/nsswitch.conf.old
-mv /etc/ldap.conf /etc/ldap.conf.old
-mv /etc/openldap/ldap.conf /etc/openldap/ldap.conf.old
-mv /etc/pam.d/common-account /etc/pam.d/common-account.old
-mv /etc/pam.d/common-account-pc /etc/pam.d/common-account-pc.old
-mv /etc/pam.d/common-auth /etc/pam.d/common-auth.old
-mv /etc/security/access.conf /etc/security/access.conf.old
-mv /etc/auto.master /etc/auto.master.old
-mv /etc/auto.home /etc/auto.home.old
-mv /etc/slurm/slurm.conf /etc/slurm/slurm.conf.old
-mv /etc/slurm/slurm-epilog.sh /etc/slurm/slurm-epilog.sh.old
-mv /etc/slurm/slurm-resume.sh /etc/slurm/slurm-resume.sh.old
-mv /etc/slurm/slurm-suspend.sh /etc/slurm/slurm-suspend.sh.old
+swap_config_files(){ #$1=local-filename, $2=path-to-original-file 
+  if test -f $1; 
+  then
+	mv $2 $2.old
+	mv $1 $2
+  else
+	echo "+++ Blad: Brak pliku ${1}!"
+	echo +++ Uruchamiam rollback
+	sh rollback_setup.sh
+	exit 1
+  fi;
+}
 
-echo +++ Przenoszenie nowych plikow konfiguracyjnych...
-mv nsswitch.conf /etc/nsswitch.conf
-mv ldap.conf /etc/ldap.conf
-mv openldap.conf /etc/openldap/ldap.conf
-mv common-account /etc/pam.d/common-account
-mv common-account-pc /etc/pam.d/common-account-pc
-mv common-auth /etc/pam.d/common-auth
-mv access.conf /etc/security/access.conf
-mv auto.master /etc/auto.master
-mv auto.home /etc/auto.home
-mv slurm.conf /etc/slurm/slurm.conf
-mv slurm-epilog.sh /etc/slurm/slurm-epilog.sh
-mv slurm-resume.sh /etc/slurm/slurm-resume.sh
-mv slurm-suspend.sh /etc/slurm/slurm-suspend.sh
+echo +++ Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych... 
+swap_config_files nsswitch.conf /etc/nsswitch.conf
+swap_config_files ldap.conf /etc/ldap.conf
+swap_config_files openldap.conf /etc/openldap/ldap.conf
+swap_config_files comon-account /etc/pam.d/common-account
+swap_config_files common-account-pc /etc/pam.d/common-account-pc
+swap_config_files common-auth /etc/pam.d/common-auth
+swap_config_files access.conf /etc/security/access.conf
+swap_config_files auto.master /etc/auto.master
+swap_config_files auto.home /etc/auto.home
+swap_config_files slurm.conf /etc/slurm/slurm.conf
+swap_config_files slurm-epilog.sh /etc/slurm/slurm-epilog.sh
+swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
+swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
 
 echo +++ Tworzenie folderow dla Slurma...
 mkdir -p /var/lib/slurm/{spool,state}
