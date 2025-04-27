@@ -38,3 +38,10 @@ else
 echo "enp1s0 down";
 ip link set dev enp1s0 up
 fi;
+
+if snmpget -v2c -cpublic 192.168.0.239 ifOperStatus.39 | grep 'down' -q;
+then
+echo "Port on the switch is down..."
+snmpset -v3 -uadmin -aSHA -Aswitch10G -xDES -Xswitch10G -l authPriv 192.168.0.239 ifAdminStatus.39 i 1
+echo "Setting up port on the switch..."
+fi;
