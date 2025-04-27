@@ -10,6 +10,7 @@
  do
    machine=$name$i
    echo "Pinging ${machine}..."
+   
    if ping -c1 $machine > /dev/null 2>&1; #ping once and redirect stdout and stderr to /dev/null
    then #if ping was successful
      echo "${machine} alive";
@@ -17,5 +18,12 @@
      echo "Unable to contact ${machine}"
      wol $(arp -a $machine | grep -oP '(([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2}))') > /dev/null #get the mac address of the machine from the arp table then wake on lan
      echo "Waking up ${machine}..."
+   fi;
+   
+   if snmpget -v2c -cpublic 192.168.0.239 ifOperStatus.39 | grep 'down' -q;
+   then
+    echo "Port on the switch is down..."
+    snmpset -v3 -uadmin -aSHA -Aswitch10G -xDES -Xswitch10G -l authPriv 192.168.0.239 ifAdminStatus.39 i 1
+    echo "Setting up port on the switch..."
    fi;
  done;
