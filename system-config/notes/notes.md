@@ -89,3 +89,5 @@ jak będzie wszystko działać to zintegrować to z meshem (komunikat na meshu �
 Przygotować harmonaogram - do czerwca z tekstem pracy
 
 instrukcja obsługi (komendy, batche, etc)
+
+w jaki sposób się dowiedzieć jaki komputer ma jaki port na switchu?
