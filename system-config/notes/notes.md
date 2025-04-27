@@ -1,24 +1,12 @@
 ## Do analizy:
-read_slurm_conf: backup_controller not specified??
 
-debug:  No backup controllers, not launching heartbeat.?
+debug:  Not launching heartbeat.?
 
 Logging from the ResumeProgram/SuspendProgram scripts must be programmed in the scripts. This example may be used:
 ```
 action="start"
 echo "`date` User $USER invoked $action $0 $*" >>/var/log/slurm/power_save.log
 ```
-
-W plikach /etc/pam.d/common-* znajdują się warningi, ostrzegające przed ich ręczną modyfikacją, gdyż zostanie ona nadpisana przez pam-config. Dopytać o to CS
-
-## Żeby nie krzyczał, że nie może otworzyć skryptów:
-  ```
-  $ chmod a+rx /etc/slurm/slurm-resume.sh
-  $ chmod a+rx /etc/slurm/slurm-suspend.sh
-  $ chmod a+rx /etc/slurm/slurm-epilog.sh
-```
-
-do rozważenia - zamiast a+rx jakieś g+rx albo coś
 
 ## W slurm.conf zwrócić uwagę na parametry:
 ```
@@ -53,6 +41,22 @@ Po skopiowaniu trzeba zmienić ownera, bo inaczej munge nie chce wystartować.
   $ sinfo
   $ sinfo -R
   $ scontrol update nodename=lab-net-57 state=resume
+```
+
+trzeba zmienic parametry startowe slurmd i slurmctld za pomocą 
+```
+systemctl edit slurmd
+```
+Trzeba dopisać
+```
+[Service]
+ExecStart=
+ExecStart=/usr/sbin/slurmd -D -c -vv
+```
+a następnie wykonać
+```
+systemctl daemon-reload
+systemctl restart slurmd
 ```
 
 ## MeshCentral
