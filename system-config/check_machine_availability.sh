@@ -20,3 +20,7 @@
      echo "Waking up ${machine}..."
    fi;
  done;
+
+ #maki musza byc na sztywno - nie ma jak brac ich dynamicznie - mozna przygotowac zeby bralo format isc-dhcp-server albo etc-ethers; 
+ #tablice mozna stworzyc samemu, albo zapytac CS
+ #dodac sposob na wybieranie odpowiedniego systemu innego niz vlab
