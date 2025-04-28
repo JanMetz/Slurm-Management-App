@@ -100,3 +100,5 @@ dowiedziec sie czy ethers (odwzorowanie ip na mac) jest dostepne gdzies w ldapie
 sprawdzic czy katalogi domowe sie poprawnie montuja
 stworzyc osobny obraz dla systemu do obliczen
 wylaczyc mozliwosc logowania po ssh dla osob, ktore nie sa ownerami zadania
+
+na lab-net-56 zrobic resize images; na lab-net-57 mozna wykorzystac sdf5
