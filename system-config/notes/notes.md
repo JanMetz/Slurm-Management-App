@@ -96,3 +96,7 @@ logowanie po ssh ma byc dostepne tylko dla zleceniodawcy zadania
 jezeli nie ma w meshcentral opcji na powiadamianie o zajetosci maszyny to trzeba samemu dopisac
 po uruchomieniu systemu tylko do obliczen ma sie pokazywac na ekranie wiadomosc o tym, ze system jest w trakcie uzywania (poszukac w manie do getty - /etc/issue)
 dowiedziec sie czy ethers (odwzorowanie ip na mac) jest dostepne gdzies w ldapie
+
+sprawdzic czy katalogi domowe sie poprawnie montuja
+stworzyc osobny obraz dla systemu do obliczen
+wylaczyc mozliwosc logowania po ssh dla osob, ktore nie sa ownerami zadania
