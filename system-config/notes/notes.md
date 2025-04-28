@@ -76,7 +76,7 @@ odapalanie maszyn (ping czy wgl maszyna jest widoczna)
 sprawdzanie konfigu (czy działa sieć 10Gb enp1s0, jaki jest uruchomiony system)
 jeżeli nie działa 10gb to można spróbować zrobić reset portu na switchu
 odpalanie usług (usługi startowe)
-odapalanie zadań (cron) 
+odapalanie zadań - mozna w specyfikacji wezlow napisac dostepnosc od-do
 
 lab-net-56 jest dopięte do switcha na porcie 39
 
@@ -90,4 +90,9 @@ Przygotować harmonaogram - do czerwca z tekstem pracy
 
 instrukcja obsługi (komendy, batche, etc)
 
-w jaki sposób się dowiedzieć jaki komputer ma jaki port na switchu?
+zmienic z bashrc na /etc/profile.d
+
+logowanie po ssh ma byc dostepne tylko dla zleceniodawcy zadania
+jezeli nie ma w meshcentral opcji na powiadamianie o zajetosci maszyny to trzeba samemu dopisac
+po uruchomieniu systemu tylko do obliczen ma sie pokazywac na ekranie wiadomosc o tym, ze system jest w trakcie uzywania (poszukac w manie do getty - /etc/issue)
+dowiedziec sie czy ethers (odwzorowanie ip na mac) jest dostepne gdzies w ldapie
