@@ -25,7 +25,7 @@ swap_config_files slurm-epilog.sh /etc/slurm/slurm-epilog.sh
 swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
 
-echo +++ Zmieniono pliki PAM. Sprawdz czy mozesz sie zalogowac na maszyne odpalajac sesje SSH z innego terminala!
+echo +++ ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
 echo +++ W przypadku problemow uruchom skrypt rollback.sh
 
 echo +++ Tworzenie folderow dla Slurma...
