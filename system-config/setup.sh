@@ -46,7 +46,7 @@ useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication 
 groupadd -r -g 148 slurm
 useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload manager" slurm
 
-echo +++ Przenoszenie klucza Munge...
+echo +++ [INFO] Przenoszenie klucza Munge...
 if test -f munge.key; then
   	mv munge.key /etc/munge/munge.key
    	chown munge:munge /etc/munge/munge.key
@@ -62,6 +62,6 @@ chmod g+rx /etc/slurm/slurm-suspend.sh
 chmod g+rx /etc/slurm/slurm-epilog.sh
 chmod g+rx /etc/slurm/slurm-resume.sh
 
-echo +++ Aktywacja serwisow Slurm i Munge...
+echo +++ [INFO] Aktywacja serwisow Slurm i Munge...
 systemctl enable munge
 systemctl enable slurmd
