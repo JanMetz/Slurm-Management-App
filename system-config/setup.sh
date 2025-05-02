@@ -5,12 +5,13 @@ swap_config_files(){ #$1=local-filename, $2=path-to-original-file
   then
 	mv $2 $2.old
 	mv $1 $2
+ 	echo "+++ [DEBUG] przeniesiono plik ${1}"
   else
-	echo "+++ Blad: Brak pliku ${1}!"
+	echo "+++ [ERROR] Brak pliku ${1}!"
   fi;
 }
 
-echo +++ Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych... 
+echo +++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych... 
 swap_config_files nsswitch.conf /etc/nsswitch.conf
 swap_config_files ldap.conf /etc/ldap.conf
 swap_config_files openldap.conf /etc/openldap/ldap.conf
@@ -25,20 +26,20 @@ swap_config_files slurm-epilog.sh /etc/slurm/slurm-epilog.sh
 swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
 
-echo +++ ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
-echo +++ W przypadku problemow uruchom skrypt rollback.sh
+echo +++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
+echo +++ [INFO] W przypadku problemow uruchom skrypt rollback.sh
 
-echo +++ Tworzenie folderow dla Slurma...
+echo +++ [INFO] Tworzenie folderow dla Slurma...
 mkdir -p /var/lib/slurm/{spool,state}
 chown -R slurm:slurm /var/lib/slurm
 
-echo +++ Tworzenie plikow dla Slurma...
+echo +++ [INFO] Tworzenie plikow dla Slurma...
 touch /var/lib/slurm/state/job_state.old
 touch /var/lib/slurm/state/job_state
 touch /var/lib/slurm/state/resv_state
 touch /var/lib/slurm/state/resv_state.old
 
-echo +++ Tworzenie grupy i uzytkownika dla Slurma i Munge...
+echo +++ [INFO] Tworzenie grupy i uzytkownika dla Slurma i Munge...
 groupadd -r -g 149 munge
 useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication service" munge
  
@@ -50,10 +51,10 @@ if test -f munge.key; then
   	mv munge.key /etc/munge/munge.key
    	chown munge:munge /etc/munge/munge.key
 else
-	echo +++ OSTRZEZENIE: NIE ODNALEZIONO PLIKU MUNGE.KEY!
+	echo +++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!
 fi
 
-echo +++ Zmiana wlasiciela plikow /etc/slurm/slurm-*.sh
+echo +++ [INFO] Zmiana wlasiciela plikow /etc/slurm/slurm-*.sh
 chown slurm:slurm /etc/slurm/slurm-suspend.sh
 chown slurm:slurm /etc/slurm/slurm-epilog.sh
 chown slurm:slurm /etc/slurm/slurm-resume.sh
