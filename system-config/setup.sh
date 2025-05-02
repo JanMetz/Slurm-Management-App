@@ -7,9 +7,6 @@ swap_config_files(){ #$1=local-filename, $2=path-to-original-file
 	mv $1 $2
   else
 	echo "+++ Blad: Brak pliku ${1}!"
-	echo +++ Uruchamiam rollback
-	sh rollback_setup.sh
-	exit 1
   fi;
 }
 
@@ -27,6 +24,9 @@ swap_config_files slurm.conf /etc/slurm/slurm.conf
 swap_config_files slurm-epilog.sh /etc/slurm/slurm-epilog.sh
 swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
+
+echo +++ Zmieniono pliki PAM. Sprawdz czy mozesz sie zalogowac na maszyne odpalajac sesje SSH z innego terminala!
+echo +++ W przypadku problemow uruchom skrypt rollback.sh
 
 echo +++ Tworzenie folderow dla Slurma...
 mkdir -p /var/lib/slurm/{spool,state}
