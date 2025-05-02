@@ -37,15 +37,10 @@ then
 echo "enp1s0 up";
 else
 echo "enp1s0 down";
-ip link set dev enp1s0 up
-#zrestartowac port na switchu
-fi;
-
-if snmpget -v2c -cpublic 192.168.0.239 ifOperStatus.39 | grep 'down' -q;
-then
-echo "Port on the switch is down..."
+echo "resetting port on the switch..."
+snmpset -v3 -uadmin -aSHA -Aswitch10G -xDES -Xswitch10G -l authPriv 192.168.0.239 ifAdminStatus.39 i 0
 snmpset -v3 -uadmin -aSHA -Aswitch10G -xDES -Xswitch10G -l authPriv 192.168.0.239 ifAdminStatus.39 i 1
-echo "Setting up port on the switch..."
+ip link set dev enp1s0 up
 fi;
 
 #lab-sec ma porty 1-16
