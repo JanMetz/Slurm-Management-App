@@ -67,6 +67,7 @@ Można się zalogować, wybrać z gruba rescue i naprawić np. pama jak coś pó
 osobna! maszyna do logowania się i zlecania zadań - ma się odpalać nie vlab tylko jeden system, który będzie pozwalał się użytkownikowi zalogować i zlecać zadania
 
 ## TODO
+w slurm.conf node musi miec taka sama liste jak partycja - inaczej daemon nie dziala i krzyczy ze lookup failure 
 przenieść repo git
 naprawić setup.sh
 skrypt do uruchomienia komputera - można wykorzystać wol adres:mac
