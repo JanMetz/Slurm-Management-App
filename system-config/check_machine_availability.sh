@@ -16,7 +16,7 @@
      echo "${machine} alive";
    else #if machine could not be pinged
      echo "Unable to contact ${machine}"
-     wol $(cat /etc/ethers | sed -nE 's/(.*)${machine}/\1/p') #get the mac address of the machine from the ethers table then wake on lan
+     wol $(cat /etc/ethers | sed -nE "s/(.*)$machine/\1/p") #get the mac address of the machine from the ethers table then wake on lan
      echo "Waking up ${machine}..."
    fi;
  done;
