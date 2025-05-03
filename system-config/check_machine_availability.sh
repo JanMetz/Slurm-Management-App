@@ -16,14 +16,14 @@
      echo "${machine} alive";
    else #if machine could not be pinged
      echo "Unable to contact ${machine}"
-	    mac=$(cat /etc/ethers | sed -nE "s/(^[^#]+)\s+$machine/\1/p"); #get the mac address of the machine from the ethers table
-	    if ! [ -z "${mac}" ]; 
+	   mac=$(cat /etc/ethers | sed -nE "s/(^[^#]+)\s+$machine/\1/p"); #get the mac address of the machine from the ethers table
+	   if ! [ -z "${mac}" ]; 
      then
-		     echo "Waking up ${machine}...";
-		     wol $mac > /dev/null; # wake on lan
-	    else
-		     echo "No entry in the ethers table for ${machine}";
-	    fi;
+	     echo "Waking up ${machine}...";
+		   wol $mac > /dev/null; # wake on lan
+	   else
+		   echo "No entry in the ethers table for ${machine}";
+	   fi;
    fi;
  done;
 
