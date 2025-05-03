@@ -11,16 +11,20 @@
      sssd
      ipmitool
      
-## Należy mieć ten sam klucz munge:
-    $ dd if=/dev/random bs=1 count=1024 > /etc/munge/munge.key
-    $ scp /etc/munge/munge.key other_host@/folder/with/config/files
+## Każdy komputer należący do klastra (w tym zarządca) muszą posiadać ten sam klucz munge
+     Taki klucz można wygenerować za pomocą następującej komendy:
+     $ dd if=/dev/random bs=1 count=1024 > /etc/munge/munge.key
+
+     Po wygenerowaniu należy go rozpowszechnić na wszystkich komputerach klastra na przykład za pomocą takiej komendy:
+     $ scp /etc/munge/munge.key other_host@/folder/with/config/files
     
 ## Aby skonfigurować node klastra:
-     # sh setup.sh
+     Należy pobrac archiwum system-config, przejsc do folderu, w ktorym sie znajduje, a nastepnie uruchomic skrypt konfiguracyjny
+     $ sh setup.sh
+     wymienia on potrzebne pliki na wersje z archiwum system-config.
+     Należy obserwować wiadomości logu wyświetlane przez skrypt.
+     Wprowadzone przez skrypt setup.sh zmiany dotyczące plików konfiguracyjnych można wycofać uruchamiając skryp
+     $ sh rollback_setup.sh
 
-## Na komputerze zarządcy należy aktywować serwis slurmctld:
+## Na komputerze zarządcy należy ręcznie aktywować serwis slurmctld:
     $ systemctl enable slurmctld
-
-## Należy włączyć serwisy munge i slurmd:
-     $ systemctl start munge
-     $ systemctl start slurmd
