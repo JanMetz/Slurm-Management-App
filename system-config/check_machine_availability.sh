@@ -29,3 +29,7 @@
 
  #tablice mozna stworzyc samemu, albo zapytac CS
  #dodac sposob na wybieranie odpowiedniego systemu innego niz vlab
+ # trzeba miec roota!
+ #os_id=$(grub2-once --list | sed -nE "s/^\s+([0-9]+)\s+VLab$/\1/p")
+ #grub2-once os_id
+ #reboot 
