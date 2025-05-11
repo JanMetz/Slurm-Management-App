@@ -26,5 +26,11 @@
      Wprowadzone przez skrypt setup.sh zmiany dotyczące plików konfiguracyjnych można wycofać uruchamiając skryp
      $ sh rollback_setup.sh
 
-## Na komputerze zarządcy należy ręcznie aktywować serwis slurmctld:
+## Na komputerze zarządcy należy:
+### ręcznie aktywować serwis slurmctld
     $ systemctl enable slurmctld
+### zablokować możliwość wykonywania zadań w godzinach zajęć dydaktycznych
+NodeCnt należy zmienić na liczbę skonfigurowanych węzłów
+    
+    $ scontrol create Reservation="zajecia dydaktyczne" StartTime=07:00:00 Duration=15:00:00 user=root flags=ignore_jobs,daily NodeCnt=2
+
