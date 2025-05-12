@@ -35,3 +35,5 @@
  #reboot 
 
  #./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" --restart - sprawdzic czy dziala dla pozostalych kompow w labie
+ #password to hasło do systemu meshcentral, nie do komputera
+ #można skonfigurować uwierzytelnianie za pomocą klucza RSA, ale wymaga to wersji Enterprise (Intel EMA)
