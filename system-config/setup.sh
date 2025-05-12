@@ -18,6 +18,8 @@ swap_config_files openldap.conf /etc/openldap/ldap.conf
 swap_config_files comon-account /etc/pam.d/common-account
 swap_config_files common-account-pc /etc/pam.d/common-account-pc
 swap_config_files common-auth /etc/pam.d/common-auth
+swap_config_files common-session /etc/pam.d/common-session
+swap_config_files common-session-pc /etc/pam.d/common-session-pc
 swap_config_files access.conf /etc/security/access.conf
 swap_config_files auto.master /etc/auto.master
 swap_config_files auto.home /etc/auto.home
@@ -25,6 +27,8 @@ swap_config_files slurm.conf /etc/slurm/slurm.conf
 swap_config_files slurm-epilog.sh /etc/slurm/slurm-epilog.sh
 swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
+swap_config_files sshd /etc/pam.d/sshd
+swap_config_files sshd_config /etc/ssh/sshd_config
 
 echo +++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
 echo +++ [INFO] W przypadku problemow uruchom skrypt rollback.sh
