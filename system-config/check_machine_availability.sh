@@ -33,3 +33,5 @@
  #os_id=$(grub2-once --list | sed -nE "s/^\s+([0-9]+)\s+VLab$/\1/p")
  #grub2-once os_id
  #reboot 
+
+ #./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" - sprawdzic czy dziala dla pozostalych kompow w labie
