@@ -34,4 +34,4 @@
  #grub2-once os_id
  #reboot 
 
- #./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" - sprawdzic czy dziala dla pozostalych kompow w labie
+ #./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" --restart - sprawdzic czy dziala dla pozostalych kompow w labie
