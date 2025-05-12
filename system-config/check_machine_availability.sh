@@ -34,6 +34,7 @@
  #grub2-once os_id
  #reboot 
 
- #./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" --restart - sprawdzic czy dziala dla pozostalych kompow w labie
+ #./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" --restart - sprawdzic czy dziala dla pozostalych kompow w labie - na lab-net-57 nie działa, bo jest za stara wersja UEFI - musi być możliwe bootowanie po nazwie z EFI boot entry
+ # nazwy z efi boot entry można sprawdzić komendą efibootmgr
  #password to hasło do systemu meshcentral, nie do komputera
  #można skonfigurować uwierzytelnianie za pomocą klucza RSA, ale wymaga to wersji Enterprise (Intel EMA)
