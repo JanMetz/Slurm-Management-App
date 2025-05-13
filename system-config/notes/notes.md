@@ -99,7 +99,7 @@ po uruchomieniu systemu tylko do obliczen ma sie pokazywac na ekranie wiadomosc 
 dowiedziec sie czy ethers (odwzorowanie ip na mac) jest dostepne gdzies w ldapie
 
 sprawdzic czy katalogi domowe sie poprawnie montuja
-stworzyc osobny obraz dla systemu do obliczen
+stworzyc osobny obraz dla systutofsemu do obliczen
 wylaczyc mozliwosc logowania po ssh dla osob, ktore nie sa ownerami zadania - zapytac o pam_slurm_adopt
 
 na lab-net-56 zrobic resize images; na lab-net-57 mozna wykorzystac sdf5 - przy odwolywaniu sie do partycji uzywac labeli, a nie nazwy partycji /dev/disk/by/label
@@ -107,3 +107,7 @@ na lab-net-56 zrobic resize images; na lab-net-57 mozna wykorzystac sdf5 - przy 
 musi byc dostepne logowanie po ldapie
 
 czy rezerwacja zostanie zerwana jezeli ktorys z komputerow nie bedzie dostepny
+
+czy da sie wywalic uzytkownika po ssh po zakoczeniu zadania slurm
+
+zrobic weryfikacje zuzywanych zasobow
