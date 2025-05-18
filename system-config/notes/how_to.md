@@ -1,12 +1,12 @@
 
-## Aby uruchomić daemona slurma na komputerach zarządzanych:
-     $ slurmd -D -c -vv
-
-## Aby uruchomić daemona slurma na komputerze zarządcy:
-     $ slurmctld -D -c -vv
+## Aby przygotować komputer do bycia nodem:
+- Pobrać pliki configuracyjne
+- Przejść do folderu do którego się pobrały
+- Uruchomić skrypt konfiguracyjny komendą ```sh setup.sh```
 
 ## Aby zlecić zadanie testowe:
-     $ srun -n1 -l /bin/hostname
+- Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
+- Wykonać komendę ```srun -n1 -l /bin/hostname```
 
 ## Aby dokonać restartu i wymazać cache Slurma:
      $ rm -rf /var/lib/slurm/spool/*
