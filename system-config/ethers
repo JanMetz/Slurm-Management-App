@@ -14,5 +14,134 @@
 #	Ethernet-address	IP-number
 #
 #
-18:66:da:23:10:7f lab-net-56
-18:66:da:22:f0:eb lab-net-57
+# HP
+BC:0F:F3:C8:47:D3	lab-dbx-1
+64:4E:D7:6E:D8:A1	lab-dbx-2
+64:4E:D7:6E:D8:D7	lab-dbx-3
+64:4E:D7:6E:D8:C1	lab-dbx-4
+# 64:4E:D7:6E:D8:49	lab-dbx-5
+00:68:EB:B8:05:96	lab-dbx-5
+64:4E:D7:6E:D8:71	lab-dbx-6
+64:4E:D7:6E:D7:DE	lab-dbx-7
+64:4E:D7:6E:D8:B8	lab-dbx-8
+64:4E:D7:6E:D8:E5	lab-dbx-9
+64:4E:D7:6E:D8:BE	lab-dbx-10
+64:4E:D7:6E:D8:5E	lab-dbx-11
+64:4E:D7:6E:D8:D4	lab-dbx-12
+64:4E:D7:6E:D8:64	lab-dbx-13
+64:4E:D7:6E:D8:40	lab-dbx-14
+64:4E:D7:6E:CD:F0	lab-dbx-15
+64:4E:D7:6F:B7:F3	lab-dbx-16
+
+# OptiPlex 7060
+8C:EC:4B:AA:04:AB	lab-os-1
+8C:EC:4B:AA:07:7B	lab-os-2
+8C:EC:4B:AA:02:95	lab-os-3
+8C:EC:4B:AA:04:90	lab-os-4
+8C:EC:4B:AA:05:08	lab-os-5
+8C:EC:4B:AA:02:93	lab-os-6
+8C:EC:4B:A9:5A:F5	lab-os-7
+8C:EC:4B:AA:07:64	lab-os-8
+8C:EC:4B:AA:07:7A	lab-os-9
+8C:EC:4B:AA:04:91	lab-os-10
+8C:EC:4B:AA:07:77	lab-os-11
+8C:EC:4B:AA:01:DC	lab-os-12
+8C:EC:4B:AA:07:73	lab-os-13
+8C:EC:4B:AA:02:92	lab-os-14
+8C:EC:4B:AA:02:D0	lab-os-15
+8C:EC:4B:AA:07:75	lab-os-16
+8C:EC:4B:AA:02:94	lab-os-17
+
+# OptiPlex 7070
+E4:54:E8:A5:98:C6	lab-sec-1 	
+E4:54:E8:A5:98:D6	lab-sec-2 	
+E4:54:E8:A5:98:CC	lab-sec-3 	
+E4:54:E8:A5:98:D4	lab-sec-4 	
+E4:54:E8:A5:9A:D4	lab-sec-5 	
+E4:54:E8:A5:98:D3	lab-sec-6 	
+CC:48:3A:5E:B1:7D	lab-sec-7 	
+E4:54:E8:A5:98:D7	lab-sec-8 	
+E4:54:E8:A5:98:F0	lab-sec-9 	
+E4:54:E8:A5:9A:DB	lab-sec-10 	
+E4:54:E8:A5:98:E0	lab-sec-11 	
+E4:54:E8:A5:98:E5	lab-sec-12 	
+E4:54:E8:A5:98:D2	lab-sec-13 	
+E4:54:E8:A5:9A:70	lab-sec-14 	
+E4:54:E8:A5:9A:8E	lab-sec-15 	
+E4:54:E8:A5:9A:C6	lab-sec-16 	
+
+# HP Elite Tower 800 G9 Desktop PC
+5C:60:BA:33:8B:F9	lab-net-1
+5C:60:BA:33:8D:F1	lab-net-2
+5C:60:BA:33:82:A3	lab-net-3
+5C:60:BA:33:8C:5F	lab-net-4
+5C:60:BA:33:8C:A7	lab-net-5
+5C:60:BA:33:8D:20	lab-net-6
+5C:60:BA:33:8B:B8	lab-net-7
+5C:60:BA:33:8D:D2	lab-net-8
+5C:60:BA:33:8E:07	lab-net-9
+5C:60:BA:33:8C:06	lab-net-10
+5C:60:BA:33:51:41	lab-net-11
+5C:60:BA:33:8D:F7	lab-net-12
+5C:60:BA:33:8C:DC	lab-net-13
+5C:60:BA:33:8C:93	lab-net-14
+5C:60:BA:33:8D:5E	lab-net-15
+5C:60:BA:33:8C:A3	lab-net-16
+
+# 1.6.17
+18:66:DA:23:10:7F	lab-net-56
+18:66:DA:22:F0:EB	lab-net-57
+
+# HP Elite Tower 600 G9
+84:69:93:7D:D0:53	lab-dba-1
+84:69:93:7B:45:84	lab-dba-2
+84:69:93:7B:45:8B	lab-dba-3
+84:69:93:7D:D0:6F	lab-dba-4
+84:69:93:7D:A8:E5	lab-dba-5
+84:69:93:7D:A8:D3	lab-dba-6
+84:69:93:7D:AA:24	lab-dba-7
+84:69:93:7D:D0:38	lab-dba-8
+84:69:93:7D:AA:AF	lab-dba-9
+84:69:93:7D:A9:00	lab-dba-10
+84:69:93:7D:A8:D8	lab-dba-11
+84:69:93:7B:45:5D	lab-dba-12
+84:69:93:7B:45:74	lab-dba-13
+84:69:93:7D:D0:ED	lab-dba-14
+84:69:93:7D:A8:BC	lab-dba-15
+84:69:93:7D:AA:42	lab-dba-16
+# 84:69:93:7D:D0:6F	lab-dba-17
+
+# OptiPlex 7090
+D0:8E:79:0D:E3:20	lab-dbm-1
+D0:8E:79:0D:E5:18	lab-dbm-2
+D0:8E:79:0D:E5:F1	lab-dbm-3
+D0:8E:79:0D:E5:EF	lab-dbm-4
+D0:8E:79:0D:E1:C7	lab-dbm-5
+D0:8E:79:0D:E5:C7	lab-dbm-6
+D0:8E:79:0D:E5:1C	lab-dbm-7
+D0:8E:79:0D:E3:EB	lab-dbm-8
+D0:8E:79:0D:E5:A2	lab-dbm-9
+D0:8E:79:0D:E5:CD	lab-dbm-10
+D0:8E:79:0D:E5:FC	lab-dbm-11
+D0:8E:79:0D:E5:D9	lab-dbm-12
+D0:8E:79:0D:E5:F7	lab-dbm-13
+D0:8E:79:0D:E4:86	lab-dbm-14
+D0:8E:79:0D:E4:50	lab-dbm-15
+D0:8E:79:0D:E5:E1	lab-dbm-16
+
+# 1.6.20
+B8:85:84:AF:F6:A9	lab-al-1
+B8:85:84:B0:1F:03	lab-al-2
+B8:85:84:AF:F9:AF	lab-al-3
+B8:85:84:B0:07:6C	lab-al-4
+B8:85:84:AF:F8:9F	lab-al-5
+B8:85:84:AF:F9:56	lab-al-6
+B8:85:84:AF:F9:B2	lab-al-7
+B8:85:84:AF:F6:DE	lab-al-8
+B8:85:84:B0:09:E7	lab-al-9
+B8:85:84:AF:FA:5E	lab-al-10
+B8:85:84:B0:1E:D0	lab-al-11
+B8:85:84:AF:FD:86	lab-al-12
+B8:85:84:AF:E0:9A	lab-al-13
+B8:85:84:B0:04:0B	lab-al-14
+B8:85:84:AF:FA:B3	lab-al-15
