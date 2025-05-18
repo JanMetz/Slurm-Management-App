@@ -11,15 +11,20 @@ swap_config_files(){ #$1=local-filename, $2=path-to-original-file
   fi;
 }
 
+echo "+++ Wybierz typ konfiguracji w zaleznosci od tego, czy zalezy Ci na skonfigurowaniu wezla do obliczen czy maszyny zarzadcy [node/master]" 
+read opt
+
+while ! echo $opt | grep -E -q 'node|master';
+do
+    read opt;
+done;
+
 echo +++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych... 
 swap_config_files nsswitch.conf /etc/nsswitch.conf
 swap_config_files ldap.conf /etc/ldap.conf
 swap_config_files openldap.conf /etc/openldap/ldap.conf
-swap_config_files common-account /etc/pam.d/common-account
-swap_config_files common-account-pc /etc/pam.d/common-account-pc
 swap_config_files common-auth /etc/pam.d/common-auth
 swap_config_files common-session /etc/pam.d/common-session
-swap_config_files common-session-pc /etc/pam.d/common-session-pc
 swap_config_files access.conf /etc/security/access.conf
 swap_config_files auto.master /etc/auto.master
 swap_config_files auto.home /etc/auto.home
@@ -29,8 +34,15 @@ swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
 swap_config_files sshd /etc/pam.d/sshd
 swap_config_files sshd_config /etc/ssh/sshd_config
-swap_config_files slurmd.override.conf /etc/systemd/system/slurmd.service.d/override.conf
-swap_config_files ethers /etc/ethers
+
+if [ $opt == "master" ]; then
+	swap_config_files ethers /etc/ethers;
+	swap_config_files common-account-master /etc/pam.d/common-account;
+ 	swap_config_files slurmctld.override.conf /etc/systemd/system/slurmctld.service.d/override.conf
+ else
+ 	swap_config_files common-account-node /etc/pam.d/common-account;
+  	swap_config_files slurmd.override.conf /etc/systemd/system/slurmd.service.d/override.conf;
+ fi
 
 echo +++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
 echo +++ [INFO] W przypadku problemow uruchom skrypt rollback.sh
@@ -70,7 +82,12 @@ chmod g+rx /etc/slurm/slurm-resume.sh
 
 echo +++ [INFO] Aktywacja serwisow Slurm i Munge...
 systemctl enable munge
-systemctl enable slurmd
+
+if [ $opt == "master" ]; then
+	systemctl enable slurmctld;
+else
+	systemctl enable slurmd;
+ fi
 
 echo +++ [INFO] Przeładowanie uslug po zmianie konfiguracji...
 systemctl daemon-reload
