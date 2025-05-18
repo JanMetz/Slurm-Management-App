@@ -1,8 +1,11 @@
 
 ## Aby przygotować komputer do bycia nodem:
+- Zalogować się na komputer 
 - Pobrać pliki configuracyjne
 - Przejść do folderu do którego się pobrały
 - Uruchomić skrypt konfiguracyjny komendą ```sh setup.sh```
+- Spróbować z innej konsoli połączyć się do komputera, żeby sprawdzić czy modyfikacja plików PAM nie wprowadziła niechcianych zmian
+- W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh``` 
 
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
