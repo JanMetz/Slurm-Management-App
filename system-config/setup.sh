@@ -29,6 +29,7 @@ swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
 swap_config_files sshd /etc/pam.d/sshd
 swap_config_files sshd_config /etc/ssh/sshd_config
+swap_config_files slurmd.override.conf /etc/systemd/system/slurmd.service.d/override.conf
 
 echo +++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
 echo +++ [INFO] W przypadku problemow uruchom skrypt rollback.sh
@@ -69,3 +70,7 @@ chmod g+rx /etc/slurm/slurm-resume.sh
 echo +++ [INFO] Aktywacja serwisow Slurm i Munge...
 systemctl enable munge
 systemctl enable slurmd
+
+echo +++ [INFO] Przeładowanie uslug po zmianie konfiguracji...
+systemctl daemon-reload
+systemctl restart slurmd
