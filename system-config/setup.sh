@@ -15,7 +15,7 @@ echo +++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjny
 swap_config_files nsswitch.conf /etc/nsswitch.conf
 swap_config_files ldap.conf /etc/ldap.conf
 swap_config_files openldap.conf /etc/openldap/ldap.conf
-swap_config_files comon-account /etc/pam.d/common-account
+swap_config_files common-account /etc/pam.d/common-account
 swap_config_files common-account-pc /etc/pam.d/common-account-pc
 swap_config_files common-auth /etc/pam.d/common-auth
 swap_config_files common-session /etc/pam.d/common-session
