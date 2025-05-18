@@ -3,7 +3,9 @@
 - Zalogować się na komputer 
 - Pobrać pliki configuracyjne
 - Przejść do folderu do którego się pobrały
-- Uruchomić skrypt konfiguracyjny komendą ```sh setup.sh```
+- Umieścić w niej klucz munge
+- Uruchomić skrypt konfiguracyjny komendą ```sh setup.sh```\
+- UWAŻNIE PRZECZYTAĆ WYGENEROWANY PRZEZ SKRYPT OUTPUT
 - Spróbować z innej konsoli połączyć się do komputera, żeby sprawdzić czy modyfikacja plików PAM nie wprowadziła niechcianych zmian
 - W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh``` 
 
@@ -23,8 +25,3 @@
 
 ## Aby wyłączyć Slurm:
      $ systemctl stop slurmd
-     $ ps aux | grep slurm
-     $ kill -9 pid
-Wg dokumentacj: 
-    "SIGINT SIGTERM SIGQUIT
-    slurmstepd will shutdown cleanly." 
