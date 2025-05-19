@@ -11,6 +11,16 @@ swap_config_files(){ #$1=local-filename, $2=path-to-original-file
   fi;
 }
 
+remove_user_and_group(){ #$1=group/user name
+  if ! [ -z "$(getent passwd $1)" ]; then
+	userdel $1;
+  fi
+
+  if ! [ -z "$(getent group $1)" ]; then
+	groupdel $1;
+  fi
+}
+
 echo "+++ Wybierz typ konfiguracji w zaleznosci od tego, czy zalezy Ci na skonfigurowaniu wezla do obliczen czy maszyny zarzadcy [node/master]" 
 read opt
 
@@ -59,9 +69,11 @@ touch /var/lib/slurm/state/resv_state
 touch /var/lib/slurm/state/resv_state.old
 
 echo +++ [INFO] Tworzenie grupy i uzytkownika dla Slurma i Munge...
+remove_user_and_group munge
 groupadd -r -g 149 munge
 useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication service" munge
- 
+
+remove_user_and_group slurm
 groupadd -r -g 148 slurm
 useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload manager" slurm
 
