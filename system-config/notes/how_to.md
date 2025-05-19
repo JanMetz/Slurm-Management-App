@@ -7,7 +7,10 @@
 - Uruchomić skrypt konfiguracyjny komendą ```sh setup.sh```\
 - UWAŻNIE PRZECZYTAĆ WYGENEROWANY PRZEZ SKRYPT OUTPUT
 - Spróbować z innej konsoli połączyć się do komputera, żeby sprawdzić czy modyfikacja plików PAM nie wprowadziła niechcianych zmian
-- W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh``` 
+- W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh```
+- Utworzyć cron job, który będzie odpalał skrypt czyszczący nodey po rezerwacji na zajęcia dydaktyczne:
+  - wykonać komendę ```crontab -e```
+  - dopisać do pliku crona linię ```0 22 * * * /etc/slurm/post_reservation_cleanup.sh```
 
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
