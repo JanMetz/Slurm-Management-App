@@ -118,3 +118,6 @@ fi
 
 sudo systemctl enable --now mariadb
 sudo mysql_secure_installation
+
+systemctl enable slurmdbd
+systemctl start slurmdbd
