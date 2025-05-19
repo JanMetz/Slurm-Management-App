@@ -42,6 +42,7 @@ swap_config_files slurm.conf /etc/slurm/slurm.conf
 swap_config_files slurm-epilog.sh /etc/slurm/slurm-epilog.sh
 swap_config_files slurm-resume.sh /etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
+swap_config_files slurmdbd.conf /etc/slurm/slurmdbd.conf
 swap_config_files sshd /etc/pam.d/sshd
 swap_config_files sshd_config /etc/ssh/sshd_config
 
@@ -73,6 +74,8 @@ remove_user_and_group slurm
 groupadd -r -g 148 slurm
 useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload manager" slurm
 
+sacctmgr add cluster dcc
+
 echo +++ [INFO] Przenoszenie klucza Munge...
 if test -f munge.key; then
   	mv munge.key /etc/munge/munge.key
@@ -89,9 +92,11 @@ echo +++ [INFO] Zmiana wlasiciela plikow /etc/slurm/slurm-*.sh
 chown slurm:slurm /etc/slurm/slurm-suspend.sh
 chown slurm:slurm /etc/slurm/slurm-epilog.sh
 chown slurm:slurm /etc/slurm/slurm-resume.sh
+chown slurm:slurm /etc/slurm/slurmdbd.conf
 chmod g+rx /etc/slurm/slurm-suspend.sh
 chmod g+rx /etc/slurm/slurm-epilog.sh
 chmod g+rx /etc/slurm/slurm-resume.sh
+chmod 600 /etc/slurm/slurmdbd.conf
 
 echo +++ [INFO] Aktywacja serwisow Slurm i Munge...
 systemctl enable munge
