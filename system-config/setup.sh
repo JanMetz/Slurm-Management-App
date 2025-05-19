@@ -87,8 +87,13 @@ if [ $opt == "master" ]; then
 	systemctl enable slurmctld;
 else
 	systemctl enable slurmd;
- fi
+fi
 
 echo +++ [INFO] Przeładowanie uslug po zmianie konfiguracji...
 systemctl daemon-reload
-systemctl restart slurmd
+
+if [ $opt == "master" ]; then
+	systemctl restart slurmctld;
+else
+	systemctl restart slurmd;
+fi
