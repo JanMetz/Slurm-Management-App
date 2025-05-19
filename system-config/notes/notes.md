@@ -43,6 +43,9 @@ Po skopiowaniu trzeba zmienić ownera, bo inaczej munge nie chce wystartować.
   $ scontrol update nodename=lab-net-57 state=resume
 ```
 
+## Rezerwacje
+Nie należy korzystać z rezerwacji z flagą DAILY, ponieważ powoduje ona zablokowanie dostępu do zasobów NAWET POZA wyznaczonym okresem. Co więcej, to nie bug, to feature :))) Problem uniemożliwienia korzystania z nodeów w czasie zajęć dydaktycznych należy rozwiązać korzystając z crona,
+który będzie codziennie odpalał rezerwację na określone godziny.
 
 ## MeshCentral
 mesh.cs.put.poznan.pl
