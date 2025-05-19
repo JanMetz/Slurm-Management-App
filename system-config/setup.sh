@@ -39,6 +39,7 @@ if [ $opt == "master" ]; then
 	swap_config_files ethers /etc/ethers;
 	swap_config_files common-account-master /etc/pam.d/common-account;
  	swap_config_files slurmctld.override.conf /etc/systemd/system/slurmctld.service.d/override.conf
+        mv post_reservation_cleanup.sh /etc/slurm/post_reservation_cleanup.sh
  else
  	swap_config_files common-account-node /etc/pam.d/common-account;
   	swap_config_files slurmd.override.conf /etc/systemd/system/slurmd.service.d/override.conf;
