@@ -27,9 +27,10 @@ read opt
 while ! echo $opt | grep -E -q 'node|master';
 do
     read opt;
+    echo "+++ [ERROR] Wybrano niepoprawna opcje! Poprawne opcje to node lub master!"
 done;
 
-echo +++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych... 
+echo "+++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych..." 
 swap_config_files nsswitch.conf /etc/nsswitch.conf
 swap_config_files ldap.conf /etc/ldap.conf
 swap_config_files openldap.conf /etc/openldap/ldap.conf
@@ -56,16 +57,16 @@ if [ $opt == "master" ]; then
   	swap_config_files slurmd.override.conf /etc/systemd/system/slurmd.service.d/override.conf;
  fi
 
-echo +++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
-echo +++ [INFO] W przypadku problemow uruchom skrypt rollback.sh
+echo "+++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!"
+echo "+++ [INFO] W przypadku problemow uruchom skrypt rollback.sh"
 
-echo +++ [INFO] Tworzenie plikow dla Slurma...
+echo "+++ [INFO] Tworzenie plikow dla Slurma..."
 touch /var/lib/slurm/state/job_state.old
 touch /var/lib/slurm/state/job_state
 touch /var/lib/slurm/state/resv_state
 touch /var/lib/slurm/state/resv_state.old
 
-echo +++ [INFO] Tworzenie grupy i uzytkownika dla Slurma i Munge...
+echo "+++ [INFO] Tworzenie grupy i uzytkownika Slurm i Munge..."
 remove_user_and_group munge
 groupadd -r -g 149 munge
 useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication service" munge
@@ -74,53 +75,53 @@ remove_user_and_group slurm
 groupadd -r -g 148 slurm
 useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload manager" slurm
 
-sacctmgr add cluster dcc
-
-echo +++ [INFO] Przenoszenie klucza Munge...
+echo "+++ [INFO] Przenoszenie klucza Munge..."
 if test -f munge.key; then
   	mv munge.key /etc/munge/munge.key
    	chown munge:munge /etc/munge/munge.key
 else
-	echo +++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!
+	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!"
 fi
 
-echo +++ [INFO] Tworzenie folderow dla Slurma...
+echo "+++ [INFO] Tworzenie katalogow dla Slurma..."
 mkdir -p /var/lib/slurm/{spool,state}
 chown -R slurm:slurm /var/lib/slurm
 
-echo +++ [INFO] Zmiana wlasiciela plikow /etc/slurm/slurm-*.sh
+echo "+++ [INFO] Zmiana praw dostepu do plikow i katalogow uzywanych przez Slurma"
 chown slurm:slurm /etc/slurm/slurm-suspend.sh
 chown slurm:slurm /etc/slurm/slurm-epilog.sh
 chown slurm:slurm /etc/slurm/slurm-resume.sh
 chown slurm:slurm /etc/slurm/slurmdbd.conf
+
 chmod g+rx /etc/slurm/slurm-suspend.sh
 chmod g+rx /etc/slurm/slurm-epilog.sh
 chmod g+rx /etc/slurm/slurm-resume.sh
 chmod 600 /etc/slurm/slurmdbd.conf
-
 chmod 755 /var/run/slurm
 chmod 755 /var/log
 
-echo +++ [INFO] Aktywacja serwisow Slurm i Munge...
+echo "+++ [INFO] Aktywacja serwisow..."
+systemctl daemon-reload
+
 systemctl enable munge
+systemctl restart munge
 
 if [ $opt == "master" ]; then
 	systemctl enable slurmctld;
+ 	systemctl restart slurmctld;
+  
+  	systemctl enable mariadb
+	systemctl restart mariadb
+
+	systemctl enable slurmdbd
+	systemctl restart slurmdbd
 else
 	systemctl enable slurmd;
+ 	systemctl restart slurmd;
 fi
 
-echo +++ [INFO] Przeładowanie uslug po zmianie konfiguracji...
-systemctl daemon-reload
-
-if [ $opt == "master" ]; then
-	systemctl restart slurmctld;
-else
-	systemctl restart slurmd;
+if [ $opt == "master" ]; then 
+	echo "+++ [INFO] Konfiguracja bazy accounting...";
+	mysql_secure_installation;
+ 	sacctmgr add cluster dcc;
 fi
-
-sudo systemctl enable --now mariadb
-sudo mysql_secure_installation
-
-systemctl enable slurmdbd
-systemctl start slurmdbd
