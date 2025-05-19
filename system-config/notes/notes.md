@@ -88,6 +88,6 @@ musi byc dostepne logowanie po ldapie
 
 czy rezerwacja zostanie zerwana jezeli ktorys z komputerow nie bedzie dostepny
 
-czy da sie wywalic uzytkownika po ssh po zakoczeniu zadania slurm
+czy da sie wywalic uzytkownika po ssh po zakoczeniu zadania slurm - tak, wstawiając odpowiedni wpis w epilogu
 
 zrobic weryfikacje zuzywanych zasobow
