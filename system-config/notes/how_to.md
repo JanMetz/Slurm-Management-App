@@ -13,9 +13,11 @@
 Podstawowe kroki konfiguracyjne są takie same jak dla nodea, tylko odpalając skrypt ```setup.sh``` należy odpalić go z argumentem master. Oprócz tego należy:
 - Utworzyć cron job, który będzie odpalał skrypt czyszczący nodey po rezerwacji na zajęcia dydaktyczne:
   - wykonać komendę ```crontab -e```
-  - dopisać do pliku crona linię ```0 22 * * * /etc/slurm/post_reservation_cleanup.sh```
-
-- Stworzyć rezerwację na czas trwania zajęć dydaktycznych: ```scontrol create Reservation="zajecia_dydaktyczne" StartTime=07:00:00 Duration=14:59:00 user=root flags=ignore_jobs,daily Nodes=ALL```
+  - dopisać do pliku crona linie:
+  ```
+  0 22 * * * /etc/slurm/post_reservation_cleanup.sh
+  0 7 * * * /etc/slurm/create_reservation.sh
+  ```
 
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
