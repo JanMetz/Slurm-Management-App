@@ -47,6 +47,19 @@ Po skopiowaniu trzeba zmienić ownera, bo inaczej munge nie chce wystartować.
 Nie należy korzystać z rezerwacji z flagą DAILY, ponieważ powoduje ona zablokowanie dostępu do zasobów NAWET POZA wyznaczonym okresem. Co więcej, to nie bug, to feature :))) Problem uniemożliwienia korzystania z nodeów w czasie zajęć dydaktycznych należy rozwiązać korzystając z crona,
 który będzie codziennie odpalał rezerwację na określone godziny.
 
+## Zlecanie zadań
+Zlecając zadania za pomocą sbatch należy określić ich zapotrzebowanie na zasoby oraz limit czasowy. Ponadto, można określić pliki, do których trafią wyniki działania skryptu. Przykładowy nagłówek skryptu:
+```
+#!/bin/bash
+#SBATCH --job-name=NAME
+#SBATCH --output=/tmp/job.out
+#SBATCH --error=/tmp/job.err
+#SBATCH --time=00:02:00
+#SBATCH --ntasks=1
+#SBATCH --mincpus=1
+#SBATCH --mem=100M
+```
+
 ## MeshCentral
 mesh.cs.put.poznan.pl
 Można się zalogować, wybrać z gruba rescue i naprawić np. pama jak coś pójdzie nie tak.
