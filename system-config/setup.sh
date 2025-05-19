@@ -115,3 +115,6 @@ if [ $opt == "master" ]; then
 else
 	systemctl restart slurmd;
 fi
+
+sudo systemctl enable --now mariadb
+sudo mysql_secure_installation
