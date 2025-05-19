@@ -58,10 +58,6 @@ if [ $opt == "master" ]; then
 echo +++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!
 echo +++ [INFO] W przypadku problemow uruchom skrypt rollback.sh
 
-echo +++ [INFO] Tworzenie folderow dla Slurma...
-mkdir -p /var/lib/slurm/{spool,state}
-chown -R slurm:slurm /var/lib/slurm
-
 echo +++ [INFO] Tworzenie plikow dla Slurma...
 touch /var/lib/slurm/state/job_state.old
 touch /var/lib/slurm/state/job_state
@@ -84,6 +80,10 @@ if test -f munge.key; then
 else
 	echo +++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!
 fi
+
+echo +++ [INFO] Tworzenie folderow dla Slurma...
+mkdir -p /var/lib/slurm/{spool,state}
+chown -R slurm:slurm /var/lib/slurm
 
 echo +++ [INFO] Zmiana wlasiciela plikow /etc/slurm/slurm-*.sh
 chown slurm:slurm /etc/slurm/slurm-suspend.sh
