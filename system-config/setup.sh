@@ -98,6 +98,9 @@ chmod g+rx /etc/slurm/slurm-epilog.sh
 chmod g+rx /etc/slurm/slurm-resume.sh
 chmod 600 /etc/slurm/slurmdbd.conf
 
+chmod 755 /var/run/slurm
+chmod 755 /var/log
+
 echo +++ [INFO] Aktywacja serwisow Slurm i Munge...
 systemctl enable munge
 
