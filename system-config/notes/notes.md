@@ -106,3 +106,11 @@ czy da sie wywalic uzytkownika po ssh po zakoczeniu zadania slurm - tak, wstawia
 zrobic weryfikacje zuzywanych zasobow
 
 sacct --format=jobid,jobname,user,ncpus,avecpu,reqmem,averss,avevmsize,avediskread,avediskwrite,elapsed
+
+
+## Konfig mysql
+sudo mysql -u root -p
+CREATE DATABASE slurm_acct_db;
+CREATE USER 'slurm'@'localhost' IDENTIFIED BY 'hasło_slurm';
+GRANT ALL PRIVILEGES ON slurm_acct_db.* TO 'slurm'@'localhost';
+FLUSH PRIVILEGES;
