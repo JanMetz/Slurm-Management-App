@@ -104,3 +104,5 @@ czy rezerwacja zostanie zerwana jezeli ktorys z komputerow nie bedzie dostepny
 czy da sie wywalic uzytkownika po ssh po zakoczeniu zadania slurm - tak, wstawiając odpowiedni wpis w epilogu
 
 zrobic weryfikacje zuzywanych zasobow
+
+sacct --format=jobid,jobname,user,ncpus,avecpu,reqmem,averss,avevmsize,avediskread,avediskwrite,elapsed
