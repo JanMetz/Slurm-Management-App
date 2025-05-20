@@ -46,6 +46,8 @@ swap_config_files slurm-suspend.sh /etc/slurm/slurm-suspend.sh
 swap_config_files slurmdbd.conf /etc/slurm/slurmdbd.conf
 swap_config_files sshd /etc/pam.d/sshd
 swap_config_files sshd_config /etc/ssh/sshd_config
+swap_config_files my.cnf /etc/my.cnf
+swap_config_files acct_gather.conf /etc/slurm/acct_gather.conf
 
 if [ $opt == "master" ]; then
 	swap_config_files ethers /etc/ethers;
