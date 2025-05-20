@@ -126,4 +126,10 @@ if [ $opt == "master" ]; then
 	echo "+++ [INFO] Konfiguracja bazy accounting...";
 	mysql_secure_installation;
  	sacctmgr add cluster dcc;
+
+  	systemctl enable influxdb
+	systemctl start influxdb
+
+ 	systemctl enable grafana-server
+  	systemctl start grafana-server
 fi
