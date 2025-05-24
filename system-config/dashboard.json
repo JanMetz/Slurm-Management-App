@@ -1,0 +1,116 @@
+	{
+  "dashboard": {
+    "id": null,
+    "uid": null,
+    "title": "Slurm Job Metrics Overview",
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "type": "table",
+        "title": "Slurm Job Summary",
+        "datasource": "InfluxDB-Slurm",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "options": {
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "9.6.2",
+        "targets": [
+          {
+            "refId": "A",
+            "groupBy": [
+              {
+                "type": "tag",
+                "params": ["jobid"]
+              }
+            ],
+            "measurement": "job_metrics",
+            "select": [
+              [
+                {
+                  "type": "field",
+                  "params": ["jobid"]
+                }
+              ],
+              [
+                {
+                  "type": "field",
+                  "params": ["jobname"]
+                }
+              ],
+              [
+                {
+                  "type": "field",
+                  "params": ["user"]
+                }
+              ],
+              [
+                {
+                  "type": "mean",
+                  "params": ["ncpus"]
+                }
+              ],
+              [
+                {
+                  "type": "mean",
+                  "params": ["avecpu"]
+                }
+              ],
+              [
+                {
+                  "type": "field",
+                  "params": ["reqmem"]
+                }
+              ],
+              [
+                {
+                  "type": "mean",
+                  "params": ["averss"]
+                }
+              ],
+              [
+                {
+                  "type": "mean",
+                  "params": ["avevmsize"]
+                }
+              ],
+              [
+                {
+                  "type": "mean",
+                  "params": ["avediskread"]
+                }
+              ],
+              [
+                {
+                  "type": "mean",
+                  "params": ["avediskwrite"]
+                }
+              ],
+              [
+                {
+                  "type": "field",
+                  "params": ["elapsed"]
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ]
+      }
+    ],
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": []
+    }
+  }
+}
