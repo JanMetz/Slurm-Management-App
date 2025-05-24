@@ -1,116 +1,142 @@
-	{
+{
   "dashboard": {
     "id": null,
-    "uid": null,
-    "title": "Slurm Job Metrics Overview",
+    "title": "Slurm Job Metrics",
     "timezone": "browser",
-    "schemaVersion": 36,
-    "version": 1,
-    "refresh": "30s",
     "panels": [
       {
-        "type": "table",
-        "title": "Slurm Job Summary",
-        "datasource": "InfluxDB-Slurm",
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
-        "options": {
-          "showHeader": true,
-          "sortBy": []
-        },
-        "pluginVersion": "9.6.2",
+        "type": "graph",
+        "title": "CPU Utilization",
         "targets": [
           {
+            "measurement": "CPUUtilization",
             "refId": "A",
             "groupBy": [
-              {
-                "type": "tag",
-                "params": ["jobid"]
-              }
+              { "type": "time", "params": ["$__interval"] }
             ],
-            "measurement": "job_metrics",
+            "orderByTime": "ASC",
             "select": [
-              [
-                {
-                  "type": "field",
-                  "params": ["jobid"]
-                }
-              ],
-              [
-                {
-                  "type": "field",
-                  "params": ["jobname"]
-                }
-              ],
-              [
-                {
-                  "type": "field",
-                  "params": ["user"]
-                }
-              ],
-              [
-                {
-                  "type": "mean",
-                  "params": ["ncpus"]
-                }
-              ],
-              [
-                {
-                  "type": "mean",
-                  "params": ["avecpu"]
-                }
-              ],
-              [
-                {
-                  "type": "field",
-                  "params": ["reqmem"]
-                }
-              ],
-              [
-                {
-                  "type": "mean",
-                  "params": ["averss"]
-                }
-              ],
-              [
-                {
-                  "type": "mean",
-                  "params": ["avevmsize"]
-                }
-              ],
-              [
-                {
-                  "type": "mean",
-                  "params": ["avediskread"]
-                }
-              ],
-              [
-                {
-                  "type": "mean",
-                  "params": ["avediskwrite"]
-                }
-              ],
-              [
-                {
-                  "type": "field",
-                  "params": ["elapsed"]
-                }
-              ]
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
             ],
-            "tags": []
+            "alias": "CPU Util (%)"
           }
-        ]
+        ],
+        "datasource": "slurm",
+        "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "type": "graph",
+        "title": "CPU Frequency",
+        "targets": [
+          {
+            "measurement": "CPUFrequency",
+            "refId": "A",
+            "groupBy": [
+              { "type": "time", "params": ["$__interval"] }
+            ],
+            "select": [
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
+            ],
+            "alias": "CPU Freq (MHz)"
+          }
+        ],
+        "datasource": "slurm",
+        "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "type": "graph",
+        "title": "Memory Usage (RSS / VMSize)",
+        "targets": [
+          {
+            "measurement": "RSS",
+            "refId": "A",
+            "groupBy": [
+              { "type": "time", "params": ["$__interval"] }
+            ],
+            "select": [
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
+            ],
+            "alias": "RSS (MB)"
+          },
+          {
+            "measurement": "VMSize",
+            "refId": "B",
+            "groupBy": [
+              { "type": "time", "params": ["$__interval"] }
+            ],
+            "select": [
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
+            ],
+            "alias": "VMSize (MB)"
+          }
+        ],
+        "datasource": "slurm",
+        "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 }
+      },
+      {
+        "type": "graph",
+        "title": "Disk I/O (MB)",
+        "targets": [
+          {
+            "measurement": "ReadMB",
+            "refId": "A",
+            "groupBy": [
+              { "type": "time", "params": ["$__interval"] }
+            ],
+            "select": [
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
+            ],
+            "alias": "Read (MB)"
+          },
+          {
+            "measurement": "WriteMB",
+            "refId": "B",
+            "groupBy": [
+              { "type": "time", "params": ["$__interval"] }
+            ],
+            "select": [
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
+            ],
+            "alias": "Write (MB)"
+          }
+        ],
+        "datasource": "slurm",
+        "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 }
+      },
+      {
+        "type": "graph",
+        "title": "GPU Utilization",
+        "targets": [
+          {
+            "measurement": "GPUUtilization",
+            "refId": "A",
+            "groupBy": [
+              { "type": "time", "params": ["$__interval"] }
+            ],
+            "select": [
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
+            ],
+            "alias": "GPU Util (%)"
+          },
+          {
+            "measurement": "GPUMemMB",
+            "refId": "B",
+            "groupBy": [
+              { "type": "time", "params": ["$__interval"] }
+            ],
+            "select": [
+              [{ "type": "field", "params": ["value"] }, { "type": "mean", "params": [] }]
+            ],
+            "alias": "GPU Mem (MB)"
+          }
+        ],
+        "datasource": "slurm",
+        "gridPos": { "x": 0, "y": 24, "w": 24, "h": 8 }
       }
     ],
-    "templating": {
-      "list": []
-    },
-    "annotations": {
-      "list": []
-    }
-  }
+    "schemaVersion": 36,
+    "version": 1,
+    "refresh": "30s"
+  },
+  "overwrite": true
 }
