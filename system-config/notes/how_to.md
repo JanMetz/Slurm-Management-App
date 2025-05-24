@@ -63,14 +63,14 @@ Następnie, należy zalogować się do bazy danych i stworzyć w niej użytkowni
 ```
 $ sudo mysql -u root -p
 > CREATE DATABASE slurm_acct_db;
-> CREATE USER 'slurm'@'localhost' IDENTIFIED BY 'hasło_slurm';
+> CREATE USER 'slurm'@'localhost' IDENTIFIED BY 'phahbaShei6f';
 > GRANT ALL PRIVILEGES ON slurm_acct_db.* TO 'slurm'@'localhost';
 > FLUSH PRIVILEGES;
 ```
 
 ### Influxdb
 Aby móc monitorować wykorzystanie zasobów na przestrzeni czasu należy skonfigurować bazę danych influx, która będzie przechowywać informacje o zużyciu zasobów
-w sposób, który umożliwia ich łatwy eksport do narzędzi do wizualizacji np. grafany:
+w sposób, który umożliwia ich łatwy eksport do narzędzi do wizualizacji np. Grafany:
 ```
 $ influx
 > CREATE DATABASE slurm
@@ -78,6 +78,19 @@ $ influx
 > GRANT ALL ON slurm TO slurm
 > CREATE RETENTION POLICY "default" ON "slurm" DURATION 14d REPLICATION 1 DEFAULT
 ```
+
+### Grafana
+Aby móc wyświetlać dane dotyczące zużycia zasobów w Grafanie należy dodać influx jako źródło informacji. W tym celu należy:
+- Wejść na stronę grafany pod adresem ```http://<adres-komputera-zarzadcy>:3000```
+- Zalogować się jako admin (domyślne hasło admin)
+- Wejść w ustawienia, a następnie w Data Sources
+- Dodać data source - wybrać InfluxDB
+- Jako url do Influx podać ```http://localhost:8086```
+- Jako bazę danych podać ```slurm```
+- Jako użytkownika podać ```slurm```
+- Podać hasło użytkownika ```slurm ``` (ustawione w ramach wykonywania instrukcji paragraf wyżej)
+- Zapisać źródło danych
+- Stworzyć, korzystając z pliku dashboard.json, dashboard, który będzie wyświetlał interesujące nas informacje
 
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
