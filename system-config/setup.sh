@@ -126,7 +126,6 @@ fi
 
 if [ $opt == "master" ]; then 
 	echo "+++ [INFO] Konfiguracja bazy accounting...";
-	mysql_secure_installation;
  	sacctmgr add cluster dcc;
 
   	systemctl enable influxdb
