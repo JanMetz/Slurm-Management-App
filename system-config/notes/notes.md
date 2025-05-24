@@ -107,3 +107,12 @@ zrobic weryfikacje zuzywanych zasobow
 
 sacct --format=jobid,jobname,user,ncpus,avecpu,reqmem,averss,avevmsize,avediskread,avediskwrite,elapsed
 
+## Aby zlecić zadanie testowe:
+- Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
+- Wykonać komendę ```srun -n1 -l /bin/hostname```
+
+## Aby dokonać restartu i wymazać cache Slurma:
+     $ rm -rf /var/lib/slurm/spool/*
+
+## Aby zmienić stan nodea:
+     $ scontrol update nodename=lab-net-57 state=resume
