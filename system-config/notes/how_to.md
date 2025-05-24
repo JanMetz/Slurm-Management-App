@@ -1,6 +1,6 @@
 # Wymagania do uruchomienia klastra slurm
   
-## Klucz munge
+## Klucz munge:
 Każdy komputer należący do klastra (w tym zarządca) muszą posiadać ten sam klucz munge - służy on do uwierzytelniania i jest niezbędny do prawidłowego działania klastra.
 
 Taki klucz można wygenerować za pomocą następującej komendy: ```dd if=/dev/random bs=1 count=1024 > /etc/munge/munge.key```
@@ -8,8 +8,8 @@ Taki klucz można wygenerować za pomocą następującej komendy: ```dd if=/dev/
 Po wygenerowaniu należy go rozpowszechnić na wszystkich komputerach klastra, na przykład za pomocą takiej komendy:  ```scp /etc/munge/munge.key other_host@/folder/with/config/files``` 
 zastępując nazwę hosta oraz ścieżkę do folderu poprawnymi wartościami.
      
-## Aby przygotować komputer do bycia nodem:
-### Potrzebne paczki:
+## Przygotowanie komputera do bycia nodem:
+### Potrzebne paczki
 Należy zainstalować następujące paczki:
 ```
 autofs
@@ -36,8 +36,8 @@ W tym celu należy:
 - Spróbować z innej konsoli połączyć się do konfigurowanego komputera, żeby sprawdzić czy modyfikacja plików PAM nie wprowadziła niechcianych zmian
 - W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh```
 
-## Aby przygotować komputer do bycia zarządcą:
-## Potrzebne paczki:
+## Przygotowanie komputera do bycia zarządcą:
+### Potrzebne paczki
 Na komputerze zarządcy należy zainstalować wszystkie paczki potrzebne do działania nodea oraz dodatkowo:
 ```
 influxdb
@@ -54,8 +54,9 @@ Podstawowe kroki konfiguracyjne są takie same jak dla nodea, tylko odpalając s
   0 22 * * * /etc/slurm/post_reservation_cleanup.sh
   0 7 * * * /etc/slurm/create_reservation.sh
   ```
-  
-### Mysql
+
+### Accounting
+#### Mysql
 Należy odpalić skrypt konfiguracyjny mysql, w którym należy ustawić hasło dla roota oraz usunąć tymczasowych, testowych użytkowników i struktury.
 Skrypt można odpalić poleceniem:
 ```$ mysql_secure_installation```
@@ -68,7 +69,7 @@ $ sudo mysql -u root -p
 > FLUSH PRIVILEGES;
 ```
 
-### Influxdb
+#### Influxdb
 Aby móc monitorować wykorzystanie zasobów na przestrzeni czasu należy skonfigurować bazę danych influx, która będzie przechowywać informacje o zużyciu zasobów
 w sposób, który umożliwia ich łatwy eksport do narzędzi do wizualizacji np. Grafany:
 ```
@@ -79,7 +80,7 @@ $ influx
 > CREATE RETENTION POLICY "default" ON "slurm" DURATION 14d REPLICATION 1 DEFAULT
 ```
 
-### Grafana
+#### Grafana
 Aby móc wyświetlać dane dotyczące zużycia zasobów w Grafanie należy dodać influx jako źródło informacji. W tym celu należy:
 - Wejść na stronę grafany pod adresem ```http://<adres-komputera-zarzadcy>:3000```
 - Zalogować się jako admin (domyślne hasło admin)
