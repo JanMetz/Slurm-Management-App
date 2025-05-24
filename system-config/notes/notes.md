@@ -109,8 +109,19 @@ sacct --format=jobid,jobname,user,ncpus,avecpu,reqmem,averss,avevmsize,avediskre
 
 
 ## Konfig mysql
-sudo mysql -u root -p
-CREATE DATABASE slurm_acct_db;
-CREATE USER 'slurm'@'localhost' IDENTIFIED BY 'hasło_slurm';
-GRANT ALL PRIVILEGES ON slurm_acct_db.* TO 'slurm'@'localhost';
-FLUSH PRIVILEGES;
+```
+$ sudo mysql -u root -p
+> CREATE DATABASE slurm_acct_db;
+> CREATE USER 'slurm'@'localhost' IDENTIFIED BY 'hasło_slurm';
+> GRANT ALL PRIVILEGES ON slurm_acct_db.* TO 'slurm'@'localhost';
+> FLUSH PRIVILEGES;
+```
+
+## Konfig influxdb
+```
+$ influx
+> CREATE DATABASE slurm
+> CREATE USER slurm WITH PASSWORD 'phahbaShei6f'
+> GRANT ALL ON slurm TO slurm
+> CREATE RETENTION POLICY "default" ON "slurm" DURATION 14d REPLICATION 1 DEFAULT
+```
