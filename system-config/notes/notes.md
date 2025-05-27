@@ -109,7 +109,7 @@ sacct --format=jobid,jobname,user,ncpus,avecpu,reqmem,averss,avevmsize,avediskre
 
 ogólne dane o zajętości maszyn mają być publiczne; dane zawierające nazwę użytkownika mają być dostępne dopiero po logowaniu
 
-nie powinno wywalić wszystkich połączeń po ssh do danego nodea
+nie powinno wywalić wszystkich połączeń po ssh do danego nodea; nie powinno być kill wszystkich procesów, tylko tych, które jako JOB_ID mają odpowiednią wartość
 
 sprawdzić czy rezerwacja będzie uniemożliwiała rozpoczęcie pracy dłuższej niż ilość pozostałego czasu - przełączyć tworzenie rezerwacji na następny dzień
 
