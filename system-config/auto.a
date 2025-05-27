@@ -1,0 +1,2 @@
+local     -fstype=nfs,nosuid,nodev,soft sirius.cs.put.poznan.pl:/local
+mail      -fstype=nfs,nosuid,nodev,soft sirius.cs.put.poznan.pl:/mail
