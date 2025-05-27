@@ -1,2 +1,1 @@
-*       -fstype=nfs,nosuid,nodev,soft       150.254.30.35:/home/&
-
+*       -fstype=nfs,nosuid,nodev,soft       sirius.cs.put.poznan.pl:/home/&
