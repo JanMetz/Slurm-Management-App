@@ -109,6 +109,10 @@ sacct --format=jobid,jobname,user,ncpus,avecpu,reqmem,averss,avevmsize,avediskre
 
 ogólne dane o zajętości maszyn mają być publiczne; dane zawierające nazwę użytkownika mają być dostępne dopiero po logowaniu
 
+nie powinno wywalić wszystkich połączeń po ssh do danego nodea
+
+sprawdzić czy rezerwacja będzie uniemożliwiała rozpoczęcie pracy dłuższej niż ilość pozostałego czasu - przełączyć tworzenie rezerwacji na następny dzień
+
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
 - Wykonać komendę ```srun -n1 -l /bin/hostname```
