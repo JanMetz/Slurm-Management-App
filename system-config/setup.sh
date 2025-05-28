@@ -107,7 +107,7 @@ chown slurm:slurm /etc/slurm/slurm-suspend.sh
 chown slurm:slurm /etc/slurm/slurm-epilog.sh
 chown slurm:slurm /etc/slurm/slurm-resume.sh
 chown slurm:slurm /etc/slurm/slurmdbd.conf
-chwon slurm:slurm /var/run/slurm
+chown slurm:slurm /var/run/slurm
 chown :slurm /var/log
 
 chmod g+rx /etc/slurm/slurm-suspend.sh
