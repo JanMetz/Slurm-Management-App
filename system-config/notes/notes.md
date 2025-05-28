@@ -115,6 +115,8 @@ sprawdzić czy rezerwacja będzie uniemożliwiała rozpoczęcie pracy dłuższej
 
 musi być montowanie katalogów domowych polluksa przy połączeniu przez ssh
 
+brak możliwości zamonotwania katalogu, jeżeli jądro nie wspiera nfsa
+
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
 - Wykonać komendę ```srun -n1 -l /bin/hostname```
