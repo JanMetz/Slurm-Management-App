@@ -123,6 +123,9 @@ systemctl daemon-reload
 systemctl enable munge
 systemctl restart munge
 
+systemctl enable autofs
+systemctl restart autofs
+
 if [ $opt == "master" ]; then
 	systemctl enable slurmctld;
  	systemctl restart slurmctld;
