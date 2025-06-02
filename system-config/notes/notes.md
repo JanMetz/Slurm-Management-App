@@ -164,7 +164,7 @@ echo -e "BOOTPROTO='auto'\nSTARTMODE='hotplug'\nETHTOOL_OPTIONS='wol g'" >  /etc
 
 grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="openSUSE" --removable  #czy nie powinno byc i386? bez efi?
 os-prober
-grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-mkconfig -o /boot/efi/EFI/opensuse/grub.cfg
 systemctl enable wickedd
 systemctl enable wicked
 systemctl enable sshd
@@ -174,8 +174,19 @@ passwd
 exit
 umount -R /mnt
 os-prober
-grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-mkconfig -o /boot/efi/EFI/opensuse/grub.cfg
 grub2-once --list
 grub2-once X
 reboot
+```
+
+grub
+```
+ls
+ls (hd5,gpt2)/boot
+
+set root=(hd5,gpt2)
+linux /boot/vmlinuz-6.4.0-150600.23.47-default
+initrd /boot/initrd-6.4.0-150600.23.47-default
+boot
 ```
