@@ -161,15 +161,17 @@ echo "UUID=XXXX-XXXX   /   ext4    defaults  0 2" > /etc/fstab # zamienic UUID n
 echo -e "search cs.put.poznan.pl\nnameserver 150.254.30.30\nnameserver 150.254.5.4\nnameserver 150.254.5.11" > etc/resolv.conf
 echo -e "BOOTPROTO='auto'\nSTARTMODE='hotplug'\nETHTOOL_OPTIONS='wol g'" >  /etc/sysconfig/network/ifcfg-eth0
 #vim /etc/default/grub -> GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS4,115200n8"; GRUB_DISABLE_OS_PROBER=false
+echo -e 'LOADER_TYPE="grub2"\nSECURE_BOOT="no"\nTRUSTED_BOOT="no"\nUPDATE_NVRAM="yes"' > /etc/sysconfig/bootloader 
 
 grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="openSUSE" --removable  #czy nie powinno byc i386? bez efi?
 os-prober
 grub2-mkconfig -o /boot/efi/EFI/opensuse/grub.cfg
+grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-once --list
 systemctl enable wickedd
 systemctl enable wicked
 systemctl enable sshd
 update-ca-certificates
-hostname XXX
 passwd
 exit
 umount -R /mnt
