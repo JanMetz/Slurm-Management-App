@@ -117,6 +117,15 @@ else
 	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!"
 fi
 
+echo "+++ [INFO] Przenoszenie certyfikatu LDAP..."
+if test -f cs.local.pem; then
+  	mv cs.local.pem /etc/pki/trust/anchors/cs.local.pem
+else
+	echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
+ 	echo "+++ [INFO] Uruchamiam skrypt rollback.sh";
+  	sh rollback.sh;
+fi
+
 echo "+++ [INFO] Aktywacja serwisow..."
 systemctl daemon-reload
 
