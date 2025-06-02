@@ -3,11 +3,11 @@
 swap_config_files(){ #$1=local-filename, $2=path-to-original-file 
   if test -f $1; 
   then
-	mv $2 $2.old
-	mv $1 $2
- 	echo "+++ [DEBUG] przeniesiono plik ${1}"
+	mv $2 $2.old;
+	mv $1 $2;
+ 	echo "+++ [DEBUG] przeniesiono plik ${1}";
   else
-	echo "+++ [ERROR] Brak pliku ${1}!"
+	echo "+++ [ERROR] Brak pliku ${1}!";
   fi;
 }
 
@@ -27,7 +27,7 @@ read opt
 while ! echo $opt | grep -E -q 'node|master';
 do
     read opt;
-    echo "+++ [ERROR] Wybrano niepoprawna opcje! Poprawne opcje to node lub master!"
+    echo "+++ [ERROR] Wybrano niepoprawna opcje! Poprawne opcje to node lub master!";
 done;
 
 echo "+++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych..." 
@@ -111,15 +111,15 @@ touch /var/lib/slurm/state/resv_state.old
 
 echo "+++ [INFO] Przenoszenie klucza Munge..."
 if test -f munge.key; then
-  	mv munge.key /etc/munge/munge.key
-   	chown munge:munge /etc/munge/munge.key
+  	mv munge.key /etc/munge/munge.key;
+   	chown munge:munge /etc/munge/munge.key;
 else
-	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!"
+	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!";
 fi
 
 echo "+++ [INFO] Przenoszenie certyfikatu LDAP..."
 if test -f cs.local.pem; then
-  	mv cs.local.pem /etc/pki/trust/anchors/cs.local.pem
+  	mv cs.local.pem /etc/pki/trust/anchors/cs.local.pem;
 else
 	echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
  	echo "+++ [INFO] Uruchamiam skrypt rollback";
@@ -142,11 +142,11 @@ if [ $opt == "master" ]; then
 	systemctl enable slurmctld;
  	systemctl restart slurmctld;
   
-  	systemctl enable mariadb
-	systemctl restart mariadb
+  	systemctl enable mariadb;
+	systemctl restart mariadb;
 
-	systemctl enable slurmdbd
-	systemctl restart slurmdbd
+	systemctl enable slurmdbd;
+	systemctl restart slurmdbd;
 else
 	systemctl enable slurmd;
  	systemctl restart slurmd;
@@ -156,9 +156,9 @@ if [ $opt == "master" ]; then
 	echo "+++ [INFO] Konfiguracja bazy accounting...";
  	sacctmgr add cluster dcc;
 
-  	systemctl enable influxdb
-	systemctl start influxdb
+  	systemctl enable influxdb;
+	systemctl start influxdb;
 
- 	systemctl enable grafana-server
-  	systemctl start grafana-server
+ 	systemctl enable grafana-server;
+  	systemctl start grafana-server;
 fi
