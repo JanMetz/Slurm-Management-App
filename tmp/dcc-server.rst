@@ -19,25 +19,26 @@ Tests
 ----
 
 LDAP:    
-```
      $ getent passwd voytek
+
      $ ldapsearch -LLL -ZZ -x '(uid=voytek)' dn
-```
 
 MUNGE:
-```
      $ munge -n
+
      $ munge -n | unmunge
+
      $ munge -n | ssh dcc-2 unmunge
+
      $ ssh dcc-2 munge -n | unmunge
-```
 
 SLURM:
-```
      dcc-0# slurmctld -D -c -vv
+
      dcc-n# slurmd -D -c -vv
+
      (reset)      $ rm -rf /var/lib/slurm/spool/*
-```
+
 
 Config
 ----
