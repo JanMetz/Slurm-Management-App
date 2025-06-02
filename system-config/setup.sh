@@ -13,6 +13,7 @@ swap_config_files(){ #$1=local-filename, $2=path-to-original-file
 
 remove_user_and_group(){ #$1=group/user name
   if ! [ -z "$(getent passwd $1)" ]; then
+  	pkill -u $1
 	userdel $1;
   fi
 
