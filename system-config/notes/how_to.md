@@ -20,6 +20,8 @@ slurm
 slurm-munge
 slurm-pam_slurm
 sssd
+
+zypper --root /mnt install --no-recommends bash coreutils glibc zypper rpm filesystem vim ca-certificates coreutils glibc-locale grub2 openssh wicked dhcp_client autofs nss_ldap openldap2-client pam_ldap slurm slurm_munge slurm-pam_slurm sssd
 ```
 Można to zrobić korzystając z zyppera - polecenie ```zypper install <nazwa_paczki>```
      
