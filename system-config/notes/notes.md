@@ -119,6 +119,8 @@ brak możliwości zamonotwania katalogu, jeżeli jądro nie wspiera nfsa
 
 zainstalować certyfikaty ca-certificates z poziomu chroota
 
+przydały by się też certy dla ldapa...
+
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
 - Wykonać komendę ```srun -n1 -l /bin/hostname```
