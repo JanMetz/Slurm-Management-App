@@ -130,3 +130,52 @@ przydały by się też certy dla ldapa...
 
 ## Aby zmienić stan nodea:
      $ scontrol update nodename=lab-net-57 state=resume
+
+
+## Konfig OS od zera 
+```
+parted /dev/sdX
+(parted) > mklabel gpt
+(parted) > mkpart biosboot 1MB 2MB
+(parted) > set 1 bios_grub on
+(parted) > mkpart primary ext4 3MB 200GB
+(parted) > quit
+mkfs.ext4 /dev/sdX2
+mount /dev/sdX2 /mnt
+zypper --root /mnt ar http://download.opensuse.org/distribution/leap/15.6/repo/oss/ main
+zypper --root /mnt refresh
+zypper --root /mnt install --no-recommends bash coreutils glibc zypper rpm filesystem vim \
+ca-certificates coreutils glibc-locale grub2 openssh wicked dhcp_client autofs nss_ldap \
+openldap2-client pam_ldap slurm slurm_munge slurm-pam_slurm sssd grub2-x86_64-efi shim \
+kernel-default os-prober
+mount --bind /dev /mnt/dev
+mount --bind /proc /mnt/proc
+mount --bind /sys /mnt/sys
+mount --bind /run /mnt/run
+mkdir /mnt/boot/efi
+mount /dev/sdY1 /mnt/boot/efi  # sdY1 to partycja EFI
+blkid /dev/sdX2
+chroot /mnt
+
+echo "UUID=XXXX-XXXX   /   ext4    defaults  0 2" > /etc/fstab # zamienic UUID na to wygenerowane przez blkid
+echo -e "search cs.put.poznan.pl\nnameserver 150.254.30.30\nnameserver 150.254.5.4\nnameserver 150.254.5.11" > etc/resolv.conf
+echo -e "BOOTPROTO='auto'\nSTARTMODE='hotplug'\nETHTOOL_OPTIONS='wol g'" >  /etc/sysconfig/network/ifcfg-eth0
+#vim /etc/default/grub -> GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS4,115200n8"; GRUB_DISABLE_OS_PROBER=false
+
+grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="openSUSE" --removable  #czy nie powinno byc i386? bez efi?
+os-prober
+grub2-mkconfig -o /boot/grub2/grub.cfg
+systemctl enable wickedd
+systemctl enable wicked
+systemctl enable sshd
+update-ca-certificates
+hostname XXX
+passwd
+exit
+umount -R /mnt
+os-prober
+grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-once --list
+grub2-once X
+reboot
+```
