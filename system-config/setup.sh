@@ -122,8 +122,8 @@ if test -f cs.local.pem; then
   	mv cs.local.pem /etc/pki/trust/anchors/cs.local.pem
 else
 	echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
- 	echo "+++ [INFO] Uruchamiam skrypt rollback.sh";
-  	sh rollback.sh;
+ 	echo "+++ [INFO] Uruchamiam skrypt rollback";
+  	sh rollback_setup.sh;
    	exit 1;
 fi
 
