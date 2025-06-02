@@ -124,6 +124,7 @@ else
 	echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
  	echo "+++ [INFO] Uruchamiam skrypt rollback.sh";
   	sh rollback.sh;
+   	return 1;
 fi
 
 echo "+++ [INFO] Aktywacja serwisow..."
