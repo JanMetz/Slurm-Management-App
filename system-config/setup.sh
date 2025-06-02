@@ -75,12 +75,6 @@ if [ $opt == "master" ]; then
 echo "+++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!"
 echo "+++ [INFO] W przypadku problemow uruchom skrypt rollback.sh"
 
-echo "+++ [INFO] Tworzenie plikow dla Slurma..."
-touch /var/lib/slurm/state/job_state.old
-touch /var/lib/slurm/state/job_state
-touch /var/lib/slurm/state/resv_state
-touch /var/lib/slurm/state/resv_state.old
-
 echo "+++ [INFO] Tworzenie grupy i uzytkownika Slurm i Munge..."
 remove_user_and_group munge
 groupadd -r -g 149 munge
@@ -89,14 +83,6 @@ useradd -r -u 149 -g munge -d /run/munge -s /bin/false -c "MUNGE authentication 
 remove_user_and_group slurm
 groupadd -r -g 148 slurm
 useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload manager" slurm
-
-echo "+++ [INFO] Przenoszenie klucza Munge..."
-if test -f munge.key; then
-  	mv munge.key /etc/munge/munge.key
-   	chown munge:munge /etc/munge/munge.key
-else
-	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!"
-fi
 
 echo "+++ [INFO] Tworzenie katalogow dla Slurma..."
 mkdir -p /var/lib/slurm/{spool,state}
@@ -116,6 +102,20 @@ chmod g+rx /etc/slurm/slurm-resume.sh
 chmod 600 /etc/slurm/slurmdbd.conf
 chmod g+rw /var/run/slurm
 chmod g+rw /var/log
+
+echo "+++ [INFO] Tworzenie plikow dla Slurma..."
+touch /var/lib/slurm/state/job_state.old
+touch /var/lib/slurm/state/job_state
+touch /var/lib/slurm/state/resv_state
+touch /var/lib/slurm/state/resv_state.old
+
+echo "+++ [INFO] Przenoszenie klucza Munge..."
+if test -f munge.key; then
+  	mv munge.key /etc/munge/munge.key
+   	chown munge:munge /etc/munge/munge.key
+else
+	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!"
+fi
 
 echo "+++ [INFO] Aktywacja serwisow..."
 systemctl daemon-reload
