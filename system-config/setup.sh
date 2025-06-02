@@ -89,6 +89,9 @@ echo "+++ [INFO] Tworzenie katalogow dla Slurma..."
 mkdir -p /var/lib/slurm/{spool,state}
 chown -R slurm:slurm /var/lib/slurm
 
+mkdir -p /var/log/munge/
+
+
 echo "+++ [INFO] Zmiana praw dostepu do plikow i katalogow uzywanych przez Slurma"
 chown slurm:slurm /etc/slurm/slurm-suspend.sh
 chown slurm:slurm /etc/slurm/slurm-epilog.sh
@@ -96,6 +99,10 @@ chown slurm:slurm /etc/slurm/slurm-resume.sh
 chown slurm:slurm /etc/slurm/slurmdbd.conf
 chown slurm:slurm /var/run/slurm
 chown :slurm /var/log
+
+chmod 700 /etc/munge
+chown munge:munge /etc/munge
+chown -R munge:munge /var/log/munge
 
 chmod g+rx /etc/slurm/slurm-suspend.sh
 chmod g+rx /etc/slurm/slurm-epilog.sh
@@ -114,6 +121,7 @@ echo "+++ [INFO] Przenoszenie klucza Munge..."
 if test -f munge.key; then
   	mv munge.key /etc/munge/munge.key;
    	chown munge:munge /etc/munge/munge.key;
+        chmod 400 /etc/munge/munge.key
 else
 	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!";
 fi
