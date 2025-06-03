@@ -147,7 +147,7 @@ zypper --root /mnt ar http://download.opensuse.org/distribution/leap/15.6/repo/o
 zypper --root /mnt refresh
 zypper --root /mnt install --no-recommends bash coreutils glibc zypper rpm filesystem vim \
 ca-certificates coreutils glibc-locale grub2 openssh wicked dhcp_client sssd grub2-x86_64-efi shim \
-kernel-default os-prober ca-certificates-mozilla
+kernel-default os-prober ca-certificates-mozilla timezone
 
 mount --bind /dev /mnt/dev
 mount --bind /proc /mnt/proc
@@ -176,6 +176,8 @@ systemctl enable wicked
 systemctl enable sshd
 update-ca-certificates
 passwd
+timedatectl set-ntp true
+timedatectl set-timezone Europe/Warsaw
 exit
 umount -R /mnt
 
