@@ -12,7 +12,7 @@ zastępując nazwę hosta oraz ścieżkę do folderu poprawnymi wartościami.
 ### Potrzebne paczki
 Należy zainstalować potrzebne paczki następującą komendą:
 ```
-zypper install --no-recommends autofs nss_ldap openldap2-client pam_ldap slurm slurm-munge slurm-pam_slurm sssd
+zypper install --no-recommends autofs nss_ldap openldap2-client pam_ldap slurm slurm-munge slurm-pam_slurm sssd pmix pmix-devel
 ```
 Można to zrobić korzystając z zyppera - polecenie ```zypper install <nazwa_paczki>```
      
