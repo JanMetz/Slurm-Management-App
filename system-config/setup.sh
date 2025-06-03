@@ -91,13 +91,11 @@ echo "+++ [INFO] Tworzenie katalogow dla Slurma..."
 mkdir -p /var/lib/slurm/{spool,state}
 mkdir -p /var/log/munge/
 
-echo "+++ [INFO] Zmiana praw dostepu do plikow i katalogow uzywanych przez Slurma"
-
+echo "+++ [INFO] Zmiana praw dostepu do plikow i katalogow uzywanych przez Slurma i Munge"
 chmod 700 /var/run/slurm
 chown -R slurm:slurm /var/run/slurm/
 
-chmod 760 /var/log
-chown :slurm /var/log
+chmod 775 /var/log
 
 chmod 700 /etc/slurm
 chown -R slurm:slurm /etc/slurm/
