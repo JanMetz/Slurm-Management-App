@@ -100,16 +100,16 @@ chmod 775 /var/log
 chmod 700 /etc/slurm
 chown -R slurm:slurm /etc/slurm/
 
-chmod 700 /var/lib/slurm
+chmod 755 /var/lib/slurm
 chown -R slurm:slurm /var/lib/slurm/
 
 chmod 700 /etc/munge
 chown -R munge:munge /etc/munge/
 
-chmod 700 /var/log/munge
+chmod 755 /var/log/munge
 chown -R munge:munge /var/log/munge/
 
-chmod 700 /var/lib/munge
+chmod 755 /var/lib/munge
 chown -R munge:munge /var/lib/munge/
 
 echo "+++ [INFO] Tworzenie plikow dla Slurma..."
