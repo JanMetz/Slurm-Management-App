@@ -89,29 +89,30 @@ useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload man
 
 echo "+++ [INFO] Tworzenie katalogow dla Slurma..."
 mkdir -p /var/lib/slurm/{spool,state}
-chown -R slurm:slurm /var/lib/slurm
-
 mkdir -p /var/log/munge/
 
-
 echo "+++ [INFO] Zmiana praw dostepu do plikow i katalogow uzywanych przez Slurma"
-chown slurm:slurm /etc/slurm/slurm-suspend.sh
-chown slurm:slurm /etc/slurm/slurm-epilog.sh
-chown slurm:slurm /etc/slurm/slurm-resume.sh
-chown slurm:slurm /etc/slurm/slurmdbd.conf
-chown slurm:slurm /var/run/slurm
+
+chmod 700 /var/run/slurm
+chown -R slurm:slurm /var/run/slurm/
+
+chmod 760 /var/log
 chown :slurm /var/log
 
-chmod 700 /etc/munge
-chown munge:munge /etc/munge
-chown -R munge:munge /var/log/munge
+chmod 700 /etc/slurm
+chown -R slurm:slurm /etc/slurm/
 
-chmod g+rx /etc/slurm/slurm-suspend.sh
-chmod g+rx /etc/slurm/slurm-epilog.sh
-chmod g+rx /etc/slurm/slurm-resume.sh
-chmod 600 /etc/slurm/slurmdbd.conf
-chmod g+rw /var/run/slurm
-chmod g+rw /var/log
+chmod 700 /var/lib/slurm
+chown -R slurm:slurm /var/lib/slurm/
+
+chmod 700 /etc/munge
+chown -R munge:munge /etc/munge/
+
+chmod 700 /var/log/munge
+chown -R munge:munge /var/log/munge/
+
+chmod 700 /var/lib/munge
+chown -R munge:munge /var/lib/munge/
 
 echo "+++ [INFO] Tworzenie plikow dla Slurma..."
 touch /var/lib/slurm/state/job_state.old
