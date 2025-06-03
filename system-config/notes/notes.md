@@ -146,8 +146,7 @@ mount /dev/sdX2 /mnt
 zypper --root /mnt ar http://download.opensuse.org/distribution/leap/15.6/repo/oss/ main
 zypper --root /mnt refresh
 zypper --root /mnt install --no-recommends bash coreutils glibc zypper rpm filesystem vim \
-ca-certificates coreutils glibc-locale grub2 openssh wicked dhcp_client autofs nss_ldap \
-openldap2-client pam_ldap slurm slurm_munge slurm-pam_slurm sssd grub2-x86_64-efi shim \
+ca-certificates coreutils glibc-locale grub2 openssh wicked dhcp_client sssd grub2-x86_64-efi shim \
 kernel-default os-prober
 
 mount --bind /dev /mnt/dev
