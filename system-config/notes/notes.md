@@ -159,7 +159,7 @@ chroot /mnt
 
 echo "UUID=XXXX-XXXX   /   ext4    defaults  0 2" > /etc/fstab # zamienic UUID na to wygenerowane przez blkid
 echo -e "search cs.put.poznan.pl\nnameserver 150.254.30.30\nnameserver 150.254.5.4\nnameserver 150.254.5.11" > etc/resolv.conf
-echo -e "BOOTPROTO='auto'\nSTARTMODE='hotplug'\nETHTOOL_OPTIONS='wol g'" >  /etc/sysconfig/network/ifcfg-eth0
+echo -e "BOOTPROTO='dhcp'\nSTARTMODE='hotplug'\nETHTOOL_OPTIONS='wol g'" >  /etc/sysconfig/network/ifcfg-eth0
 #vim /etc/default/grub -> GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS4,115200n8"; GRUB_DISABLE_OS_PROBER=false
 echo -e 'LOADER_TYPE="grub2"\nSECURE_BOOT="no"\nTRUSTED_BOOT="no"\nUPDATE_NVRAM="yes"' > /etc/sysconfig/bootloader 
 
