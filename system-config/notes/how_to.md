@@ -10,18 +10,9 @@ zastępując nazwę hosta oraz ścieżkę do folderu poprawnymi wartościami.
      
 ## Przygotowanie komputera do bycia nodem:
 ### Potrzebne paczki
-Należy zainstalować następujące paczki:
+Należy zainstalować potrzebne paczki następującą komendą:
 ```
-autofs
-nss_ldap
-openldap2-client
-pam_ldap
-slurm
-slurm-munge
-slurm-pam_slurm
-sssd
-
-zypper --root /mnt install --no-recommends bash coreutils glibc zypper rpm filesystem vim ca-certificates coreutils glibc-locale grub2 openssh wicked dhcp_client autofs nss_ldap openldap2-client pam_ldap slurm slurm_munge slurm-pam_slurm sssd
+zypper install --no-recommends autofs nss_ldap openldap2-client pam_ldap slurm slurm-munge slurm-pam_slurm sssd
 ```
 Można to zrobić korzystając z zyppera - polecenie ```zypper install <nazwa_paczki>```
      
@@ -42,9 +33,7 @@ W tym celu należy:
 ### Potrzebne paczki
 Na komputerze zarządcy należy zainstalować wszystkie paczki potrzebne do działania nodea oraz dodatkowo:
 ```
-influxdb
-mariadb
-grafana-server
+zypper install --no-recommends influxdb mariadb grafana-server
 ```
      
 ### Konfiguracja
