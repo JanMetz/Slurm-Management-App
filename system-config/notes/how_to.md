@@ -15,7 +15,12 @@ Należy zainstalować potrzebne paczki następującą komendą:
 zypper install --no-recommends autofs nss_ldap openldap2-client pam_ldap slurm \
 slurm-munge slurm-pam_slurm sssd pmix pmix-devel nfs-utils
 ```
-Można to zrobić korzystając z zyppera - polecenie ```zypper install <nazwa_paczki>```
+W przypadku pojawienia się błędu 
+```
+/usr/sbin/groupadd -r -g 65533 nogroup
+groupadd: GID '65533' already exists
+```
+należy wybrać opcję ignore (i).
      
 ### Konfiguracja
 Aby dokonać konfiguracji komputera można wykorzystać skrypt konfiguracyjny setup.sh, który automatycznie wykona praktycznie całość potrzebnej konfiguracji dla node'a.
