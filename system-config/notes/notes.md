@@ -132,7 +132,7 @@ przydały by się też certy dla ldapa...
      $ scontrol update nodename=lab-net-57 state=resume
 
 
-## Konfig OS od zera 
+## Instalacja OS od zera na nowej partycji, z poziomu działającego systemu linux
 ```
 parted /dev/sdX
 (parted) > mklabel gpt
