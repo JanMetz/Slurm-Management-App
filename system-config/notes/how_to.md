@@ -29,6 +29,7 @@ W tym celu należy:
 - Pobrać z repozytorium pliki konfiguracyjne, znajdujące się w folderze system-config
 - Przejść do miejsca na dysku, do którego pobraliśmy folder system-config
 - Umieścić w nim klucz munge (np. za pomocą polecenia scp, lub generując nowy klucz - patrz wyżej, rozdział 'Klucz munge')
+- Umieścić w nim certyfikat dla LDAPa w pliku cs.local.pem
 - Uruchomić skrypt konfiguracyjny komendą ```sh setup.sh```
 - Wybrać tryb konfiguracji node
 - UWAŻNIE PRZECZYTAĆ WYGENEROWANY PRZEZ SKRYPT OUTPUT - szczególnie zwrócić uwagę na linie zaczynające się od WARNING lub ERROR
