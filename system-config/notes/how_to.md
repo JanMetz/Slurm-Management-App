@@ -34,9 +34,7 @@ W tym celu należy:
 - Wybrać tryb konfiguracji node
 - UWAŻNIE PRZECZYTAĆ WYGENEROWANY PRZEZ SKRYPT OUTPUT - szczególnie zwrócić uwagę na linie zaczynające się od WARNING lub ERROR
 - Spróbować z innej konsoli połączyć się do konfigurowanego komputera, żeby sprawdzić czy modyfikacja plików PAM nie wprowadziła niechcianych zmian
-- W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh```
-- Należy dopisać na koniec /etc/profile.d/profile.sh zawartość pliku machine_in_use.sh
-- W pliku /etc/grub.d/10_linux, w funkcji linux_entry podmienić os="$1" na os="$1 Calc", a następnie wykonać update gruba
+- W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh```=
 
 ## Przygotowanie komputera do bycia zarządcą:
 ### Potrzebne paczki
