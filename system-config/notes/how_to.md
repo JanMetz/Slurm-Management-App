@@ -45,12 +45,15 @@ zypper install --no-recommends influxdb mariadb grafana-server
      
 ### Konfiguracja
 Podstawowe kroki konfiguracyjne są takie same jak dla nodea, tylko odpalając skrypt ```setup.sh``` należy po odpaleniu wybrać tryb master. Oprócz tego należy:
-- Utworzyć cron job, który będzie odpalał skrypt dokonujący rezerwacji oraz skrypt czyszczący stan węzłów po rezerwacji:
+- Utworzyć cron job, który będzie odpalał skrypt czyszczący stan węzłów po rezerwacji:
   - wykonać komendę ```crontab -e```
-  - dopisać do pliku crona linie:
+  - dopisać do pliku crona linię:
   ```
   0 22 * * * /etc/slurm/post_reservation_cleanup.sh
-  0 7 * * * /etc/slurm/create_reservation.sh
+  ```
+- Należy również ustawić rezerwację zasobów przypadającą na godziny, w których komputery będą wykorzystywane do zajęć dydaktycznych. Można to zrobić poleceniem:
+  ```
+  scontrol create Reservation="zajecia_dydaktyczne" StartTime=07:00:00 Duration=14:59:00 user=root flags=ignore_jobs,daily Nodes=ALL
   ```
 
 ### Accounting
