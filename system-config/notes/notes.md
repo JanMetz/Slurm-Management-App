@@ -121,6 +121,9 @@ zainstalować certyfikaty ca-certificates z poziomu chroota
 
 przydały by się też certy dla ldapa...
 
+./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" --restart
+./meshcmd amtpower --host lab-net-57 --password PWD --restart
+
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
 - Wykonać komendę ```srun -n1 -l /bin/hostname```
