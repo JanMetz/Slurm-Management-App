@@ -35,6 +35,7 @@ W tym celu należy:
 - UWAŻNIE PRZECZYTAĆ WYGENEROWANY PRZEZ SKRYPT OUTPUT - szczególnie zwrócić uwagę na linie zaczynające się od WARNING lub ERROR
 - Spróbować z innej konsoli połączyć się do konfigurowanego komputera, żeby sprawdzić czy modyfikacja plików PAM nie wprowadziła niechcianych zmian
 - W razie potrzeby wycofać zmiany skryptem ```rollback_setup.sh```
+- Należy dopisać na koniec /etc/profile.d/profile.sh zawartość pliku machine_in_use.sh
 
 ## Przygotowanie komputera do bycia zarządcą:
 ### Potrzebne paczki
