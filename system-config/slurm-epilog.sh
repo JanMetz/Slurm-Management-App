@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 if [ -n "$SLURM_JOB_USER" -a "$SLURM_JOB_USER" != "root" ]
 then
  HOSTNAME=$(hostname)
