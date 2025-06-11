@@ -1,8 +1,7 @@
 ## TODO
 1) wybór odpowiedniego systemu (reset AMT -> logowanie admin ssh -> grub2-once)
 2) komunikat na meshu
-3) kończenie sesji SSH tylko jeżeli użytkownik nie ma więcej zadań na nodzie
-4) udostępnić dane o zajętości maszyn publicznie; dane zawierające nazwę użytkownika mają być dostępne dopiero po logowaniu
+3) udostępnić dane o zajętości maszyn publicznie; dane zawierające nazwę użytkownika mają być dostępne dopiero po logowaniu
 
 ## Do analizy:
 
