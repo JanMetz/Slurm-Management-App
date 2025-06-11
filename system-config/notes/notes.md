@@ -130,6 +130,7 @@ przydały by się też certy dla ldapa...
 ./meshcmd amtpower --host lab-net-57 --password PWD --restart
 
 viewer/SLURM1234
+http://lab-net-58:3000/d/feon6cq7zrnr4b/slurm?orgId=1&from=1749645012560&to=1749666612560
 
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
