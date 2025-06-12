@@ -212,6 +212,19 @@ grub2-once X
 reboot
 ```
 
+```
+menuentry "Linux cleanup" {
+  load_video
+  set gfxpayload=keep
+  insmod gzio
+  insmod part_gpt
+  insmod ext2
+  search --label --set=root VLAB
+  linux  /boot/vmlinuz root=/dev/disk/by-label/VLAB quiet splash=silent reboot=pci fastrestore quiet
+  initrd /boot/initrd
+}
+```
+
 grub - console mode (warto zapamiętać na jakim dysku i na jakiej partycji znajduje się działający system w razie gdyby coś poszło nie tak)
 ```
 ls
