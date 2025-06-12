@@ -192,6 +192,8 @@ grub2-mkconfig -o /boot/efi/EFI/opensuse/grub.cfg
 grub2-mkconfig -o /boot/grub2/grub.cfg
 grub2-once --list # tu musi się pojawić działający system! inaczej czeka nas commandline gruba i naprawianie po ponownym uruchomieniu systemu
 
+#usunąć grub install, grub config zmienic recznie!
+
 systemctl enable wickedd
 systemctl enable wicked
 systemctl enable sshd
