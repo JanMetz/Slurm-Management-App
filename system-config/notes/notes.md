@@ -158,7 +158,7 @@ dodać do dashboarda informację o ilości zadań aktualnie wykonywanych na nodz
 ## Instalacja OS od zera na nowej partycji, z poziomu działającego systemu linux
 
 zainstalować system na IMAGES, a nie na osobym dysku!
-ustawić label partycji (np przy mkfsie)
+ustawić label partycji (przy mkfsie (label) i przy parted (partlabel)) - sprawdzić który label jest gdzie ustawiany
 ```
 parted /dev/sdX
 (parted) > mklabel gpt
