@@ -90,6 +90,6 @@ Aby móc wyświetlać dane dotyczące zużycia zasobów w Grafanie należy doda�
 - Jako url do Influx podać ```http://localhost:8086```
 - Jako bazę danych podać ```slurm```
 - Jako użytkownika podać ```slurm```
-- Podać hasło użytkownika ```slurm ``` (ustawione w ramach wykonywania instrukcji paragraf wyżej)
+- Podać hasło użytkownika ```slurm``` (ustawione w ramach wykonywania instrukcji paragraf wyżej)
 - Zapisać źródło danych
 - Stworzyć, korzystając z pliku dashboard.json, dashboard, który będzie wyświetlał interesujące nas informacje
