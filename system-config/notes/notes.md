@@ -2,6 +2,8 @@
 1) wybór odpowiedniego systemu (reset AMT -> logowanie admin ssh -> grub2-once)
 2) komunikat na meshu
 3) udostępnić dane o zajętości maszyn publicznie; dane zawierające nazwę użytkownika mają być dostępne dopiero po logowaniu
+4) Poprosić CS o możliwość logowania na maszyny przez vlab
+5) poprosić CS o możliwość wywoływania poleceń amt (potrzebne jest hasło, ale możnaby zrobić możliwość wykonywania polecenia zdalnie przez np serwer meshcentral, który by doklejał dla uprawnionych użytkowników hasło tak, żeby mogli wykonać polecenie)
 
 ## Do analizy:
 
@@ -154,6 +156,9 @@ dodać do dashboarda informację o ilości zadań aktualnie wykonywanych na nodz
 
 
 ## Instalacja OS od zera na nowej partycji, z poziomu działającego systemu linux
+
+zainstalować system na IMAGES, a nie na osobym dysku!
+ustawić label partycji (np przy mkfsie)
 ```
 parted /dev/sdX
 (parted) > mklabel gpt
