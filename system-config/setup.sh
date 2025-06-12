@@ -66,7 +66,8 @@ if [ $opt == "master" ]; then
  	mkdir -p					/etc/systemd/system/slurmctld.service.d/;
  	swap_config_files slurmctld.override.conf	/etc/systemd/system/slurmctld.service.d/override.conf;
   
-        mv post_reservation_cleanup.sh 			/etc/slurm/post_reservation_cleanup.sh;
+        mv post_reservation_cleanup.sh 			/etc/slurm/;
+	mv reverse_proxy_grafana.conf			/etc/nginx/conf.d/
  else
  	swap_config_files sshd-node 			/etc/pam.d/sshd;
  	swap_config_files common-account-node 		/etc/pam.d/common-account-pc;
