@@ -140,6 +140,8 @@ skrócić link do grafany http://lab-net-58:3000/public-dashboards/0bc4135c59f74
 viewer/SLURM1234
 http://lab-net-58:3000/d/feon6cq7zrnr4b/slurm?orgId=1&from=1749645012560&to=1749666612560
 
+dodać do dashboarda informację o ilości zadań aktualnie wykonywanych na nodzie
+
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
 - Wykonać komendę ```srun -n1 -l /bin/hostname```
