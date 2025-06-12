@@ -144,6 +144,8 @@ http://lab-net-58:3000/d/feon6cq7zrnr4b/slurm?orgId=1&from=1749645012560&to=1749
 
 dodać do dashboarda informację o ilości zadań aktualnie wykonywanych na nodzie
 
+tune2fs -L primary2 /dev/sdb1
+
 ## Aby zlecić zadanie testowe:
 - Zalogować się na maszynę zarządcy, za pomocą swojego konta ldap ```ssh inf123456@lab-net-58```
 - Wykonać komendę ```srun -n1 -l /bin/hostname```
@@ -156,48 +158,79 @@ dodać do dashboarda informację o ilości zadań aktualnie wykonywanych na nodz
 
 
 ## Instalacja OS od zera na nowej partycji, z poziomu działającego systemu linux
-
-zainstalować system na IMAGES, a nie na osobym dysku!
-ustawić label partycji (przy mkfsie (label) i przy parted (partlabel)) - sprawdzić który label jest gdzie ustawiany
 ```
+#resize partycji IMAGES i stworzenie partycji pod nowy system
 parted /dev/sdX
-(parted) > mklabel gpt
-(parted) > mkpart biosboot 1MB 2MB
-(parted) > set 1 bios_grub on
-(parted) > mkpart primary ext4 3MB 200GB
+(parted) > resizepart idx XXXGB #idx to indeks partycji IMAGES, XXX to jej nowy KONIEC - NIE NOWY ROZMIAR! 
+(parted) > mkpart ext4 XXXGB XXX+50GB
 (parted) > quit
-mkfs.ext4 /dev/sdX2
+mkfs.ext4 /dev/sdXY -L SLURM #gdzie Y to numer porządkowy nowo utworzonej partycji
 
+#zamontowanie nowej partycji oraz potrzebnych do instalacji systemu katalogów
 mount /dev/sdX2 /mnt
-zypper --root /mnt ar http://download.opensuse.org/distribution/leap/15.6/repo/oss/ main
-zypper --root /mnt refresh
-zypper --root /mnt install --no-recommends bash coreutils glibc zypper rpm filesystem vim \
-ca-certificates coreutils glibc-locale grub2 openssh wicked dhcp_client sssd grub2-x86_64-efi shim \
-kernel-default os-prober ca-certificates-mozilla timezone
-
 mount --bind /dev /mnt/dev
 mount --bind /proc /mnt/proc
 mount --bind /sys /mnt/sys
 mount --bind /run /mnt/run
 mkdir /mnt/boot/efi
 mount /dev/sdY1 /mnt/boot/efi  # sdY1 to partycja EFI
-blkid /dev/sdX2
 
+#pobranie i instalacja systemu oraz najpotrzebniejszych bibliotek
+zypper --root /mnt ar http://download.opensuse.org/distribution/leap/15.6/repo/oss/ main
+zypper --root /mnt refresh
+zypper --root /mnt install --no-recommends bash coreutils glibc zypper rpm filesystem vim \
+ca-certificates coreutils glibc-locale openssh wicked dhcp_client sssd shim kernel-default \
+ca-certificates-mozilla timezone grub2
+
+#konfiguracja systemu
 chroot /mnt
 
-echo "UUID=XXXX-XXXX   /   ext4    defaults  0 2" > /etc/fstab # zamienic UUID na to wygenerowane przez blkid !! podmienić UUID na label !!
-echo -e "search cs.put.poznan.pl\nnameserver 150.254.30.30\nnameserver 150.254.5.4\nnameserver 150.254.5.11" > etc/resolv.conf
-echo -e "BOOTPROTO='dhcp'\nSTARTMODE='hotplug'\nETHTOOL_OPTIONS='wol g'" >  /etc/sysconfig/network/ifcfg-eth0
-#vim /etc/default/grub -> GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS4,115200n8"; GRUB_DISABLE_OS_PROBER=false
-echo -e 'LOADER_TYPE="grub2"\nSECURE_BOOT="no"\nTRUSTED_BOOT="no"\nUPDATE_NVRAM="yes"' > /etc/sysconfig/bootloader 
+echo -e "search cs.put.poznan.pl
+nameserver 150.254.30.30
+nameserver 150.254.5.4
+nameserver 150.254.5.11" > etc/resolv.conf
 
-grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="openSUSE" --removable  #czy nie powinno byc i386? bez efi?
-os-prober
-grub2-mkconfig -o /boot/efi/EFI/opensuse/grub.cfg
-grub2-mkconfig -o /boot/grub2/grub.cfg
+echo -e "BOOTPROTO='dhcp'
+STARTMODE='hotplug'
+ETHTOOL_OPTIONS='wol g'" >  /etc/sysconfig/network/ifcfg-eth0
+
+#upewnić się, że urządzenie o adresie ATTR{address}=="18:66:da:22:f0:XX" jest określone jako eth0 w pliku /etc/udev/rules.d/70-persistent-net.rules
+
+echo -e 'GRUB_DISABLE_OS_PROBER="false"
+GRUB_TERMINAL="console"
+GRUB_TIMEOUT="6"
+GRUB_ENABLE_CRYPTODISK="n"
+GRUB_GFXMODE="auto"
+GRUB_DISABLE_RECOVERY="true"
+GRUB_DISTRIBUTOR=
+GRUB_DEFAULT="saved"
+SUSE_BTRFS_SNAPSHOT_BOOTING="false"
+GRUB_HIDDEN_TIMEOUT="0"
+GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS4,115200n8 preempt=full mitigations=auto quiet"
+GRUB_CMDLINE_XEN_DEFAULT="vga=gfx-1024x768x16"
+GRUB_BACKGROUND=
+GRUB_THEME=/boot/grub2/themes/openSUSE/theme.txt' > /etc/default/grub
+
+echo -e 'LOADER_TYPE="grub2"
+SECURE_BOOT="no"
+TRUSTED_BOOT="no"
+UPDATE_NVRAM="yes"' > /etc/sysconfig/bootloader
+
+echo -e 'menuentry "SLURM compute node" {
+  load_video
+  set gfxpayload=keep
+  insmod gzio
+  insmod part_gpt
+  insmod ext2
+  search --label --set=root SLURM
+  linux  /boot/vmlinuz root=/dev/disk/by-label/SLURM quiet splash=silent reboot=pci fastrestore quiet
+  initrd /boot/initrd
+}' >> /boot/grub2/grub.cfg
+
+echo -e "LABEL=SLURM   /   ext4    defaults  0 0
+LABEL=EFI     /boot/efi  vfat  nofail,umask=0002,utf8=true  0  0" > /etc/fstab
+
 grub2-once --list # tu musi się pojawić działający system! inaczej czeka nas commandline gruba i naprawianie po ponownym uruchomieniu systemu
-
-#usunąć grub install, grub config zmienic recznie!
 
 systemctl enable wickedd
 systemctl enable wicked
@@ -207,27 +240,12 @@ passwd
 timedatectl set-ntp true
 timedatectl set-timezone Europe/Warsaw
 exit
+
+#odmontowanie nowego systemu i restart komputera ze wskazaniem na ten nowy system 
 umount -R /mnt
-
-os-prober
-grub2-mkconfig -o /boot/efi/EFI/opensuse/grub.cfg
-grub2-mkconfig -o /boot/grub2/grub.cfg
 grub2-once --list
-grub2-once X
+grub2-once X #gdzie jako X wstawiamy numer porządkowy, pod którym znajduje się system 'SLURM compute node'
 reboot
-```
-
-```
-menuentry "Linux cleanup" {
-  load_video
-  set gfxpayload=keep
-  insmod gzio
-  insmod part_gpt
-  insmod ext2
-  search --label --set=root VLAB
-  linux  /boot/vmlinuz root=/dev/disk/by-label/VLAB quiet splash=silent reboot=pci fastrestore quiet
-  initrd /boot/initrd
-}
 ```
 
 grub - console mode (warto zapamiętać na jakim dysku i na jakiej partycji znajduje się działający system w razie gdyby coś poszło nie tak)
