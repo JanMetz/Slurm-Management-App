@@ -133,6 +133,8 @@ umieścić w pracy wpis 'future works' opisujący że możnaby dodać killowanie
 
 przenieść OS na sda1
 
+sprawdzić czy da się wybrać OS przez amttool
+
 viewer/SLURM1234
 http://lab-net-58:3000/d/feon6cq7zrnr4b/slurm?orgId=1&from=1749645012560&to=1749666612560
 
