@@ -40,7 +40,7 @@ W tym celu należy:
 ### Potrzebne paczki
 Na komputerze zarządcy należy zainstalować wszystkie paczki potrzebne do działania nodea oraz dodatkowo:
 ```
-zypper install --no-recommends influxdb mariadb grafana-server
+zypper install --no-recommends influxdb mariadb grafana-server nginx
 ```
      
 ### Konfiguracja
