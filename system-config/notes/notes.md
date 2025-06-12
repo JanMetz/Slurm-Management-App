@@ -139,9 +139,6 @@ sprawdzić czy da się wybrać OS przez amttool
 
 skrócić link do grafany http://lab-net-58:3000/public-dashboards/0bc4135c59f74abda318f78c34d1b1ae?orgId=1
 
-viewer/SLURM1234
-http://lab-net-58:3000/d/feon6cq7zrnr4b/slurm?orgId=1&from=1749645012560&to=1749666612560
-
 dodać do dashboarda informację o ilości zadań aktualnie wykonywanych na nodzie
 
 tune2fs -L primary2 /dev/sdb1
