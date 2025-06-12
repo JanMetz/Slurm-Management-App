@@ -129,6 +129,8 @@ przydały by się też certy dla ldapa...
 ./meshcmd amtpower --host lab-net-57 --password PWD --bootmode 3 --bootdevice 0  --bootname "Windows Boot Manager HD" --restart
 ./meshcmd amtpower --host lab-net-57 --password PWD --restart
 
+umieścić w pracy wpis 'future works' opisujący że możnaby dodać killowanie sesji ssh powiązanych z konkretnym zadaniem po jego zakończeniu.
+
 viewer/SLURM1234
 http://lab-net-58:3000/d/feon6cq7zrnr4b/slurm?orgId=1&from=1749645012560&to=1749666612560
 
