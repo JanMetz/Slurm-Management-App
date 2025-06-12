@@ -164,6 +164,8 @@ parted /dev/sdX
 (parted) > resizepart idx XXXGB #idx to indeks partycji IMAGES, XXX to jej nowy KONIEC - NIE NOWY ROZMIAR! 
 (parted) > mkpart ext4 XXXGB XXX+50GB
 (parted) > quit
+e2fsck -f /dev/sdX
+resize2fs /dev/sdX
 mkfs.ext4 /dev/sdXY -L SLURM #gdzie Y to numer porządkowy nowo utworzonej partycji
 
 #zamontowanie nowej partycji oraz potrzebnych do instalacji systemu katalogów
