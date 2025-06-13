@@ -4,6 +4,8 @@
 3) udostępnić dane o zajętości maszyn publicznie; dane zawierające nazwę użytkownika mają być dostępne dopiero po logowaniu
 4) Poprosić CS o możliwość logowania na maszyny przez vlab
 5) poprosić CS o możliwość wywoływania poleceń amt (potrzebne jest hasło, ale możnaby zrobić możliwość wykonywania polecenia zdalnie przez np serwer meshcentral, który by doklejał dla uprawnionych użytkowników hasło tak, żeby mogli wykonać polecenie)
+6) wysyłanie danych z mysql do influxa
+7) sprawdzenie konfiguracji mysqla - czy nodey same mają wysyłać dane?
 
 ## Do analizy:
 
