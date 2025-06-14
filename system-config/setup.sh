@@ -23,7 +23,7 @@ remove_user_and_group(){ #$1=group/user name
 }
 
 adjust_dir_permissions() { #$1=dirname=groupname=username
-  chmod 700 /etc/$1
+  chmod 755 /etc/$1
   chown -R $1:$1 /etc/$1/
 
   chmod 755 /var/log/$1
