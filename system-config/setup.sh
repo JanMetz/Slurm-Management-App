@@ -22,6 +22,17 @@ remove_user_and_group(){ #$1=group/user name
   fi
 }
 
+adjust_dir_permissions() { #$1=dirname=groupname=username
+  chmod 700 /etc/$1
+  chown -R $1:$1 /etc/$1/
+
+  chmod 755 /var/log/$1
+  chown -R $1:$1 /var/log/$1/
+
+  chmod 755 /var/lib/$1
+  chown -R $1:$1 /var/lib/$1/
+}
+
 echo "+++ Wybierz typ konfiguracji w zaleznosci od tego, czy zalezy Ci na skonfigurowaniu wezla do obliczen czy maszyny zarzadcy [node/master]" 
 read opt
 
@@ -91,6 +102,7 @@ useradd -r -u 148 -g slurm -d /run/slurm -s /usr/bin/bash -c "SLURM workload man
 echo "+++ [INFO] Tworzenie katalogow dla Slurma..."
 mkdir -p /var/lib/slurm/{spool,state}
 mkdir -p /var/log/munge/
+mkdir -p /var/log/slurm
 
 echo "+++ [INFO] Zmiana praw dostepu do plikow i katalogow uzywanych przez Slurma i Munge"
 chmod 700 /var/run/slurm
@@ -98,20 +110,8 @@ chown -R slurm:slurm /var/run/slurm/
 
 chmod 775 /var/log
 
-chmod 700 /etc/slurm
-chown -R slurm:slurm /etc/slurm/
-
-chmod 755 /var/lib/slurm
-chown -R slurm:slurm /var/lib/slurm/
-
-chmod 700 /etc/munge
-chown -R munge:munge /etc/munge/
-
-chmod 755 /var/log/munge
-chown -R munge:munge /var/log/munge/
-
-chmod 755 /var/lib/munge
-chown -R munge:munge /var/lib/munge/
+adjust_dir_permissions slurm
+adjust_dir_permissions munge
 
 echo "+++ [INFO] Tworzenie plikow dla Slurma..."
 touch /var/lib/slurm/state/job_state.old
