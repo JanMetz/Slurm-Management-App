@@ -40,8 +40,11 @@ W tym celu należy:
 ### Potrzebne paczki
 Na komputerze zarządcy należy zainstalować wszystkie paczki potrzebne do działania nodea oraz dodatkowo:
 ```
-zypper install --no-recommends influxdb mariadb grafana-server nginx
+zypper install --no-recommends mariadb grafana-server nginx prometheus-slurm-exporter
 ```
+InfluxDb OSS w wersji 2 zgodnie z [instrukcją](https://docs.influxdata.com/influxdb/v2/install/?t=Linux)
+oraz
+Influx CLI zgodnie z [instrukcją](https://docs.influxdata.com/influxdb/v2/tools/influx-cli/?t=Linux)
      
 ### Konfiguracja
 Podstawowe kroki konfiguracyjne są takie same jak dla nodea, tylko odpalając skrypt ```setup.sh``` należy po odpaleniu wybrać tryb master. Oprócz tego należy:
