@@ -3,22 +3,22 @@
 swap_config_files(){ #$1=local-filename, $2=path-to-original-file 
   if test -f $1; 
   then
-	mv $2 $2.old;
-	mv $1 $2;
- 	echo "+++ [DEBUG] przeniesiono plik ${1}";
+    mv $2 $2.old;
+    mv $1 $2;
+    echo "+++ [DEBUG] przeniesiono plik ${1}";
   else
-	echo "+++ [ERROR] Brak pliku ${1}!";
+    echo "+++ [ERROR] Brak pliku ${1}!";
   fi;
 }
 
 remove_user_and_group(){ #$1=group/user name
   if ! [ -z "$(getent passwd $1)" ]; then
-  	pkill -u $1
-	userdel $1;
+    pkill -u $1
+    userdel $1;
   fi
 
   if ! [ -z "$(getent group $1)" ]; then
-	groupdel $1;
+    groupdel $1;
   fi
 }
 
@@ -38,8 +38,8 @@ read opt
 
 while ! echo $opt | grep -E -q 'node|master';
 do
-    read opt;
-    echo "+++ [ERROR] Wybrano niepoprawna opcje! Poprawne opcje to node lub master!";
+  read opt;
+  echo "+++ [ERROR] Wybrano niepoprawna opcje! Poprawne opcje to node lub master!";
 done;
 
 echo "+++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych..." 
@@ -60,6 +60,10 @@ swap_config_files sshd_config 		/etc/ssh/sshd_config
 
 swap_config_files my.cnf 		/etc/my.cnf
 
+mkdir -p /etc/prometheus
+swap_config_files prometheus.yml	/etc/prometheus/prometheus.yml
+
+mkdir -p /etc/slurm
 swap_config_files slurm.conf 		/etc/slurm/slurm.conf
 swap_config_files slurm-epilog.sh 	/etc/slurm/slurm-epilog.sh
 swap_config_files slurm-resume.sh 	/etc/slurm/slurm-resume.sh
@@ -83,8 +87,8 @@ if [ $opt == "master" ]; then
   swap_config_files sshd-node 			/etc/pam.d/sshd;
   swap_config_files common-account-node 	/etc/pam.d/common-account-pc;
 
-   mkdir -p					/etc/systemd/system/slurmd.service.d/;
-   swap_config_files slurmd.override.conf 	/etc/systemd/system/slurmd.service.d/override.conf;
+  mkdir -p					/etc/systemd/system/slurmd.service.d/;
+  swap_config_files slurmd.override.conf 	/etc/systemd/system/slurmd.service.d/override.conf;
  fi
 
 echo "+++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!"
@@ -121,21 +125,21 @@ touch /var/lib/slurm/state/resv_state.old
 
 echo "+++ [INFO] Przenoszenie klucza Munge..."
 if test -f munge.key; then
-  	mv munge.key /etc/munge/munge.key;
-   	chown munge:munge /etc/munge/munge.key;
-        chmod 400 /etc/munge/munge.key
+  mv munge.key /etc/munge/munge.key;
+  chown munge:munge /etc/munge/munge.key;
+  chmod 400 /etc/munge/munge.key;
 else
-	echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!";
+  echo "+++ [WARNING] NIE ODNALEZIONO PLIKU MUNGE.KEY!";
 fi
 
 echo "+++ [INFO] Przenoszenie certyfikatu LDAP..."
 if test -f cs.local.pem; then
   mv cs.local.pem /etc/pki/trust/anchors/cs.local.pem;
 else
- echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
- echo "+++ [INFO] Uruchamiam skrypt rollback";
- sh rollback_setup.sh;
- exit 1;
+  echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
+  echo "+++ [INFO] Uruchamiam skrypt rollback";
+  sh rollback_setup.sh;
+  exit 1;
 fi
 
 echo "+++ [INFO] Aktywacja serwisow..."
@@ -150,32 +154,32 @@ systemctl restart autofs
 systemctl enable sshd
 
 if [ $opt == "master" ]; then
- systemctl enable slurmctld;
- systemctl restart slurmctld;
+  systemctl enable slurmctld;
+  systemctl restart slurmctld;
   
- systemctl enable mariadb;
- systemctl restart mariadb;
+  systemctl enable mariadb;
+  systemctl restart mariadb;
 
- systemctl enable mysql;
- systemctl restart mysql;
+  systemctl enable mysql;
+  systemctl restart mysql;
 
- systemctl enable slurmdbd;
- systemctl restart slurmdbd;
+  systemctl enable slurmdbd;
+  systemctl restart slurmdbd;
 else
- systemctl enable slurmd;
- systemctl restart slurmd;
+  systemctl enable slurmd;
+  systemctl restart slurmd;
 fi
 
 if [ $opt == "master" ]; then 
- echo "+++ [INFO] Konfiguracja bazy accounting...";
- sacctmgr add cluster dcc;
+  echo "+++ [INFO] Konfiguracja bazy accounting...";
+  sacctmgr add cluster dcc;
 
- systemctl enable influxdb;
- systemctl restart influxdb;
+  systemctl enable influxdb;
+  systemctl restart influxdb;
 
- systemctl enable grafana-server;
- systemctl restart grafana-server;
+  systemctl enable grafana-server;
+  systemctl restart grafana-server;
 
- systemctl enable prometheus-slurm-exporter;
- systemctl restart prometheus-slurm-exporter;
+  systemctl enable prometheus-slurm-exporter;
+  systemctl restart prometheus-slurm-exporter;
 fi
