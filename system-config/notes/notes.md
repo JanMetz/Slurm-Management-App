@@ -114,7 +114,10 @@ czy da sie wywalic uzytkownika po ssh po zakoczeniu zadania slurm - tak, wstawia
 
 zrobic weryfikacje zuzywanych zasobow
 
+```
 sacct --format=jobid,jobname,user,ncpus,avecpu,reqmem,averss,avevmsize,avediskread,avediskwrite,elapsed
+sacct --format=user,usercpu,reqcpus,reqmem,reqnodes,maxvmsize,avediskread,avediskwrite
+```
 
 ogólne dane o zajętości maszyn mają być publiczne; dane zawierające nazwę użytkownika mają być dostępne dopiero po logowaniu
 
