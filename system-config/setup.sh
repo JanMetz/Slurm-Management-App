@@ -69,22 +69,22 @@ swap_config_files acct_gather.conf 	/etc/slurm/acct_gather.conf
 
 
 if [ $opt == "master" ]; then
-	swap_config_files ethers 			/etc/ethers;
+  swap_config_files ethers 			/etc/ethers;
  
- 	swap_config_files sshd-master 			/etc/pam.d/sshd;
-	swap_config_files common-account-master 	/etc/pam.d/common-account-pc;
+  swap_config_files sshd-master 		/etc/pam.d/sshd;
+  swap_config_files common-account-master 	/etc/pam.d/common-account-pc;
 
- 	mkdir -p					/etc/systemd/system/slurmctld.service.d/;
- 	swap_config_files slurmctld.override.conf	/etc/systemd/system/slurmctld.service.d/override.conf;
+  mkdir -p					/etc/systemd/system/slurmctld.service.d/;
+  swap_config_files slurmctld.override.conf	/etc/systemd/system/slurmctld.service.d/override.conf;
   
-        mv post_reservation_cleanup.sh 			/etc/slurm/;
-	mv reverse_proxy_grafana.conf			/etc/nginx/conf.d/
+  mv post_reservation_cleanup.sh 		/etc/slurm/;
+  mv reverse_proxy_grafana.conf			/etc/nginx/conf.d/
  else
- 	swap_config_files sshd-node 			/etc/pam.d/sshd;
- 	swap_config_files common-account-node 		/etc/pam.d/common-account-pc;
+  swap_config_files sshd-node 			/etc/pam.d/sshd;
+  swap_config_files common-account-node 	/etc/pam.d/common-account-pc;
 
-  	mkdir -p					/etc/systemd/system/slurmd.service.d/;
-  	swap_config_files slurmd.override.conf 		/etc/systemd/system/slurmd.service.d/override.conf;
+   mkdir -p					/etc/systemd/system/slurmd.service.d/;
+   swap_config_files slurmd.override.conf 	/etc/systemd/system/slurmd.service.d/override.conf;
  fi
 
 echo "+++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!"
@@ -130,12 +130,12 @@ fi
 
 echo "+++ [INFO] Przenoszenie certyfikatu LDAP..."
 if test -f cs.local.pem; then
-  	mv cs.local.pem /etc/pki/trust/anchors/cs.local.pem;
+  mv cs.local.pem /etc/pki/trust/anchors/cs.local.pem;
 else
-	echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
- 	echo "+++ [INFO] Uruchamiam skrypt rollback";
-  	sh rollback_setup.sh;
-   	exit 1;
+ echo "+++ [CRITICAL] NIE ODNALEZIONO PLIKU CS.LOCAL.PEM! MODULY PAM_LDAP NIE BEDA POZWALALY NA ZALOGOWANIE!";
+ echo "+++ [INFO] Uruchamiam skrypt rollback";
+ sh rollback_setup.sh;
+ exit 1;
 fi
 
 echo "+++ [INFO] Aktywacja serwisow..."
@@ -150,26 +150,32 @@ systemctl restart autofs
 systemctl enable sshd
 
 if [ $opt == "master" ]; then
-	systemctl enable slurmctld;
- 	systemctl restart slurmctld;
+ systemctl enable slurmctld;
+ systemctl restart slurmctld;
   
-  	systemctl enable mariadb;
-	systemctl restart mariadb;
+ systemctl enable mariadb;
+ systemctl restart mariadb;
 
-	systemctl enable slurmdbd;
-	systemctl restart slurmdbd;
+ systemctl enable mysql;
+ systemctl restart mysql;
+
+ systemctl enable slurmdbd;
+ systemctl restart slurmdbd;
 else
-	systemctl enable slurmd;
- 	systemctl restart slurmd;
+ systemctl enable slurmd;
+ systemctl restart slurmd;
 fi
 
 if [ $opt == "master" ]; then 
-	echo "+++ [INFO] Konfiguracja bazy accounting...";
- 	sacctmgr add cluster dcc;
+ echo "+++ [INFO] Konfiguracja bazy accounting...";
+ sacctmgr add cluster dcc;
 
-  	systemctl enable influxdb;
-	systemctl start influxdb;
+ systemctl enable influxdb;
+ systemctl restart influxdb;
 
- 	systemctl enable grafana-server;
-  	systemctl start grafana-server;
+ systemctl enable grafana-server;
+ systemctl restart grafana-server;
+
+ systemctl enable prometheus-slurm-exporter;
+ systemctl restart prometheus-slurm-exporter;
 fi
