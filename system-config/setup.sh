@@ -182,4 +182,11 @@ if [ $opt == "master" ]; then
 
   systemctl enable prometheus-slurm-exporter;
   systemctl restart prometheus-slurm-exporter;
+
+  sacctmgr add account name=ldap description="LDAP Users" -i
+  for user in $(getent passwd | cut -d: -f1); do
+    if echo $user | grep -q -e 'inf\d+'; then
+      sacctmgr add user name=$user cluster=dcc account=ldap -i;
+    fi
+  done
 fi
