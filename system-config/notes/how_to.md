@@ -71,6 +71,7 @@ Aby dodać do bazy kont SLURMa użytkowników LDAP, których nazwa zaczyna się 
     done
   done
 ```
+Wykonanie powyższej pętli chwilę zajmie, więc należy uzbroić się w cierpliwość...
 Aby dodać pojedyńczych użytkowników można po prostu wykorzystać polecenie ```sacctmgr add user name=MY_USER cluser=dcc account=MY_ACCOUNT```
 #### Mysql
 Należy odpalić skrypt konfiguracyjny mysql, w którym należy ustawić hasło dla roota oraz usunąć tymczasowych, testowych użytkowników i struktury.
