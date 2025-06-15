@@ -60,6 +60,18 @@ Podstawowe kroki konfiguracyjne są takie same jak dla nodea, tylko odpalając s
   ```
 
 ### Accounting
+#### sacctmgr
+Aby dodać do bazy kont SLURMa użytkowników LDAP, których nazwa zaczyna się od przedrostka inf, a numer indeksu ma 6 cyfr i rozpoczyna się od liczb z zakresu 140-170 można użyć poniższej pętli bashowej:
+```
+  for idx in $(seq 140 170); do
+    for user in $(ldapsearch -LLL -ZZ -x "(uid=inf$idx*)" dn |  awk -F'uid=|,' '{print $2}'); do
+      if echo $user | grep -q -E 'inf[0-9]{6}'; then
+        sacctmgr add user name=$user cluster=dcc account=ldap -i;
+      fi
+    done
+  done
+```
+Aby dodać pojedyńczych użytkowników można po prostu wykorzystać polecenie ```sacctmgr add user name=MY_USER cluser=dcc account=MY_ACCOUNT```
 #### Mysql
 Należy odpalić skrypt konfiguracyjny mysql, w którym należy ustawić hasło dla roota oraz usunąć tymczasowych, testowych użytkowników i struktury.
 Skrypt można odpalić poleceniem:
@@ -75,14 +87,7 @@ $ sudo mysql -u root -p
 
 #### Influxdb
 Aby móc monitorować wykorzystanie zasobów na przestrzeni czasu należy skonfigurować bazę danych influx, która będzie przechowywać informacje o zużyciu zasobów
-w sposób, który umożliwia ich łatwy eksport do narzędzi do wizualizacji np. Grafany:
-```
-$ influx
-> CREATE DATABASE slurm
-> CREATE USER slurm WITH PASSWORD 'phahbaShei6f'
-> GRANT ALL ON slurm TO slurm
-> CREATE RETENTION POLICY "default" ON "slurm" DURATION 14d REPLICATION 1 DEFAULT
-```
+w sposób, który umożliwia ich łatwy eksport do narzędzi do wizualizacji np. Grafany. Aby to zrobić należy postępować zgodnie z instrukcją z 
 
 #### Grafana
 Aby móc wyświetlać dane dotyczące zużycia zasobów w Grafanie należy dodać influx jako źródło informacji. W tym celu należy:
