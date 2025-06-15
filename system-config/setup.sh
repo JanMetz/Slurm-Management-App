@@ -185,7 +185,7 @@ if [ $opt == "master" ]; then
 
   sacctmgr add account name=ldap description="LDAP Users" -i
   for user in $(getent passwd | cut -d: -f1); do
-    if echo $user | grep -q -e 'inf\d+'; then
+    if echo $user | grep -q -E 'inf[0-9]+'; then
       sacctmgr add user name=$user cluster=dcc account=ldap -i;
     fi
   done
