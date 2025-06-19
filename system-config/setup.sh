@@ -26,7 +26,7 @@ adjust_dir_permissions() { #$1=dirname=groupname=username
   chmod 755 /etc/$1
   chown -R $1:$1 /etc/$1/
 
-  chmod 755 /var/log/$1
+  chmod -R 755 /var/log/$1
   chown -R $1:$1 /var/log/$1/
 
   chmod 755 /var/lib/$1
