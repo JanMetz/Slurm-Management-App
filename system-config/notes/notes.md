@@ -7,6 +7,7 @@
 6) poszukać po stronie klienta mapy ID węzła na jego hostname
 7) komunikat ma się pojawiać tylko kiedy węzeł jest aktywnie używany
 8) musi być porównanie dostępnych systemów i uzasadnienie wyboru
+9) określić zagrożenia i sposoby nadużyć
 
 ## Do analizy:
 
