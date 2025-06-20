@@ -6,6 +6,7 @@
 5) naprawić slurm_resume i slurm_suspend ```for node in "$@"; do action on $node; done```
 6) poszukać po stronie klienta mapy ID węzła na jego hostname
 7) komunikat ma się pojawiać tylko kiedy węzeł jest aktywnie używany
+8) musi być porównanie dostępnych systemów i uzasadnienie wyboru
 
 ## Do analizy:
 
