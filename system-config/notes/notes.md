@@ -8,6 +8,7 @@
 7) komunikat ma się pojawiać tylko kiedy węzeł jest aktywnie używany
 8) musi być porównanie dostępnych systemów i uzasadnienie wyboru
 9) określić zagrożenia i sposoby nadużyć
+10) musi być zbiorcze zestawienie zużytych zasobów
 
 ## Do analizy:
 
