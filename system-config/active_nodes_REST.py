@@ -5,8 +5,9 @@ app = FastAPI()
 
 @app.get("/nodes")
 async def post_nodes(req : Request):
-    resp = "'idle lab-net-[56-57]'\n"
+    #resp = "'idle lab-net-[56-57]'\n"
     #resp = "'idle localhost.localdomain'\n"
+    resp = subprocess.check_output(["sinfo", "-h", "-o", "'%T %N'"])
     arr = resp.strip().split("\n")
 
     nodes = []
