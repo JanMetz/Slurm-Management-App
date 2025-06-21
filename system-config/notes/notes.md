@@ -1,14 +1,11 @@
 ## TODO
 1) wybór odpowiedniego systemu (reset AMT -> logowanie admin ssh -> grub2-once)
-2) komunikat na meshu
-3) Poprosić CS o możliwość logowania na maszyny przez vlab
-4) poprosić CS o możliwość wywoływania poleceń amt (potrzebne jest hasło, ale możnaby zrobić możliwość wykonywania polecenia zdalnie przez np serwer meshcentral, który by doklejał dla uprawnionych użytkowników hasło tak, żeby mogli wykonać polecenie)
-5) naprawić slurm_resume i slurm_suspend ```for node in "$@"; do action on $node; done```
-6) poszukać po stronie klienta mapy ID węzła na jego hostname
-7) komunikat ma się pojawiać tylko kiedy węzeł jest aktywnie używany
-8) musi być porównanie dostępnych systemów i uzasadnienie wyboru
-9) określić zagrożenia i sposoby nadużyć
-10) musi być zbiorcze zestawienie zużytych zasobów
+2) Poprosić CS o możliwość logowania na maszyny przez vlab
+3) poprosić CS o możliwość wywoływania poleceń amt (potrzebne jest hasło, ale możnaby zrobić możliwość wykonywania polecenia zdalnie przez np serwer meshcentral, który by doklejał dla uprawnionych użytkowników hasło tak, żeby mogli wykonać polecenie)
+4) naprawić slurm_resume i slurm_suspend ```for node in "$@"; do action on $node; done```
+5) musi być porównanie dostępnych systemów i uzasadnienie wyboru
+6) określić zagrożenia i sposoby nadużyć
+7) musi być zbiorcze zestawienie zużytych zasobów
 
 ## Do analizy:
 
