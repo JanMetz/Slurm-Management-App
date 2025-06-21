@@ -65,20 +65,37 @@ var MeshServerCreateControl = function (domain, authCookie) {
                 var hours = objDate.getHours();
 
                 if (hours <= 7 || hours >= 22){
-                    /*fetch('slurm_cluster_nodes')
-                    .then(response => response.text())
-                    .then(text => alert(text))*/
-                    
-                    const clusterNodeList = ["node//fOD$HevrOZ5O@6tKt0AOpZZ6SA19JsQ1msi8QMxuAs1Rm8bDJEUUNe@ZV4NjKq2k"]
-                    const found = clusterNodeList.some(node => x.nodeids.includes(node));
+                    fetch('/nodes', {method: "GET"})
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! Status: ${res.status}`);
+                        }
 
-                    if (found && (!confirm("Ten komputer aktualnie wykonuje obliczenia jako część klastra SLURM.\nCzy na pewno chcesz wykonać akcję?"))){
-                        return;
-                    }
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log(data);       
+
+                        const idle_nodes = data.nodes;
+
+                        const hostnames = x.nodeids.map(nodeID => nodes.find((e) => e._id == nodeID).name);
+                        const is_idle = idle_nodes.some(node => hostnames.includes(node));
+
+                        if ((!is_idle) && (!confirm("Ten komputer aktualnie wykonuje obliczenia jako część klastra SLURM.\nCzy na pewno chcesz wykonać akcję?"))){
+                            return;
+                        }
+
+                        obj.socket.send(JSON.stringify(x));
+                    })
+                    .catch(err => {
+                        console.error('Fetch error:', err);
+                        alert("Błąd pobierania danych z API");
+                    });  
                 }
             }
-
-            obj.socket.send(JSON.stringify(x));
+            else {
+                obj.socket.send(JSON.stringify(x));
+            }
         }
     }
 
