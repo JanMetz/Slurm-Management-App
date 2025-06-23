@@ -1,0 +1,479 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Zestaw wykresów obrazujących aktualne zużycie zasobów w ramach klastra obliczeniowego SLURM na Politechnice Poznańskiej",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 4,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "title": "Aktualna zajętość klastra",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "description": "Wykres pokazuje ilość zadań aktualnie wykonywanych (running_tasks), ilość zadań oczekujących na zasoby (pending_tasks) oraz\nilość zadań aktualnie kończących pracę (completing_tasks)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 23,
+        "x": 0,
+        "y": 1
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_queue_running\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#running_tasks\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_queue_completing\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#completing_tasks\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_queue_pending\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#pending_tasks\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "C"
+        }
+      ],
+      "title": "Ilość zadań w kolejce",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 23,
+        "x": 0,
+        "y": 13
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_nodes_idle\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"idle_nodes\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_nodes_resv\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"reserved_nodes\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_nodes_alloc\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"allocated_nodes\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "C"
+        }
+      ],
+      "title": "Stan klastra",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 23,
+        "x": 0,
+        "y": 19
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_node_mem_alloc\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"node_mem_alloc\", _measurement: \"node_mem_alloc\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\", \"node\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Ilość zaalokowanej pamięci",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "description": "Ilość zajętych rdzeni vs ilość żądanych rdzeni",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 23,
+        "x": 0,
+        "y": 30
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_node_cpu_alloc\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"node_cpu_alloc\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\", \"node\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n   r._measurement == \"slurm_node_cpu_idle\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"node_cpu_idle\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\", \"node\"])",
+          "refId": "B"
+        }
+      ],
+      "title": "Zajętość rdzeni CPU",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": false,
+    "refresh_intervals": [
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "slurm",
+  "uid": "slurm",
+  "version": 7,
+  "weekStart": ""
+}
