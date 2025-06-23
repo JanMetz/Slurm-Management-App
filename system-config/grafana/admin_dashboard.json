@@ -1,0 +1,881 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 14,
+      "panels": [],
+      "title": "Szczegóły zlecanych zadań",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "beos20vr1y96oa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 23,
+        "x": 0,
+        "y": 1
+      },
+      "id": 12,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.15",
+      "targets": [
+        {
+          "dataset": "slurm_acct_db",
+          "datasource": {
+            "type": "mysql",
+            "uid": "beos20vr1y96oa"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT \n  sel1.id_job AS job_id, \n  sel2.user,\n  sel1.user_cpu_sec, \n  sel1.avg_cpu_freq, \n  sel1.req_min_cpufreq, \n  sel2.cpus_req, \n  sel2.mem_req, \n  sel2.nodes_alloc,\n  sel1.consumed_energy\nFROM \n(\n  SELECT t2.id_job, \n         SUM(t1.user_sec) AS user_cpu_sec, \n         AVG(t1.act_cpufreq) AS avg_cpu_freq, \n         MIN(t1.req_cpufreq_min) AS req_min_cpufreq,\n         SUM(t1.time_start) as time_start,\n         SUM(t1.time_end) as time_end,\n         SUM(t1.consumed_energy) as consumed_energy\n  FROM dcc_step_table AS t1 \n  LEFT JOIN dcc_job_table AS t2 ON t1.job_db_inx = t2.job_db_inx\n  GROUP BY t2.id_job\n) AS sel1\nJOIN \n(\n  SELECT t2.user, \n         t1.id_job, \n         t1.cpus_req, \n         t1.mem_req, \n         t1.nodes_alloc\n  FROM dcc_job_table AS t1 \n  LEFT JOIN dcc_assoc_table AS t2 ON t1.id_assoc = t2.id_assoc \n  WHERE t1.state != 524288\n) AS sel2\nON sel1.id_job = sel2.id_job\nWHERE req_min_cpufreq > avg_cpu_freq or (cpus_req > 2 and user_cpu_sec < 0.1 * (time_end - time_start)) or (consumed_energy > 300)\nORDER BY job_id DESC;\n\n",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Zlecenia wymagające uwagi",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "beos20vr1y96oa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id_job"
+            },
+            "properties": [
+              {
+                "id": "custom.width"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 23,
+        "x": 0,
+        "y": 10
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "id_job"
+          }
+        ]
+      },
+      "pluginVersion": "10.4.15",
+      "targets": [
+        {
+          "dataset": "slurm_acct_db",
+          "datasource": {
+            "type": "mysql",
+            "uid": "beos20vr1y96oa"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "select t2.user, t1.id_job, t1.cpus_req, t1.mem_req, t1.nodes_alloc, t1.submit_line,\ncase \nwhen t1.state = 0 then \"pending\"\nwhen t1.state = 1 then \"running\"\nwhen t1.state = 2 then \"suspended\"\nwhen t1.state = 3 then \"complete\"\nwhen t1.state = 4 then \"cancelled\"\nwhen t1.state = 5 then \"failed\"\nwhen t1.state = 6 then \"timeout\"\nwhen t1.state = 7 then \"node-fail\"\nwhen t1.state = 8 then \"preempted\"\nwhen t1.state = 9 then \"boot-fail\"\nwhen t1.state = 10 then \"deadline\"\nwhen t1.state = 11 then \"out-of-memory\"\nwhen t1.state = 12 then \"requed\"\nwhen t1.state = 13 then \"requed-hold\"\nwhen t1.state = 14 then \"resizing\"\nwhen t1.state = 15 then \"job-reboot\"\nelse \"???\"\nend as state \nfrom dcc_job_table as t1 left join dcc_assoc_table as t2 on t1.id_assoc=t2.id_assoc \nwhere (t1.state != 524288) and ('${Username:raw}' = 'All' or  t2.user in (${Username:singlequote}))\norder by t1.id_job desc",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "slurm_acct_db",
+          "datasource": {
+            "type": "mysql",
+            "uid": "beos20vr1y96oa"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "select t2.id_job, sum(t1.task_cnt) as task_cnt, sum(t1.user_sec) as user_cpu_sec, avg(t1.act_cpufreq) as avg_cpu_freq, min(t1.req_cpufreq_min) as req_min_cpufreq\nfrom dcc_step_table as t1 left join dcc_job_table as t2 on t1.job_db_inx=t2.job_db_inx\nGROUP BY t2.id_job\norder by t2.id_job desc",
+          "refId": "C",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Zlecone zadania",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "id_job",
+            "mode": "inner"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "id_job"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 13,
+      "title": "Aktualna zajętość klastra",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "description": "Aktualnie działające vs\nOczekujące na zasoby vs\nKończące pracę",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 23,
+        "x": 0,
+        "y": 21
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.15",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_queue_running\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#running_tasks\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_queue_completing\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#completing_tasks\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_queue_pending\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#pending_tasks\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_queue_configuring\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#configuring_tasks\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_queue_pending_dependency\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#pending_dependency_tasks\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_queue_failed\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#failed_tasks\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_queue_suspended\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#suspended_tasks\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_queue_preempted\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#preempted_tasks\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_queue_node_fail\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"#node_fail_tasks\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "I"
+        }
+      ],
+      "title": "Ilość zadań w kolejce",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 23,
+        "x": 0,
+        "y": 31
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.15",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": true,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_nodes_idle\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"idle_nodes\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": true,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_nodes_resv\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"reserved_nodes\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": true,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_nodes_alloc\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"allocated_nodes\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_nodes_comp\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"comp_nodes\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_nodes_down\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"down_nodes\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])\r\n",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_nodes_drain\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"drain_nodes\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_nodes_err\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"err_nodes\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_nodes_fail\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"fail_nodes\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"slurm_nodes_maint\"\r\n  )\r\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"maint_nodes\" }))\r\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\"])",
+          "refId": "I"
+        }
+      ],
+      "title": "Stan klastra",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 23,
+        "x": 0,
+        "y": 37
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_node_mem_alloc\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"node_mem_alloc\", _measurement: \"node_mem_alloc\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\", \"node\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Ilość zaalokowanej pamięci",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "demgne1funqiof"
+      },
+      "description": "Ilość zajętych rdzeni vs ilość żądanych rdzeni",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 23,
+        "x": 0,
+        "y": 46
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n    r._measurement == \"slurm_node_cpu_alloc\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"node_cpu_alloc\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\", \"node\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "demgne1funqiof"
+          },
+          "hide": false,
+          "query": "from(bucket: \"slurm\")\n  |> range(start: -24h)\n  |> filter(fn: (r) =>\n   r._measurement == \"slurm_node_cpu_idle\"\n  )\n  |> map(fn: (r) => ({ r with _field: \"\", _measurement: \"node_cpu_idle\" }))\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"_measurement\", \"node\"])",
+          "refId": "B"
+        }
+      ],
+      "title": "Zajętość rdzeni CPU",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": "\"All\"",
+        "current": {
+          "selected": true,
+          "text": [
+            "root"
+          ],
+          "value": [
+            "root"
+          ]
+        },
+        "datasource": {
+          "type": "mysql",
+          "uid": "beos20vr1y96oa"
+        },
+        "definition": "select name from user_table",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Username",
+        "multi": true,
+        "name": "Username",
+        "options": [],
+        "query": "select name from user_table",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": false,
+    "refresh_intervals": [
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "slurm-admin",
+  "uid": "slurm-admin",
+  "version": 40,
+  "weekStart": ""
+}
