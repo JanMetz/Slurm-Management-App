@@ -5,8 +5,9 @@
 4) naprawić slurm_resume i slurm_suspend ```for node in "$@"; do action on $node; done```
 5) musi być porównanie dostępnych systemów i uzasadnienie wyboru
 6) określić zagrożenia i sposoby nadużyć
-7) musi być zbiorcze zestawienie zużytych zasobów\
+7) musi być zbiorcze zestawienie zużytych zasobów
 8) dodać automatyczne uruchamianie RESTa dla MC na zarządcy
+9) migracja grafany na MySQL
 
 ## Do analizy:
 
