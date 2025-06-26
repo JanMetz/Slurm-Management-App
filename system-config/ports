@@ -1,0 +1,40 @@
+#hostname  port_na_switchu
+
+#LAB-SEC
+lab-sec-1   1
+lab-sec-2   2
+lab-sec-3   3
+lab-sec-4   4
+lab-sec-5   5
+lab-sec-6   6
+lab-sec-7   7
+lab-sec-8   8
+lab-sec-9   9
+lab-sec-10 10
+lab-sec-11 11
+lab-sec-12 12
+lab-sec-13 13
+lab-sec-14 14
+lab-sec-15 15
+lab-sec-16 16
+
+#LAB-NET
+lab-net-1  17
+lab-net-2  18
+lab-net-3  19
+lab-net-4  20
+lab-net-5  21
+lab-net-6  22
+lab-net-7  23
+lab-net-8  24
+lab-net-9  25
+lab-net-10 26
+lab-net-11 27
+lab-net-12 28
+lab-net-13 29
+lab-net-14 30
+lab-net-15 31
+lab-net-16 32
+
+#EXTRA
+lab-net-56 39
