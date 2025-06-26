@@ -1,22 +1,35 @@
 #!/bin/bash
 
 INTERFACE="enp1s0";
-SLEEP_TIME=10;
+RESTART_TIME=10;
+SETUP_TIME=15;
 SWITCH_ADDR="192.168.0.239";
 REQ_MIN_SPEED=9000;
+
+sleep_for() { # $1=ilosc sekund
+  for ((i=1; i<=$1; i++));
+  do
+      echo -n ".";
+      sleep 1;
+  done
+  
+  echo -ne "\r\033[K"
+}
 
 restart_switch_port(){ # $1 = numer portu na switchu; $2 = licznik prob
   echo "Restarting switch port... ($2/3)";
   snmpset -v3 -uadmin -aSHA -Aswitch10G -xDES -Xswitch10G -l authPriv $SWITCH_ADDR ifAdminStatus.$1 i 0;
-  sleep $SLEEP_TIME;
+  sleep_for $RESTART_TIME;
   snmpset -v3 -uadmin -aSHA -Aswitch10G -xDES -Xswitch10G -l authPriv $SWITCH_ADDR ifAdminStatus.$1 i 1;
+  sleep_for $SETUP_TIME;
 }
 
 restart_interface(){ # $1=licznik prob
   echo "Restarting interface... ($1/3)";
   ip link set dev $INTERFACE down;
-  sleep $SLEEP_TIME;
+  sleep_for $RESTART_TIME;
   ip link set dev $INTERFACE up;
+  sleep_for $SETUP_TIME;
 }
 
 check_speed(){
@@ -40,10 +53,10 @@ else
 
   PORT=$(cat /etc/ports | sed -nE "s/(^[^#]+)\s+$(hostname)/\1/p");
 
-  for i in {1..3}
+  for j in {1..3}
   do
-    restart_switch_port $PORT $i;
-    restart_interface $i;
+    restart_switch_port $PORT $j;
+    restart_interface $j;
   
     #zrobic test przed sprawdzeniem predkosci? ethtool --test enp1s0 online
     check_speed;
