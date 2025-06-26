@@ -40,8 +40,7 @@ else
   done;
 
   echo "Failed to fix the connection";
-  #ustawić stan węzła na failed
-
+  scontrol update nodename=$(hostname) state=fail reason="failed to start the 10GbE interface"
 fi;
 
 
