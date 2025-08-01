@@ -1,19 +1,20 @@
 #!/bin/bash
-
-restart_with_correct_os(){ #$1=hostname maszyny
-     ssh root@$1 "grub2-once 3; reboot" #musza koniecznie byc klucze!
-}
-
+CONF_FILE="auth.meshcentral";
+PASSWD=$(cat "$CONF_FILE" | sed -nE "s/(^[^#]+)\s+passwd/\1/p");
+USER=$(cat "$CONF_FILE" | sed -nE "s/(^[^#]+)\s+user/\1/p");
+URL=$(cat "$CONF_FILE" | sed -nE "s/(^[^#]+)\s+url/\1/p");
 
 for node in $@;
 do
   echo "Pinging ${node}..."
+  DEV_ID=$(cat abc | sed -nE "s/(^[^#]+)\s+$node/\1/p");
 
   if ping -c1 $node > /dev/null 2>&1; #ping once and redirect stdout and stderr to /dev/null
   then #if ping was successful
-    #intel amt restart + pxe
+    node meshctrl.js DevicePower --amtoff --url $URL --loginuser $USER --loginpass $PASSWD --id $DEV_ID
+    #pxe na wlasciwy system
   else #if machine could not be pinged
-    #intel amt poweron + pxe
+    #pxe na wlasciwy system
   fi;
 done;
 
