@@ -1,13 +1,12 @@
 from fastapi import FastAPI, Request
 import subprocess
+import re
 
 app = FastAPI()
 
 @app.get("/nodes")
 async def post_nodes(req : Request):
-    #resp = "'idle lab-net-[56-57]'\n"
-    #resp = "'idle localhost.localdomain'\n"
-    resp = subprocess.check_output(["sinfo", "-h", "-o", "'%T %N'"])
+    resp = subprocess.check_output(["sinfo", "-h", "-o", "'%T %N'"]).decode()
     arr = resp.strip().split("\n")
 
     nodes = []
@@ -16,7 +15,7 @@ async def post_nodes(req : Request):
         entry = entry.strip().replace("'", "")
         state, hostname = entry.split(" ")
 
-        if not (state == "allocated" or state == "alloc" or state == "mixed" or state == "reserved"):
+        if re.search(state, "ALLOCATED|MIXED|RESERVED|POWERING_UP|PLANNED|PERFCTRS", re.IGNORECASE):
             bracket_idx = hostname.find("[")
             if bracket_idx != -1:
                 prefix = hostname[:bracket_idx]
@@ -30,7 +29,6 @@ async def post_nodes(req : Request):
                 nodes.append(hostname)
 
     return {
-        "excluded-states" : ["allocated", "alloc", "mixed", "reserved"],
         "nodes" : nodes
     }
 
