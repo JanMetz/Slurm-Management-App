@@ -81,7 +81,7 @@ var MeshServerCreateControl = function (domain, authCookie) {
                         const hostnames = x.nodeids.map(nodeID => nodes.find((e) => e._id == nodeID).name);
                         const is_active = active_nodes.some(node => hostnames.includes(node));
 
-                        if ((!is_active) && (!confirm("Ten komputer aktualnie wykonuje obliczenia jako część klastra SLURM.\nCzy na pewno chcesz wykonać akcję?"))){
+                        if (is_active && (!confirm("Ten komputer aktualnie wykonuje obliczenia jako część klastra SLURM.\nCzy na pewno chcesz wykonać akcję?"))){
                             return;
                         }
 
