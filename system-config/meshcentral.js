@@ -64,8 +64,8 @@ var MeshServerCreateControl = function (domain, authCookie) {
                 var objDate = new Date();
                 var hours = objDate.getHours();
 
-                if (hours <= 7 || hours >= 22){
-                    fetch('/nodes', {method: "GET"})
+                if (hours <= 7 || hours >= 22) { //if request sent during working hours of the SLURM cluster
+                    fetch('/nodes', {method: "GET"}) //check if node is working as part of the cluster
                     .then(res => {
                         if (!res.ok) {
                             throw new Error(`HTTP error! Status: ${res.status}`);
