@@ -207,7 +207,17 @@ if [ $opt == "node" ]; then
   rm reverse_proxy_grafana.conf;
   rm active_nodes.py;
   rm active_nodes.service;
+  rm meshcentral.js;
+  rm nginx_meshcentral.conf;
+  rm -r grafana;
+  rm active_nodes.py;
+  rm post_reservation_cleanup.sh;
+  rm reverse_proxy_grafana.conf;
+  rm ports;
+  rm -r notes;
+  rm select_os.sh
 else
+  rm check_connectivity.sh
   rm sshd-node;
   rm common-account-node;
   rm slurmd.override.conf;
