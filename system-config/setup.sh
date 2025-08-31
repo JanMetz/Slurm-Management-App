@@ -210,9 +210,6 @@ if [ $opt == "node" ]; then
   rm meshcentral.js;
   rm nginx_meshcentral.conf;
   rm -r grafana;
-  rm active_nodes.py;
-  rm post_reservation_cleanup.sh;
-  rm reverse_proxy_grafana.conf;
   rm ports;
   rm -r notes;
   rm select_os.sh
