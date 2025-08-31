@@ -1,0 +1,11 @@
+[Unit]
+Description=Service providing API to check if node is currently used
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /etc/slurm/active_nodes.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
