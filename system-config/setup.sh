@@ -196,3 +196,19 @@ if [ $opt == "master" ]; then
   
   sacctmgr add account name=ldap description="LDAP Users" -i
 fi
+
+echo "+++ [INFO] Czyszczenie...";
+if [ $opt == "node" ]; then 
+  rm ethers;
+  rm sshd-master;
+  rm common-account-master;
+  rm slurmctld.override.conf;
+  rm post_reservation_cleanup.sh;
+  rm reverse_proxy_grafana.conf;
+  rm active_nodes.py;
+  rm active_nodes.service;
+else
+  rm sshd-node;
+  rm common-account-node;
+  rm slurmd.override.conf;
+fi
