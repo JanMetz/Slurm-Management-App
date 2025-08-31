@@ -3,7 +3,11 @@
 swap_config_files(){ #$1=local-filename, $2=path-to-original-file 
   if test -f $1; 
   then
-    mv $2 $2.old;
+    if test -f $2;
+    then
+      mv $2 $2.old;
+    fi;
+    
     mv $1 $2;
     echo "+++ [DEBUG] przeniesiono plik ${1}";
   else
