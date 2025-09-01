@@ -1,0 +1,13 @@
+Host lab-net-16
+  HostName              150.254.32.145
+  User                  root
+  IdentityFile          ~/.ssh/ln16
+  UserKnownHostsFile    ~/.ssh/known_hosts
+  Port                  22
+
+Host lab-net-16-vlab
+  HostName              150.254.32.145
+  User                  jmetz
+  IdentityFile          ~/.ssh/ln16v
+  UserKnownHostsFile    ~/.ssh/known_hosts_vlab
+  Port                  22
