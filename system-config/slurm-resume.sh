@@ -53,14 +53,17 @@ do
                 1) #vlab
                         echo "$node is running vlab"
                         ssh $node-vlab 'sudo grub2-once 4; sudo reboot;'
+                        sleep 15;
                         wait_for_wakeup $node
                         ;;
                 2) #other OS
                         echo "$node is running other OS"
                         DEV_ID=$(node /etc/slurm/meshctrl.js ListDevices --url $URL --loginuser XXX --loginpass XXX --json | jq -r --arg host "$node" '.[] | select((.name | ascii_downcase)==$host) | ._id')
                         node /etc/slurm/meshctrl.js DevicePower --amtreset --url $URL --loginuser XXX --loginpass XXX --id $DEV_ID
+                        sleep 15;
                         wait_for_wakeup $node;
                         ssh $node-vlab 'sudo grub2-once 4; reboot;'
+                        sleep 15;
                         wait_for_wakeup $node
                         ;;
                 *) #not possible
