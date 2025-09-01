@@ -2,6 +2,8 @@
 
 echo "resuming $@"
 URL='mesh.cs.put.poznan.pl';
+USR='XXX';
+PWD='YYY';
 
 check_curr_os(){
         ssh -q $1 exit
@@ -58,8 +60,8 @@ do
                         ;;
                 2) #other OS
                         echo "$node is running other OS"
-                        DEV_ID=$(node /etc/slurm/meshctrl.js ListDevices --url $URL --loginuser XXX --loginpass XXX --json | jq -r --arg host "$node" '.[] | select((.name | ascii_downcase)==$host) | ._id')
-                        node /etc/slurm/meshctrl.js DevicePower --amtreset --url $URL --loginuser XXX --loginpass XXX --id $DEV_ID
+                        DEV_ID=$(node /etc/slurm/meshctrl.js ListDevices --url $URL --loginuser $USR --loginpass $PWD --json | jq -r --arg host "$node" '.[] | select((.name | ascii_downcase)==$host) | ._id')
+                        node /etc/slurm/meshctrl.js DevicePower --amtreset --url $URL --loginuser $USR --loginpass $PWD --id $DEV_ID
                         sleep 15;
                         wait_for_wakeup $node;
                         ssh $node-vlab 'sudo grub2-once 4; reboot;'
