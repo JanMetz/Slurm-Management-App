@@ -24,7 +24,9 @@ wait_for_wakeup(){
         for i in $(seq 1 55); do #wait until the host becomes reachable (max 55s)
         if ping -c 1 -W 1 $1 > /dev/null 2>&1; then
                 echo "$1 woken up!"
-                sleep 40; #sleep until OS loads
+                if [ $i -gt 1 ]; then
+                        sleep 40; #sleep until OS loads, but only if the machine needed to wakeup
+                fi;
                 return 0;
         fi
         done
