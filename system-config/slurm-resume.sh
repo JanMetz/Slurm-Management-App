@@ -1,22 +1,36 @@
 #!/bin/bash
 
 echo "resuming $@"
-URL='wss://mesh.cs.put.poznan.pl';
+URL='mesh.cs.put.poznan.pl';
 
 check_curr_os(){
         ssh -q $1 exit
 
-        if [ $? -ne 0 ]; then
+        if [ $? -eq 0 ]; then
                 return 0; #correct os is running
         fi
 
         ssh -q $1-vlab exit
 
-    if [ $? -ne 0 ]; then
-        return 1; #vlab is running
-    fi
+        if [ $? -eq 0 ]; then
+                return 1; #vlab is running
+        fi
 
         return 2; #other os is running
+}
+
+wait_for_wakeup(){
+        echo "Waiting for $1 to wake up...";
+        for i in $(seq 1 55); do #wait until the host becomes reachable (max 55s)
+        if ping -c 1 -W 1 $1 > /dev/null 2>&1; then
+                echo "$1 woken up!"
+                sleep 40; #sleep until OS loads
+                return 0;
+        fi
+        done
+
+        echo "$1 did not wake up..."
+        return 1;
 }
 
 for node in $@;
@@ -24,28 +38,32 @@ do
         echo "Pinging ${node}..."
 
         if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
-        then #if ping was successful
+        then #if ping was not successful
                 wol $node;
-                sleep 100;
+                wait_for_wakeup $node;
         fi;
 
         check_curr_os $node
         case $? in
                 0) #correct OS
+                        echo "$node is running correct OS"
                         ;;
                 1) #vlab
-                        ssh lab-net-16-vlab 'sudo grub2-once 4; reboot;'
+                        echo "$node is running vlab"
+                        ssh $node-vlab 'sudo grub2-once 4; sudo reboot;'
+                        wait_for_wakeup $node
                         ;;
                 2) #other OS
-                        node meshctrl.js DevicePower --amtreset --url $URL --loginuser XXX --loginpass XXX --id 'j47j3K$MUFiFt6z3migKW2VxXxMXpuSvlvQaCc2dR49MDWBzYZsi@nPIqM5am7'
-                        sleep 100;
-                        ssh lab-net-16-vlab 'sudo grub2-once 4; reboot;'
+                        echo "$node is running other OS"
+                        node meshctrl.js DevicePower --amtreset --url wss://mesh.cs.put.poznan.pl --loginuser XXX --loginpass XXX --id XXX
+                        wait_for_wakeup $node;
+                        ssh $node-vlab 'sudo grub2-once 4; reboot;'
+                        wait_for_wakeup $node
                         ;;
                 *) #not possible
+                        echo "something went wrong..."
                         ;;
         esac
-
-        sleep 100;
 done;
 
 exit 0
