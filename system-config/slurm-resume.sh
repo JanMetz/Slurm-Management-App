@@ -55,11 +55,24 @@ for node in $@;
 do
         echo "Pinging ${node}..."
 
-        if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
-        then #if ping was not successful
-                wol $node;
-                wait_for_wakeup $node;
-        fi;
+        ASLEEP=1;
+        CNT=0;
+
+        while [[ $CNT -le 3 && $ASLEEP -eq 0 ]]; 
+        do
+                if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
+                then #if ping was not successful
+                        wol $node;
+                        wait_for_wakeup $node;
+                        ASLEEP=$?;
+                fi;
+        done
+
+        if [ $ASLEEP -eq 1 ];
+        then
+                echo "Critical error: Unable to wake up the node! Quitting"
+                exit 1;
+        fi
 
         check_curr_os $node
         case $? in
