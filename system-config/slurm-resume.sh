@@ -58,7 +58,7 @@ do
         ASLEEP=1;
         CNT=0;
 
-        while [[ $CNT -le 3 && $ASLEEP -eq 0 ]]; 
+        while [[ $CNT -le 3 && $ASLEEP -eq 1 ]]; 
         do
                 if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
                 then #if ping was not successful
