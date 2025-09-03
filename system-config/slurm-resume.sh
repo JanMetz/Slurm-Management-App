@@ -6,6 +6,7 @@ USR='XXX';
 PWD='YYY';
 
 check_curr_os(){
+        echo "checking current OS...";
         ssh -q $1 exit
 
         if [ $? -eq 0 ]; then
@@ -37,6 +38,19 @@ wait_for_wakeup(){
         return 1;
 }
 
+reboot_to_slurm_os(){
+        echo "Initiating reboot to Slurm OS...";
+        ssh $node-vlab 'sudo grub2-once 4; sudo reboot;'
+        sleep 15;
+}
+
+reboot_to_vlab(){
+        echo "Initiating reboot to Vlab...";
+        DEV_ID=$(node /etc/slurm/meshctrl.js ListDevices --url $URL --loginuser $USR --loginpass $PWD --json | jq -r --arg host "$node" '.[] | select((.name | ascii_downcase)==$host) | ._id')
+        node /etc/slurm/meshctrl.js DevicePower --amtreset --url $URL --loginuser $USR --loginpass $PWD --id $DEV_ID
+        sleep 15;
+}
+
 for node in $@;
 do
         echo "Pinging ${node}..."
@@ -50,23 +64,19 @@ do
         check_curr_os $node
         case $? in
                 0) #correct OS
-                        echo "$node is running correct OS"
+                        echo "$node is running correct OS. Nothing to do..."
                         ;;
                 1) #vlab
                         echo "$node is running vlab"
-                        ssh $node-vlab 'sudo grub2-once 4; sudo reboot;'
-                        sleep 15;
-                        wait_for_wakeup $node
+                        reboot_to_slurm_os;
+                        wait_for_wakeup $node;
                         ;;
                 2) #other OS
-                        echo "$node is running other OS"
-                        DEV_ID=$(node /etc/slurm/meshctrl.js ListDevices --url $URL --loginuser $USR --loginpass $PWD --json | jq -r --arg host "$node" '.[] | select((.name | ascii_downcase)==$host) | ._id')
-                        node /etc/slurm/meshctrl.js DevicePower --amtreset --url $URL --loginuser $USR --loginpass $PWD --id $DEV_ID
-                        sleep 15;
+                        echo "$node is running OS other than Vlab or Slurm"
+                        reboot_to_vlab;
                         wait_for_wakeup $node;
-                        ssh $node-vlab 'sudo grub2-once 4; reboot;'
-                        sleep 15;
-                        wait_for_wakeup $node
+                        reboot_to_slurm_os;
+                        wait_for_wakeup $node;
                         ;;
                 *) #not possible
                         echo "something went wrong..."
