@@ -66,6 +66,7 @@ do
                         wait_for_wakeup $node;
                         ASLEEP=$?;
                 fi;
+                CNT=$((CNT + 1));
         done
 
         if [ $ASLEEP -eq 1 ];
