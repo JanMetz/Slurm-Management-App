@@ -52,26 +52,26 @@ run_meshctrl_command(){ #$1=device power command
 }
 
 wake_node_up(){
-        if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
+        if ! ping -c1 "$node" > /dev/null 2>&1 ; #ping once and redirect stdout and stderr to /dev/null
         then #if ping was not successful
                 wol $node;
                 wait_for_wakeup $node;
         fi;
 
-        if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
+        if ! ping -c1 "$node" > /dev/null 2>&1 ; #ping once and redirect stdout and stderr to /dev/null
         then #if ping was not successful
                 run_meshctrl_command wake
                 wait_for_wakeup $node;
         fi;
 
-        if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
+        if ! ping -c1 "$node" > /dev/null 2>&1 ; #ping once and redirect stdout and stderr to /dev/null
         then #if ping was not successful
                 run_meshctrl_command amton
                 wait_for_wakeup $node;
         fi;
 
 
-        if ! [ ping -c1 $node > /dev/null 2>&1 ]
+        if ! ping -c1 "$node" > /dev/null 2>&1 ; #ping once and redirect stdout and stderr to /dev/null
         then
                 echo "Critical error: Unable to wake up the node! Quitting"
                 exit 1;
