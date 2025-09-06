@@ -96,6 +96,8 @@ do
                         echo "something went wrong..."
                         ;;
         esac
+
+        scontrol update NodeName=$node State=RESUME
 done;
 
 exit 0
