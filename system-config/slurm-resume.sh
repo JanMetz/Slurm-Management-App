@@ -106,7 +106,9 @@ do
                         ;;
         esac
 
-        scontrol update NodeName=$node State=RESUME
+        if [ "$(sinfo -n $node -o '%t' -h)" != "idle" ]; then
+                scontrol update NodeName=$node State=RESUME;
+        fi;
 done;
 
 exit 0
