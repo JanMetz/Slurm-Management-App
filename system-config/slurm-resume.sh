@@ -44,37 +44,45 @@ reboot_to_slurm_os(){
         sleep 15;
 }
 
-reboot_to_vlab(){
-        echo "Initiating reboot to Vlab...";
+run_meshctrl_command(){ #$1=device power command
         DEV_ID=$(node /etc/slurm/meshctrl.js ListDevices --url $URL --loginuser $USR --loginpass $PWD --json | jq -r --arg host "$node" '.[] | select((.name | ascii_downcase)==$host) | ._id')
-        node /etc/slurm/meshctrl.js DevicePower --amtreset --url $URL --loginuser $USR --loginpass $PWD --id $DEV_ID
+        node /etc/slurm/meshctrl.js DevicePower --$1 --url $URL --loginuser $USR --loginpass $PWD --id $DEV_ID
         sleep 15;
+}
+
+wake_node_up(){
+        echo $node
+        if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
+        then #if ping was not successful
+                wol $node;
+                wait_for_wakeup $node;
+        fi;
+
+        if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
+        then #if ping was not successful
+                run_meshctrl_command wake
+                wait_for_wakeup $node;
+        fi;
+
+        if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
+        then #if ping was not successful
+                run_meshctrl_command amton
+                wait_for_wakeup $node;
+        fi;
+
+
+        if ! [ ping -c1 $node > /dev/null 2>&1 ]
+        then
+                echo "Critical error: Unable to wake up the node! Quitting"
+                exit 1;
+        fi
 }
 
 for node in $@;
 do
         echo "Pinging ${node}..."
-
-        ASLEEP=1;
-        CNT=0;
-
-        while [[ $CNT -le 3 && $ASLEEP -eq 1 ]]; 
-        do
-                if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
-                then #if ping was not successful
-                        wol $node;
-                        wait_for_wakeup $node;
-                        ASLEEP=$?;
-                fi;
-                CNT=$((CNT + 1));
-        done
-
-        if [ $ASLEEP -eq 1 ];
-        then
-                echo "Critical error: Unable to wake up the node! Quitting"
-                exit 1;
-        fi
-
+        wake_node_up
+        
         check_curr_os $node
         case $? in
                 0) #correct OS
@@ -87,7 +95,8 @@ do
                         ;;
                 2) #other OS
                         echo "$node is running OS other than Vlab or Slurm"
-                        reboot_to_vlab;
+                        echo "Initiating reboot to Vlab...";
+                        run_meshctrl_command amtreset;
                         wait_for_wakeup $node;
                         reboot_to_slurm_os;
                         wait_for_wakeup $node;
