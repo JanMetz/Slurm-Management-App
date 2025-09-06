@@ -51,7 +51,6 @@ run_meshctrl_command(){ #$1=device power command
 }
 
 wake_node_up(){
-        echo $node
         if ! [ ping -c1 $node > /dev/null 2>&1 ]; #ping once and redirect stdout and stderr to /dev/null
         then #if ping was not successful
                 wol $node;
