@@ -28,6 +28,7 @@ wait_for_wakeup(){
         if ping -c 1 -W 1 $1 > /dev/null 2>&1; then
                 echo "$1 woken up!"
                 if [ $i -gt 1 ]; then
+                        echo "Waiting for the OS to load...";
                         sleep 40; #sleep until OS loads, but only if the machine needed to wakeup
                 fi;
                 return 0;
