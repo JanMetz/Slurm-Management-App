@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "resuming $@"
-URL='mesh.cs.put.poznan.pl';
+echo "Resuming $@"
+URL='wss://mesh.cs.put.poznan.pl';
 USR='XXX';
 PWD='YYY';
 
