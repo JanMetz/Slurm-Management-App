@@ -41,7 +41,7 @@ wait_for_wakeup(){
 
 reboot_to_slurm_os(){
         echo "Initiating reboot to Slurm OS...";
-        ssh $node-vlab 'sudo grub2-once 4; sudo reboot;'
+        ssh "${node}-vlab" 'entry=$(sudo grub2-once --list | awk "/SLURM compute node/ {print \$1; exit}"); sudo grub2-once "$entry"; sudo reboot'
         sleep 15;
 }
 
