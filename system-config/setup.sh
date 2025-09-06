@@ -91,6 +91,8 @@ if [ $opt == "master" ]; then
   mv active_nodes.py                /etc/slurm/;
   mv active_nodes.service           /etc/systemd/system/;
   chmod 644 /etc/systemd/system/active_nodes.service;
+
+  mv meshctrl.js                   /etc/slurm/
  else
   swap_config_files sshd-node 			/etc/pam.d/sshd;
   swap_config_files common-account-node 	/etc/pam.d/common-account-pc;
@@ -176,6 +178,9 @@ if [ $opt == "master" ]; then
 
   systemctl enable active_nodes;
   systemctl restart active_nodes;
+
+  npm install minimist --prefix /etc/slurm/
+  npm install ws --prefix /etc/slurm/
 else
   systemctl enable slurmd;
   systemctl restart slurmd;
