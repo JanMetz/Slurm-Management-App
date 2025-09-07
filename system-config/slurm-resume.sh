@@ -7,13 +7,13 @@ PWD='YYY';
 
 check_curr_os(){
         echo "checking current OS...";
-        ssh -q $1 exit
+        ssh -o ConnectTimeout=10 -q $1 exit
 
         if [ $? -eq 0 ]; then
                 return 0; #correct os is running
         fi
 
-        ssh -q $1-vlab exit
+        ssh -o ConnectTimeout=10 -q $1-vlab exit
 
         if [ $? -eq 0 ]; then
                 return 1; #vlab is running
