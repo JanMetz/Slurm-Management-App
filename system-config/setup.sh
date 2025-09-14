@@ -47,32 +47,33 @@ do
 done;
 
 echo "+++ [INFO] Zmiana nazwy starych i przenoszenie nowych plikow konfiguracyjnych..." 
-swap_config_files common-auth 		/etc/pam.d/common-auth-pc
-swap_config_files common-session 	/etc/pam.d/common-session-pc
+swap_config_files common-auth 		  /etc/pam.d/common-auth-pc
+swap_config_files common-session 	  /etc/pam.d/common-session-pc
 swap_config_files common-password 	/etc/pam.d/common-password-pc
 
-swap_config_files nsswitch.conf 	/etc/nsswitch.conf
-swap_config_files ldap.conf 		/etc/ldap.conf
-swap_config_files openldap.conf 	/etc/openldap/ldap.conf
-swap_config_files auto.master 		/etc/auto.master
-swap_config_files auto.home 		/etc/auto.home
-swap_config_files auto.a		/etc/auto.a
-swap_config_files autofs		/etc/sysconfig/autofs
+swap_config_files nsswitch.conf 	  /etc/nsswitch.conf
+swap_config_files ldap.conf 		    /etc/ldap.conf
+swap_config_files openldap.conf 	  /etc/openldap/ldap.conf
+swap_config_files auto.master 		  /etc/auto.master
+swap_config_files auto.home 		    /etc/auto.home
+swap_config_files auto.a		        /etc/auto.a
+swap_config_files autofs		        /etc/sysconfig/autofs
+swap_config_files ports             /etc/ports
 
-swap_config_files access.conf 		/etc/security/access.conf
-swap_config_files sshd_config 		/etc/ssh/sshd_config
+swap_config_files access.conf 		  /etc/security/access.conf
+swap_config_files sshd_config 		  /etc/ssh/sshd_config
 
-swap_config_files my.cnf 		/etc/my.cnf
+swap_config_files my.cnf 		        /etc/my.cnf
 
-mkdir -p /etc/prometheus
-swap_config_files prometheus.yml	/etc/prometheus/prometheus.yml
+mkdir -p                            /etc/prometheus
+swap_config_files prometheus.yml	  /etc/prometheus/prometheus.yml
 
-mkdir -p /etc/slurm
-swap_config_files slurm.conf 		/etc/slurm/slurm.conf
+mkdir -p                            /etc/slurm
+swap_config_files slurm.conf 	    	/etc/slurm/slurm.conf
 swap_config_files slurm-epilog.sh 	/etc/slurm/slurm-epilog.sh
 swap_config_files slurm-resume.sh 	/etc/slurm/slurm-resume.sh
 swap_config_files slurm-suspend.sh 	/etc/slurm/slurm-suspend.sh
-swap_config_files slurmdbd.conf 	/etc/slurm/slurmdbd.conf
+swap_config_files slurmdbd.conf 	  /etc/slurm/slurmdbd.conf
 swap_config_files acct_gather.conf 	/etc/slurm/acct_gather.conf
 
 
@@ -182,6 +183,7 @@ if [ $opt == "master" ]; then
   npm install minimist --prefix /etc/slurm/
   npm install ws --prefix /etc/slurm/
 else
+  systemctl enable check_connectivity.service;
   systemctl enable slurmd;
   systemctl restart slurmd;
 fi
@@ -215,7 +217,6 @@ if [ $opt == "node" ]; then
   rm meshcentral.js;
   rm nginx_meshcentral.conf;
   rm -r grafana;
-  rm ports;
   rm -r notes;
   rm select_os.sh
 else
