@@ -99,7 +99,9 @@ if [ $opt == "master" ]; then
   swap_config_files common-account-node 	/etc/pam.d/common-account-pc;
 
   mkdir -p					/etc/systemd/system/slurmd.service.d/;
-  swap_config_files slurmd.override.conf 	/etc/systemd/system/slurmd.service.d/override.conf;
+  swap_config_files slurmd.override.conf 	       /etc/systemd/system/slurmd.service.d/override.conf;
+
+  swap_config_files check_connectivity.service   /etc/systemd/system/check_connectivity.service
  fi
 
 echo "+++ [WARNING] ZMIENIONO KONFIGURACJE PAM. SPRAWDZ, CZY MOZESZ SIE ZALOGOWAC ODPALAJAC SESJE SSH Z INNEGO TERMINALA!"
