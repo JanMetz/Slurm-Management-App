@@ -101,6 +101,7 @@ if [ $opt == "master" ]; then
   mkdir -p					/etc/systemd/system/slurmd.service.d/;
   swap_config_files slurmd.override.conf 	       /etc/systemd/system/slurmd.service.d/override.conf;
 
+  swap_config_files check_connectivity.sh        /etc/slurm/check_connectivity.sh
   swap_config_files check_connectivity.service   /etc/systemd/system/check_connectivity.service
  fi
 
@@ -222,7 +223,6 @@ if [ $opt == "node" ]; then
   rm -r notes;
   rm select_os.sh
 else
-  rm check_connectivity.sh
   rm sshd-node;
   rm common-account-node;
   rm slurmd.override.conf;
