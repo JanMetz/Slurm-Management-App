@@ -222,6 +222,7 @@ if [ $opt == "node" ]; then
   rm -r grafana;
   rm -r notes;
   rm select_os.sh
+  rm ssh_config
 else
   rm sshd-node;
   rm common-account-node;
