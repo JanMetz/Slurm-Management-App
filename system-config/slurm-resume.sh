@@ -7,13 +7,13 @@ PWD='YYY';
 
 check_curr_os(){
         echo "checking current OS...";
-        ssh -o ConnectTimeout=10 -q $1 exit
+        ssh -o ConnectTimeout=10 -q "s${1}" exit
 
         if [ $? -eq 0 ]; then
                 return 0; #correct os is running
         fi
 
-        ssh -o ConnectTimeout=10 -q $1-vlab exit
+        ssh -o ConnectTimeout=10 -q "s${1}-vlab" exit
 
         if [ $? -eq 0 ]; then
                 return 1; #vlab is running
@@ -41,7 +41,7 @@ wait_for_wakeup(){
 
 reboot_to_slurm_os(){
         echo "Initiating reboot to Slurm OS...";
-        ssh "${node}-vlab" 'entry=$(sudo grub2-once --list | awk "/SLURM compute node/ {print \$1; exit}"); sudo grub2-once "$entry"; sudo reboot'
+        ssh "s${node}-vlab" 'entry=$(sudo grub2-once --list | awk "/SLURM compute node/ {print \$1; exit}"); sudo grub2-once "$entry"; sudo reboot'
         sleep 15;
 }
 
