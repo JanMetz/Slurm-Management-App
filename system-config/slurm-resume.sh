@@ -1,12 +1,17 @@
 #!/bin/bash
 
-echo "Resuming $@"
+write_to_log "Resuming $@"
+LOGFILE='/var/log/slurm/slurm-resume.log';
 URL='wss://mesh.cs.put.poznan.pl';
 USR='XXX';
 PWD='YYY';
 
-check_curr_os(){
-        echo "checking current OS...";
+write_to_log(){ #$1=message
+        echo "[$(date)] ${1}" >> LOGFILE 2>&1;
+}
+
+check_curr_os(){ #$1=hostname
+        write_to_log "checking current OS...";
         ssh -o ConnectTimeout=10 -q "s${1}" exit
 
         if [ $? -eq 0 ]; then
@@ -23,24 +28,24 @@ check_curr_os(){
 }
 
 wait_for_wakeup(){
-        echo "Waiting for $1 to wake up...";
+        write_to_log "Waiting for $1 to wake up...";
         for i in $(seq 1 55); do #wait until the host becomes reachable (max 55s)
         if ping -c 1 -W 1 $1 > /dev/null 2>&1; then
-                echo "$1 woken up!"
+                write_to_log "$1 has woken up!"
                 if [ $i -gt 1 ]; then
-                        echo "Waiting for the OS to load...";
+                        write_to_log "Waiting for the OS to load...";
                         sleep 40; #sleep until OS loads, but only if the machine needed to wakeup
                 fi;
                 return 0;
         fi
         done
 
-        echo "$1 did not wake up..."
+        write_to_log "$1 did not wake up..."
         return 1;
 }
 
 reboot_to_slurm_os(){
-        echo "Initiating reboot to Slurm OS...";
+        write_to_log "Initiating reboot to Slurm OS...";
         ssh "s${node}-vlab" 'entry=$(sudo grub2-once --list | awk "/SLURM compute node/ {print \$1; exit}"); sudo grub2-once "$entry"; sudo reboot'
         sleep 15;
 }
@@ -73,36 +78,36 @@ wake_node_up(){
 
         if ! ping -c1 "$node" > /dev/null 2>&1 ; #ping once and redirect stdout and stderr to /dev/null
         then
-                echo "Critical error: Unable to wake up the node! Quitting"
+                write_to_log "Critical error: Unable to wake up the node! Quitting"
                 exit 1;
         fi
 }
 
 for node in $@;
 do
-        echo "Pinging ${node}..."
+        write_to_log "Pinging ${node}..."
         wake_node_up
         
         check_curr_os $node
         case $? in
                 0) #correct OS
-                        echo "$node is running correct OS. Nothing to do..."
+                        write_to_log "$node is running correct OS. Nothing to do..."
                         ;;
                 1) #vlab
-                        echo "$node is running vlab"
+                        write_to_log "$node is running vlab"
                         reboot_to_slurm_os;
                         wait_for_wakeup $node;
                         ;;
                 2) #other OS
-                        echo "$node is running OS other than Vlab or Slurm"
-                        echo "Initiating reboot to Vlab...";
+                        write_to_log "$node is running OS other than Vlab or Slurm"
+                        write_to_log "Initiating reboot to Vlab...";
                         run_meshctrl_command amtreset;
                         wait_for_wakeup $node;
                         reboot_to_slurm_os;
                         wait_for_wakeup $node;
                         ;;
                 *) #not possible
-                        echo "something went wrong..."
+                        write_to_log "something went wrong..."
                         ;;
         esac
 
