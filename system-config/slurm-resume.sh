@@ -1,4 +1,9 @@
 #!/bin/bash
+LOGFILE='/var/log/slurm/slurm-resume.log';
+URL='wss://mesh.cs.put.poznan.pl';
+USR='XXX';
+PWD='YYY';
+
 write_to_log(){ #$1=message
         echo "[$(date)] ${1}" >> LOGFILE 2>&1;
 }
@@ -77,10 +82,6 @@ wake_node_up(){
 }
 
 write_to_log "Resuming $@"
-LOGFILE='/var/log/slurm/slurm-resume.log';
-URL='wss://mesh.cs.put.poznan.pl';
-USR='XXX';
-PWD='YYY';
 
 for node in $@;
 do
