@@ -4,8 +4,11 @@ URL='wss://mesh.cs.put.poznan.pl';
 USR='XXX';
 PWD='YYY';
 
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
+exec >> $LOGFILE 2>&1
+
 write_to_log(){ #$1=message
-        echo "[$(date)] ${1}" >> LOGFILE 2>&1;
+        echo "[$(date)] ${1}";
 }
 
 check_curr_os(){ #$1=hostname
