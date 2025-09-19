@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Resuming $@"
+echo "Suspending $@"
 URL='wss://mesh.cs.put.poznan.pl';
 USR='XXX';
 PWD='YYY';
